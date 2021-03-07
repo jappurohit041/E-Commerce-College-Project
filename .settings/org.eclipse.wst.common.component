@@ -3,6 +3,7 @@
     <wb-module deploy-name="ECollegeProject">
                 
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/"/>
                 
         <property name="context-root" value="ECollegeProject"/>
                 
