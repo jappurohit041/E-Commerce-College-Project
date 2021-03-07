@@ -12,7 +12,7 @@
 
 <body>
 		<!-- multistep form -->
-    <form id="msform" action="#">
+    <form id="msform" action="#" method="post">
         <!-- progressbar -->
         <ul id="progressbar">
             <li class="active">Basic Details</li>
@@ -52,6 +52,8 @@
                     <input type="text" class="form-control" placeholder="Confirm Password" id="inputCPassword" name="cPassword">
                 </div>
             </div>
+            <a href="LoginForm.jsp" style="float : left">Already Existing User</a>
+            <br>
             <input type="button" name="next" class="next action-button" value="Next" />
         </fieldset>
         <fieldset>
