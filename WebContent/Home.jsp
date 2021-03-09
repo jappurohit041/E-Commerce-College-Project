@@ -125,10 +125,10 @@
 </style>
 </head>
 <body>
-    <header class="bg-primary container-fluid ">
+    <header class="container-fluid " style="background: linear-gradient(#8aaed1, white);">
         <div class="row">
             <div class="col-1">
-                <img  src="images/BlueColorLogoWhiteFont.jpg" alt="White BigDeal Main Logo">
+                <a href="LoginForm.jsp"><img   src="images/BigDealWhiteLogo.jpg" alt="White BigDeal Main Logo">
             </div>
             <div class="col-6">
                 <form class="searchForm">
@@ -143,7 +143,7 @@
             <div class="col-2 ">
                 <div class="LoginButton">
                     <div class="dropdown">
-                        <a href="" class="dropbtn" style=" text-decoration: none;">Login</a>
+                        <a href="LoginForm.jsp" class="dropbtn" style=" text-decoration: none;">Login</a>
                         <div class="dropdown-content">
                             <a>sfgsfgs</a>
                             <a>sfgsfgs</a>
@@ -159,7 +159,7 @@
     
     <br><br><br><br><br>
 
-    <footer class="row footerBackground">
+    <footer class="row " style="background: linear-gradient(#8aaed1, white);">
         <div class="col-6">
             <div class="row">
               <div class="col-3">
@@ -184,7 +184,7 @@
                     <a class="link-light" href="#">Youtube</a><br>    
            </div>
             </div>
-            <img src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/payment-method_7934bc.svg" alt="" style="margin-top: 70px; width: 410px;">
+            	<img src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/payment-method_7934bc.svg" alt="" style="margin-top: 70px; width: 450px; margin-left: 120px;">
         </div>
        <!--ubhi liti-->
        <div class="col-6 vlLeft">
