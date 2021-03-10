@@ -1,4 +1,4 @@
-package com.util;
+package src.com.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,5 +24,7 @@ public class JDBCConnectionOrcale {
 		}
 		return con;
 	}
-	
+	public static void main(String[] args) {
+		JDBCConnectionOrcale.connectionMethod();
+	}
 }
