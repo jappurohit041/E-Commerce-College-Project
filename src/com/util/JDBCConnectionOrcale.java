@@ -1,4 +1,4 @@
-package com.util;
+package src.com.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +17,7 @@ public class JDBCConnectionOrcale {
 				System.out.println("not connected");
 			else
 				System.out.println("connected");
-			System.out.println(con);
+				System.out.println(con);
 		}
 		catch(Exception e){
 			System.out.println("Something went wrong "+e);
