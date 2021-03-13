@@ -13,7 +13,7 @@ public class JDBCConnectionOrcale {
 		try {
 			Class.forName(driverName);
 			con = DriverManager.getConnection(url,userName,password);
-			if(con == null)
+		 	if(con == null)
 				System.out.println("not connected");
 			else
 				System.out.println("connected");
@@ -24,5 +24,7 @@ public class JDBCConnectionOrcale {
 		}
 		return con;
 	}
-	
+	public static void main(String[] args) {
+		JDBCConnectionOrcale.connectionMethod();
+	}
 }
