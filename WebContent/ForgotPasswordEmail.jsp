@@ -12,7 +12,7 @@
 
 <body>
 		<!-- multistep form -->
-    <form id="msform" action="#" method="post">
+    <form id="msform" action="ForgotPasswordSecurityQuestion.jsp" method="post">
         <!-- progressbar -->
         <ul id="progressbar" style="text-align: center; margin-left:450px">
             <li class="active">Enter Email</li>

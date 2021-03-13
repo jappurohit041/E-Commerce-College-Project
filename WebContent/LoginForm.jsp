@@ -27,7 +27,7 @@
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
             </div>
-            <a href="#" style="float: left">Forget Password</a>
+            <a href="ForgotPasswordEmail.jsp" style="float: left">Forget Password</a>
             <a href="SignupForm.jsp" style="float: right">New User</a>
             <br />
             <input type="submit" name="next" class="next action-button" value="Submit" />
