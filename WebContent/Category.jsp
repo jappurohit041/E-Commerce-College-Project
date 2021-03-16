@@ -107,7 +107,7 @@
             </div>
             <div class="col-2 categoryImg">
                 
-                    <img src="C:\Users\MITANSH\Downloads\beauty-removebg-preview.png" style="margin-top: 4px;" height="50px" width="50px">
+                    <img src="images	\beauty-removebg-preview.png" style="margin-top: 4px;" height="50px" width="50px">
                     <!-- <p>Beauty</p> -->
                     <br><div class="btn-group">
                         <button type="button" class="btn  btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,7 +125,7 @@
             </div>
             <div class="col-2 categoryImg">
                 
-                    <img src="C:\Users\MITANSH\Downloads\toycar-removebg-preview.png" style="margin-top: 4px;" height="50px" width="50px">
+                    <img src="images\toycar-removebg-preview.png" style="margin-top: 4px;" height="50px" width="50px">
                     <!-- <p>Toys</p> -->
                     <br><div class="btn-group">
                         <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
