@@ -12,6 +12,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+import com.util.UtilValidation;
+
 /**
  * Servlet Filter implementation class SignupValidationfilter
  */
@@ -29,7 +31,7 @@ public class SignupValidationfilter implements Filter
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException 
 	{
 		
-		String Firstname=request.getParameter("firstName");										
+		String firstName=request.getParameter("firstName");										
 		String Lastname=request.getParameter("lastName");
 		String email=request.getParameter("emailAddress");
 		String dob=request.getParameter("dateOfBirth");
@@ -45,56 +47,9 @@ public class SignupValidationfilter implements Filter
 		String securityQuestion=request.getParameter("securityQuestion");
 		String secrityAnswer=request.getParameter("securityAnswer");
 		
-		boolean isError=false;
-		if(Firstname==null || Firstname.trim().length()==0)
-		{
-			isError=true;
+		if(UtilValidation.firstNameValidation(firstName)) {
+			System.out.println("True");
 		}
-		if(Lastname==null || Lastname.trim().length()==0)
-		{
-			isError=true;
-		}if(email==null || email.trim().length()==0)
-		{
-			isError=true;
-		}if(dob==null || dob.trim().length()==0)
-		{
-			isError=true;
-		}if(password==null || password.trim().length()==0)
-		{
-			isError=true;
-		}if(Confirmpassword==null || Confirmpassword.trim().length()==0)
-		{
-			isError=true;
-		}if(HouseNumber==null || HouseNumber.trim().length()==0)
-		{
-			isError=true;
-		}if(Landmark==null || Landmark.trim().length()==0)
-		{
-			isError=true;
-		}if(city==null || city.trim().length()==0)
-		{
-			isError=true;
-		}if(state==null || state.trim().length()==0)
-		{
-			isError=true;
-		}if(pincode==null || pincode.trim().length()==0)
-		{
-			isError=true;
-		}if(country==null || country.trim().length()==0)
-		{
-			isError=true;
-		}if(phoneNumber==null || phoneNumber.trim().length()==0)
-		{
-			isError=true;
-		}if(securityQuestion.equals("-1") )
-		{
-			isError=true;
-		}if(secrityAnswer==null || secrityAnswer.trim().length()==0)
-		{
-			isError=true;
-		}
-		
-		
 		if(isError==true)
 		{
 			request.getRequestDispatcher("").forward(request, response);
