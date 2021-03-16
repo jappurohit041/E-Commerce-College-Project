@@ -50,10 +50,7 @@ public class SignupValidationfilter implements Filter
 		if(UtilValidation.firstNameValidation(firstName)) {
 			System.out.println("True");
 		}
-		if(isError==true)
-		{
-			request.getRequestDispatcher("").forward(request, response);
-		}
+		
 		else
 		{
 		chain.doFilter(request, response);

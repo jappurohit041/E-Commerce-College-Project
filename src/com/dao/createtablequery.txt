@@ -27,3 +27,122 @@ create table userDetails(
 	constraint user_id_pk primary key(userID),
 	constraint role_id_fk foreign key(roleID) references role(roleID)
 );
+
+CREATE SEQUENCE user_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER user_id_inc 
+BEFORE INSERT ON USERDETAILS
+FOR EACH ROW
+
+BEGIN
+  SELECT user_seq.NEXTVAL
+  INTO   :new.userID
+  FROM   dual;
+END;
+/
+
+
+--------Category Table Creation------------
+create table categoryDetails(
+	categoryID number(3),
+	categoryName varchar2(40),
+	imagePath varchar2(50),
+	isActive number(1) not null check (isActive in (0,1)),
+	constraint category_id_pk primary key(categoryID)
+);
+
+CREATE SEQUENCE cat_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER category_id_inc 
+BEFORE INSERT ON CATEGORYDETAILS
+FOR EACH ROW
+
+BEGIN
+  SELECT cat_seq.NEXTVAL
+  INTO   :new.categoryID
+  FROM   dual;
+END;
+/
+
+--------Sub-Category Table Creation------------
+create table subCategoryDetails(
+	subCategoryID number(3),
+	subCategoryName varchar2(40),
+	categoryID number(3),
+	isActive number(1) not null check (isActive in (0,1)),
+	constraint sub_category_id_pk primary key(subCategoryID),
+	constraint sub_category_id_fk foreign key(categoryID) references categoryDetails(categoryID)
+);
+
+CREATE SEQUENCE sub_cat_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER sub_category_id_inc 
+BEFORE INSERT ON SUBCATEGORYDETAILS
+FOR EACH ROW
+
+BEGIN
+  SELECT sub_cat_seq.NEXTVAL
+  INTO   :new.subCategoryID
+  FROM   dual;
+END;
+/
+
+
+----------PRODUCT TABLE CREATION-------------------
+create table productDetails(
+	productID number(3),
+	categoryID number(3),
+	subCategoryID number(3),
+	originalPrice number(9,2),
+	offerPrice number(9,2),
+	productName varchar2(50),
+	companyName varchar2(50),
+	quantity number(6),
+	offerTill date,
+	imagePath varchar2(50),
+	productDescription varchar2(100),
+	constraint product_id_pk primary key (productID),
+	constraint product_id_fk foreign key(categoryID) references categoryDetails(categoryID),
+	constraint product_id_fk1 foreign key(subCategoryID) references subCategoryDetails(subCategoryID)
+);
+
+CREATE SEQUENCE product_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER product_id_inc
+BEFORE INSERT ON productDetails
+FOR EACH ROW
+
+BEGIN
+  SELECT product_seq.NEXTVAL
+  INTO   :new.productID 
+  FROM   dual;
+END;
+/
+
+
+------------CART TABLE CREATION--------
+
+create table cartDetails(
+	cartID number(10),
+	userID number(10),
+	productID number(3),
+	price number(9,2),
+	qty number(6),
+	constraint cart_id_pk primary key (cartID),
+	constraint cart_id_fk foreign key(userID) references userDetails(userID),
+	constraint cart_id_fk1 foreign key(productID) references productDetails(productID) 
+);
+
+CREATE SEQUENCE cart_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER cart_id_inc
+BEFORE INSERT ON cartDetails
+FOR EACH ROW
+
+BEGIN
+  SELECT cart_seq.NEXTVAL
+  INTO   :new.cartID 
+  FROM   dual;
+END;
+/
+
