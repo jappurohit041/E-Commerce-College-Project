@@ -1,0 +1,29 @@
+--------Role Table Creation------------
+create table role(
+	roleID number(1),
+	role_name varchar2(10),
+	constraint role_id_pk primary key(roleID)
+);
+
+
+--------User Table Creation------------
+create table userDetails(
+	firstName varchar2(30),
+	lastName varchar2(30),
+	emailID varchar2(40),
+	passWord varchar2(20),
+	address varchar2(150),
+	userID number(10),
+	dateOfBirth date not null,
+	city varchar2(30),
+	state varchar2(30),
+	pincode varchar2(30),
+	country varchar2(30),
+	contactNumber number(10),
+	roleID number(1) not null check (roleID in (1,2)),
+	isBlock number(1) not null check (isBlock in (0,1)),
+	securityQuestion varchar2(50),
+	securityAnswer varchar2(50),
+	constraint user_id_pk primary key(userID),
+	constraint role_id_fk foreign key(roleID) references role(roleID)
+);
