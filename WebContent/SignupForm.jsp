@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +42,7 @@
                 </div>
                 <div class="col-6">
                     <label for="inputDOB">Date of Birth</label>
-                    <input type="date" class="form-control" placeholder="" id="inputDOB" name="dateOfBirth" />
+                    <input type="date" class="form-control" placeholder="" id="inputDOB" name="dateOfBirth"/>
                 </div>
             </div>
             <div class="row">

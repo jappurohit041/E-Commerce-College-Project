@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +28,8 @@
     </form>
 </body>
 </html>
-=======
+
+<!--  
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,14 +43,14 @@
 </head>
 
 <body>
-		<!-- multistep form -->
+		 multistep form
     <form id="msform" action="#" method="post">
         <!-- progressbar -->
-        <ul id="progressbar" style="text-align: center; margin-left:450px">
+      <!--    <ul id="progressbar" style="text-align: center; margin-left:450px">
             <li class="active">Enter Email</li>
             <li></li>
         </ul>
-        <!-- fieldsets -->
+         fieldsets 
         <fieldset>
             <h2 class="fs-title">Basic Details</h2>
                     <label for="inputEmailAddress" style="flex: content;">Email Address</label>
@@ -60,5 +60,4 @@
     </form>
 </body>
 </html>
->>>>>>> branch 'master' of https://github.com/jappurohit041/ECollegeProject
-<!-- next  -->
+-->
