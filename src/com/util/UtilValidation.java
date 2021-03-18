@@ -62,7 +62,34 @@ public class UtilValidation
 		Matcher mHouseNumber=pHouseNumberRegex.matcher(HouseNumber);
 		return mHouseNumber.matches();
 	}
+<<<<<<< HEAD
 
+=======
+	public static boolean pincodeValidation(String pincode)
+	{
+			return UtilValidation.isNull(pincode) && UtilValidation.lengthOfValue(pincode); 
+	}
+	public static boolean countryValidation(String country)
+		{
+				return UtilValidation.isNull(country) && UtilValidation.lengthOfValue(country); 
+		}
+		public static boolean phoneNumberValidation(String phoneNumber)
+		{
+				return UtilValidation.isNull(phoneNumber) && UtilValidation.lengthOfValue(phoneNumber); 
+		}
+		public static boolean securityQuestionValidation(String securityQuestion)
+		{
+				return UtilValidation.isNull(securityQuestion) && UtilValidation.lengthOfValue(securityQuestion); 
+		}
+		public static boolean secrityAnswerValidation(String secrityAnswer)
+		{
+				return UtilValidation.isNull(secrityAnswer) && UtilValidation.lengthOfValue(secrityAnswer); 
+		}
+		
+		public static void main(String[] args) {
+			System.out.println(UtilValidation.firstNameValidation("Jap"));
+		}
+>>>>>>> ec17a7aba4bb42c3e0f2d4b9a20685af4613de58
 }
 
 //	Pattern pLandmarkRegex=Pattern.compile(nameRegex);
