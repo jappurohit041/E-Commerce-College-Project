@@ -3,6 +3,9 @@
 package com.filter;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -32,9 +35,10 @@ public class SignupValidationfilter implements Filter
 	{
 		
 		String firstName=request.getParameter("firstName");										
-		String Lastname=request.getParameter("lastName");
+		String lastName=request.getParameter("lastName");
 		String email=request.getParameter("emailAddress");
 		String dob=request.getParameter("dateOfBirth");
+//		--------------
 		String password=request.getParameter("password");
 		String Confirmpassword=request.getParameter("cPassword");
 		String HouseNumber=request.getParameter("houseNumber");
@@ -47,13 +51,60 @@ public class SignupValidationfilter implements Filter
 		String securityQuestion=request.getParameter("securityQuestion");
 		String secrityAnswer=request.getParameter("securityAnswer");
 		
-		if(UtilValidation.firstNameValidation(firstName)) {
-			System.out.println("True");
+		
+		
+		
+		
+		boolean isError=false;
+		if(UtilValidation.valueValidation(firstName) && UtilValidation.nameValidation(firstName)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(lastName)  && UtilValidation.nameValidation(lastName)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(email) && UtilValidation.emailValidation(email)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(dob)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(password) && UtilValidation.passwordValidation(password)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(Confirmpassword) && UtilValidation.passwordValidation(Confirmpassword) && Confirmpassword.equals(password)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(HouseNumber) && UtilValidation.HouseNoValidaition(HouseNumber)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(Landmark) && UtilValidation.nameValidation(Landmark) ){
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(city)  && UtilValidation.nameValidation(city))) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(state)  && UtilValidation.nameValidation(state)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(pincode) && UtilValidation.pincodeValidaition(pincode)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(country)   && UtilValidation.nameValidation(country)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(phoneNumber)   && UtilValidation.phoneValidation(phoneNumber) ) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(securityQuestion)) {
+			 isError=false; 
+		}
+		if(UtilValidation.valueValidation(secrityAnswer)) {
+			 isError=false; 
 		}
 		if(isError==true)
 		{
 			request.getRequestDispatcher("").forward(request, response);
-		}
+		}	
 		else
 		{
 		chain.doFilter(request, response);
