@@ -30,8 +30,12 @@
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
             </div>
-            <a href="ForgotPasswordEmail.jsp" style="float: left">Forget Password</a>
+            <a href="ForgotPasswordEmail.jsp" style="float: left">Forget Password&nbsp;</a>
+			<div class="verticalLine" style="border-right: solid #000000; float:left">&nbsp;&nbsp;</div>
+			<a style="float: left; text-decoration:none ;cursor: default">&nbsp;&nbsp;&nbsp;</a>
+			<a href="Home.jsp" style="float: left">Home Page</a>
             <a href="SignupForm.jsp" style="float: right">New User</a>
+
             <br />
             <input type="submit" name="next" class="next action-button" value="Submit" />
 

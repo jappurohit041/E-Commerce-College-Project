@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link href="fontawesome/css/font-awesome.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Home Page</title>
 <style>
     .LoginButton{
         border: solid 1px White;
@@ -131,7 +131,7 @@
     <header class="container-fluid " style="background: linear-gradient(#8aaed1, white);">
         <div class="row">
             <div class="col-1">
-                <a href="LoginForm.jsp"><img   src="images/BigDealWhiteLogo.jpg" alt="White BigDeal Main Logo">
+                <a href="Home.jsp"><img   src="images/BigDealWhiteLogo.jpg" alt="White BigDeal Main Logo">
             </div>
             <div class="col-6">
                 <form class="searchForm">
@@ -148,11 +148,9 @@
                     <div class="dropdown">
                         <a href="LoginForm.jsp" class="dropbtn" style=" text-decoration: none;">Login</a>
                         <div class="dropdown-content">
-                            <a>sfgsfgs</a>
-                            <a>sfgsfgs</a>
-                            <a>sfgsfgs</a>
-                            <a>sfgsfgs</a>
-                            <a>sfgsfgs</a>
+                            <a href="SignupForm.jsp">Sign Up Form</a>
+                            <a>View Orders</a>
+                            <a>Edit Profile</a>
                         </div>
                     </div>
                 </div>

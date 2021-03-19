@@ -121,7 +121,6 @@ END;
 
 
 ------------CART TABLE CREATION--------
-
 create table cartDetails(
 	cartID number(10),
 	userID number(10),
@@ -145,4 +144,8 @@ BEGIN
   FROM   dual;
 END;
 /
+
+---------------ORDER TABLE CREATION-------
+
+
 
