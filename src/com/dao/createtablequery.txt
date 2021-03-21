@@ -101,6 +101,7 @@ create table productDetails(
 	offerTill date,
 	imagePath varchar2(50),
 	productDescription varchar2(100),
+	isActive number(1) not null check (isActive in (0,1)),
 	constraint product_id_pk primary key (productID),
 	constraint product_id_fk foreign key(categoryID) references categoryDetails(categoryID),
 	constraint product_id_fk1 foreign key(subCategoryID) references subCategoryDetails(subCategoryID)

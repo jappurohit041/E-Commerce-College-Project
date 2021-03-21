@@ -10,15 +10,17 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <title>Add or Edit Product</title>
+    <style>
+		body {
+		    background-repeat: no-repeat;
+		}
+	</style>
 </head>
 
 <body>
-			<!-- multistep form -->
-            <form id="msform" action="Home.jsp" method="post">
-                <!-- progressbar -->
-               
-                <!-- fieldsets -->
+		<form id="msform" action="Home.jsp" method="post">
         <fieldset>
             <h2 class="fs-title">Product Details</h2>
             <div class="row">
@@ -62,32 +64,87 @@
                     <input type="date" class="form-control" placeholder="Offer-Date" id="inputOfferTillDate" name="inputOfferTillDate" />
                 </div>
                 <div class="col-6">
-                    <label for="inputImage">Image Path</label>
-                   <input type="file" class="form-control" placeholder="Input" id="inputImage" name="input" style="padding: 3.5px 3px;"/>  
+                <label for="inputProductStatus">Product Active</label>
+				<select class="input-field" id="activeSession" name="inputProductStatus">
+                        <option value="-1">Please select product active status</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <label for="inputCategory">Category</label>
-					<select class="form-control" id="questions" name="category" onchange="getdata()">
-                        <option value="-1">Please select category ?</option>
+                	<label for="inputCategory">Category</label>
+					<select class="input-field" id="category" name="category">
+                        <option>Please select category ?</option>
                     </select>
                 </div>
                 <div class="col-6">
-                    <label for="inputsubCategory">Sub-Category</label>
-					<select class="form-control" id="questions" name="subCategory" onchange="getdata()">
-                        <option value="-1">Please select sub category?</option>
+                	<label for="inputsubCategory">Sub-Category</label>
+					 <select class="input-field" id="subCategory" name="subCategory">
+                        <option>Please select sub category?</option>
                     </select>
                 </div>
             </div>
-            
-            <br>
-            <input type="submit" name="submit" class="btn btn-success success action-button" value="Submit" />
-        </fieldset>
-       
-           
+            <div class="row">
+            	<div class="col">
+            	      <label for="inputImage">Image Path</label>
+                   <input type="file" class="form-control" placeholder="Input" id="inputImage" name="input" style="padding: 3.5px 3px;"/>  
+            	</div>
+            </div>
+            <input type="submit" name="submit" class="btn btn-success success action-button" style="margin: 5px; padding:0px"value="Submit" />
+        </fieldset>   
     </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+            url: "GetCategoryAndSubCategory",
+            method: "GET",
+            data: {operation: 'category'},
+            success: function (data, textStatus, jqXHR) {
+                let obj = $.parseJSON(data);
+                $.each(obj, function (key, value) {
+                    $('#category').append('<option value="' + value.id + '">' + value.categoryName + '</option>')
+                });
+                $('select').formSelect();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#category').append('<option>Category Unavailable</option>');
+            },
+            cache: false
+        });	
+	});
+    $('#category').change(function () {
+        $('#subCategory').find('option').remove();
+        $('#subCategory').append('<option>Select Sub Category</option>'); 
 
+        let cid = $('#category').val();
+        let data = {
+            operation: "subCategory",
+            id: cid
+        };
+        
+        $.ajax({
+            url: "GetCategoryAndSubCategory",
+            method: "GET",
+            data: data,
+            success: function (data, textStatus, jqXHR) {
+                let obj = $.parseJSON(data);
+                $.each(obj, function (key, value) {
+                    $('#subCategory').append('<option value="' + value.id + '">' + value.subCategoryName + '</option>')
+                });
+                $('select').formSelect();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#subCategory').append('<option>SubCategory Unavailable</option>');
+            },
+            cache: false
+        });
+    });
+
+</script>
 </body>
 
 </html>
