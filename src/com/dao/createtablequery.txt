@@ -147,6 +147,33 @@ END;
 /
 
 ---------------ORDER TABLE CREATION-------
+create table orderDetails(
+	orderId number(10),
+	userID number(10),
+	address varchar2(150),
+	paymentType number(1),
+	finalAmount number(7,2),
+	totalAmount number(7,2),
+	discountAmount number(7,2),
+	quantity number(7,2),
+	orderDate date,
+	deliveryDate date,
+	deliveryStatus number(1),
+	constraint order_id_pk primary key (orderId),
+	constraint order_id_fk foreign key(userID) references userDetails(userID)
+);
 
+CREATE SEQUENCE order_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER order_id_inc
+BEFORE INSERT ON orderDetails
+FOR EACH ROW
+
+BEGIN
+  SELECT order_seq.NEXTVAL
+  INTO   :new.orderId 
+  FROM   dual;
+END;
+/
 
 

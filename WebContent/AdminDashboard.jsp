@@ -29,42 +29,42 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href=".html">
+                        <a class="nav-link" href="AdminDashboard.jsp">
                             <i class="nc-icon nc-grid-45"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li>
                         <!--href = "UsersDisplayServlet"-->
-                        <a class="nav-link" href="UsersDisplay.html">
+                        <a class="nav-link" href="UsersDisplay.jsp">
                             <i class="nc-icon nc-single-02"></i>
                             <p>Manage Users</p>
                         </a>
                     </li>
                     <li>
                         <!--href = "ProductsDisplayServlet"-->
-                        <a class="nav-link" href="ProductsDisplay.html">
+                        <a class="nav-link" href="ProductsDisplay.jsp">
                             <i class="nc-icon nc-cart-simple"></i>
                             <p>Manage Products</p>
                         </a>
                     </li>
                     <li>
                         <!-- href = "OrdersDisplayServlet"-->
-                        <a class="nav-link" href="OrdersDisplay.html">
+                        <a class="nav-link" href="OrdersDisplay.jsp">
                             <i class="nc-icon nc-delivery-fast"></i>
                             <p>List of Orders</p>
                         </a>
                     </li>
                     <li>
                         <!-- href = "OrdersDisplayServlet"-->
-                        <a class="nav-link" href="OrdersDisplay.html">
+                        <a class="nav-link" href="CategoryDisplay.jsp">
                             <i class="nc-icon nc-layers-3"></i>
                             <p>Manage Category</p>
                         </a>
                     </li>
                     <li>
                         <!-- href = "OrdersDisplayServlet"-->
-                        <a class="nav-link" href="OrdersDisplay.html">
+                        <a class="nav-link" href="SubCategoryDisplay.jsp">
                             <i class="nc-icon nc-notes"></i>
                             <p>Manage Sub-Category</p>
                         </a>
