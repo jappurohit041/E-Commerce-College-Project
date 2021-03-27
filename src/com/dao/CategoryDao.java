@@ -30,4 +30,47 @@ public class CategoryDao {
 		}
 		return list;
 	}
+	public static int getCurrentValue() {
+		int currentValue=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select categoryID from categoryDetails order by categoryid desc fetch first 1 rows only");
+			ResultSet set = psmt.executeQuery();){
+			currentValue = set.getInt("categoryID");	
+		}catch(Exception e) {
+			System.out.println("In get current value of Category Detail");
+			e.printStackTrace();
+		}
+		return currentValue;
+	}
+	public static int insertRecord(CategoryDetailBean category) {
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt= con.prepareStatement("insert into categoryDetails(categoryName, isActive, imagePath) value(?,?,?)");){
+			psmt.setString(1, category.getCategoryName());
+			psmt.setInt(2, category.getIsActive());
+			psmt.setString(3, category.getImagePath());
+			psmt.executeUpdate();
+			con.prepareStatement("commit;").execute();
+		}
+		catch(Exception e) {
+			System.out.println("Insert Record of Category Detail");
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public static int updateRecord(CategoryDetailBean category) {
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("update categoryDetails set categoryName = ?, isActive = ?, imagePath = ? where categoryId = ?");
+				){
+			psmt.setString(1, category.getCategoryName());
+			psmt.setInt(2, category.getIsActive());
+			psmt.setString(3, category.getImagePath());
+			psmt.setInt(4, category.getCategoryID());
+		}
+		catch(Exception e) {
+			System.out.println("Update Record of Category Detail");
+			e.printStackTrace();
+			
+		}
+		return 0;
+	}
 }
