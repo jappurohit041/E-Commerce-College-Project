@@ -1,4 +1,4 @@
---------Role Table Creation------------
+REM --------Role Table Creation------------
 create table role(
 	roleID number(1),
 	role_name varchar2(10),
@@ -6,7 +6,7 @@ create table role(
 );
 
 
---------User Table Creation------------
+REM --------User Table Creation------------
 create table userDetails(
 	firstName varchar2(30),
 	lastName varchar2(30),
@@ -42,7 +42,7 @@ END;
 /
 
 
---------Category Table Creation------------
+REM --------Category Table Creation------------
 create table categoryDetails(
 	categoryID number(3),
 	categoryName varchar2(40),
@@ -52,6 +52,7 @@ create table categoryDetails(
 );
 
 CREATE SEQUENCE cat_seq START WITH 1;
+
 
 CREATE OR REPLACE TRIGGER category_id_inc 
 BEFORE INSERT ON CATEGORYDETAILS
@@ -64,7 +65,9 @@ BEGIN
 END;
 /
 
---------Sub-Category Table Creation------------
+insert into categoryDetails(categoryName, isActive, imagePath) values('Grocery','1','images\\category\\1.png');
+
+REM --------Sub-Category Table Creation------------
 create table subCategoryDetails(
 	subCategoryID number(3),
 	subCategoryName varchar2(40),
@@ -88,7 +91,7 @@ END;
 /
 
 
-----------PRODUCT TABLE CREATION-------------------
+REM ----------PRODUCT TABLE CREATION-------------------
 create table productDetails(
 	productID number(3),
 	categoryID number(3),
@@ -121,7 +124,7 @@ END;
 /
 
 
-------------CART TABLE CREATION--------
+REM ------------CART TABLE CREATION--------
 create table cartDetails(
 	cartID number(10),
 	userID number(10),
@@ -146,7 +149,7 @@ BEGIN
 END;
 /
 
----------------ORDER TABLE CREATION-------
+REM ---------------ORDER TABLE CREATION-------
 create table orderDetails(
 	orderId number(10),
 	userID number(10),

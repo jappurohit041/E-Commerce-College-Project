@@ -17,16 +17,18 @@
 	<form id="msform" action="AddEditCategoryServlet" method="post">
 	<fieldset>
 	 <h2 class="fs-title">Category Details</h2>
+	 	<input type="hidden" value="${category.getCategoryID()}" name="categoryID">
 		<div class="row">
 			<div class="col-6">
 			    <label for="inputProductName">Category Name</label>
-                <input type="text" value="${user.getFirstName()}" class="form-control" placeholder="Category Name" id="inputFirstName" name="categoryName">
+                <input type="text" value="${category.getCategoryName()}" class="form-control" placeholder="Category Name" id="inputFirstName" name="categoryName">
                 <label class="error">${productNameError}</label>
 			</div>
 			<div class="col-6">
 				<div class="col">
                     <label for="inputImage">Image Path</label>
                    <input type="file" class="form-control" placeholder="Input" id="inputImage" name="inputImage" style="padding: 3.5px 3px;"/>  
+                 <label class="error">${imageError}</label>
                 </div>
 			</div>
 		</div>
@@ -38,6 +40,7 @@
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                 </select>	
+                   <label class="error">${categoryStatusError}</label>
                 </div>
 		</div>
 		     <input type="submit" name="submit" class="btn btn-success success action-button" value="Submit" />
