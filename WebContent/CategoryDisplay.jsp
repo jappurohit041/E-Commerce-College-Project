@@ -1,3 +1,6 @@
+<%@page import="com.dao.CategoryDao"%>
+<%@page import="com.bean.CategoryDetailBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -17,6 +20,12 @@
     <link href="assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="assets/css/demo.css" rel="stylesheet" />
+    <style>
+    
+    	.navbar{
+    		
+    	}
+    </style>
 </head>
 
 <body>
@@ -94,7 +103,41 @@
             </nav>
             <!-- End Navbar -->
             <div class="content">
-                
+            <hr style="border-color:black; border-width: 5px;">
+            	        <a class="btn btn-primary" href="AddCategory.jsp">Add Category</a>
+				        <a class="btn btn-danger" href="#" style="float: right">Deleted Category List</a>
+			<hr style="border-color:black; border-width: 5px;">	    
+			<br>
+                <%ArrayList<CategoryDetailBean> list=(ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory();%>
+              <div class="table-responsive">
+                <table border="1">
+                	<thead>
+                		<tr>
+                			<th>Category ID</th>
+                			<th>Category Name</th>
+                			<th>IsActive</th>
+                			<th>Category Display Image</th>
+                			<th>Action</th>
+                		</tr>
+                	</thead>
+                	<tbody>
+                		<%for(CategoryDetailBean category: list ){ 
+                			if(category.getIsActive()==1){
+                		%>		
+                			<tr>
+                				<td><%=category.getCategoryID() %></td>
+                				<td><%=category.getCategoryName() %></td>
+                				<td><%=category.getIsActive() %></td>
+                				<td><img src="<%=category.getImagePath() %>"></td>
+                				<td>
+                					<a href="UpdateCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button type="button" class="btn btn-primary">Update</button></a>
+                					<a href="DeleteCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button type="button" class="btn btn-danger">Delete</button></a>
+                				</td>
+                			</tr>
+                		<%}} %>
+                	</tbody>
+                </table>
+               </div>
             </div>  
     </div>
 </body>

@@ -35,7 +35,9 @@ public class CategoryDao {
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
 			PreparedStatement psmt = con.prepareStatement("select categoryID from categoryDetails order by categoryid desc fetch first 1 rows only");
 			ResultSet set = psmt.executeQuery();){
-			currentValue = set.getInt("categoryID");	
+			while(set.next()) {
+				currentValue = set.getInt("categoryID");			
+			}
 		}catch(Exception e) {
 			System.out.println("In get current value of Category Detail");
 			e.printStackTrace();
@@ -44,7 +46,9 @@ public class CategoryDao {
 	}
 	public static int insertRecord(CategoryDetailBean category) {
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
-			PreparedStatement psmt= con.prepareStatement("insert into categoryDetails(categoryName, isActive, imagePath) value(?,?,?)");){
+			PreparedStatement psmt= con.prepareStatement("insert into categoryDetails(categoryName, isActive, imagePath,categoryID) values(?,?,?,?)");){
+			int number = CategoryDao.getCurrentValue()+1;
+			psmt.setInt(4, number);
 			psmt.setString(1, category.getCategoryName());
 			psmt.setInt(2, category.getIsActive());
 			psmt.setString(3, category.getImagePath());
@@ -65,6 +69,7 @@ public class CategoryDao {
 			psmt.setInt(2, category.getIsActive());
 			psmt.setString(3, category.getImagePath());
 			psmt.setInt(4, category.getCategoryID());
+			psmt.executeUpdate();
 		}
 		catch(Exception e) {
 			System.out.println("Update Record of Category Detail");
@@ -72,5 +77,25 @@ public class CategoryDao {
 			
 		}
 		return 0;
+	}
+	public static CategoryDetailBean getCategory(int categoryID) {
+		CategoryDetailBean category = new CategoryDetailBean();
+		try (Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt=con.prepareStatement("select * from categoryDetails where categoryID=?");
+				){
+				psmt.setInt(1, categoryID);
+				ResultSet set = psmt.executeQuery();
+				while(set.next()) {
+					category.setCategoryID(set.getInt("CATEGORYID"));
+					category.setCategoryName(set.getString("CATEGORYNAME"));
+					category.setIsActive(set.getInt("ISACTIVE"));
+					category.setImagePath(set.getString("IMAGEPATH"));
+				}
+		}
+		catch(Exception e) {
+			System.out.println("In get particular Category");
+			e.printStackTrace();
+		}
+		return category;
 	}
 }

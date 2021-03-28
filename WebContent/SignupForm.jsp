@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="col-6">
                     <label for="inputEmailAddress">Email Address</label>
-                    <input type="text" value="${user.getEmailID()}" class="form-control" placeholder="Email Address" id="inputEmailAddress" name="emailAddress" />
+                    <input type="text" value="${user.getEmailID()}" class="form-control" placeholder="Email Address" id="inputEmailAddress" name="emailAddress"/>
                 	<label class="error">${emailIDError}</label>
                 </div>
                 <div class="col-6">

@@ -14,7 +14,8 @@
     <title>Add | Edit Category</title>
 </head>
 <body>
-	<form id="msform" action="AddEditCategoryServlet" method="post">
+	<form id="msform" action="EditCategoryServlet" method="post"
+		enctype="multipart/form-data">
 	<fieldset>
 	 <h2 class="fs-title">Category Details</h2>
 	 	<input type="hidden" value="${category.getCategoryID()}" name="categoryID">
