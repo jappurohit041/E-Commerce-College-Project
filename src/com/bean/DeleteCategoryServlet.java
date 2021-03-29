@@ -19,10 +19,10 @@ public class DeleteCategoryServlet extends HttpServlet{
 		int categoryID = Integer.parseInt(request.getParameter("categoryID"));
 		boolean flag = CategoryDao.makeCategoryDeActive(categoryID);
 		if(flag) {
-			request.setAttribute("msg", "Delete Succesfully");
+			request.setAttribute("msg", "Deleted Category Successfully");
 		}
 		else {
-			request.setAttribute("msg", "Error Occured");
+			request.setAttribute("msg", "Error Occured while Deleting Category");
 		}
 		request.getRequestDispatcher("CategoryDisplay.jsp").forward(request, response);;
 		

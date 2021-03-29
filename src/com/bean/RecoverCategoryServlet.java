@@ -19,10 +19,10 @@ public class RecoverCategoryServlet extends HttpServlet{
 		int categoryID = Integer.parseInt(request.getParameter("categoryID"));
 		boolean flag = CategoryDao.makeCategoryActive(categoryID);
 		if(flag) {
-			request.setAttribute("msg", "Recovered Succesfully");
+			request.setAttribute("msg", "Recovered Category Successfully");
 		}
 		else {
-			request.setAttribute("msg", "Error Occured");
+			request.setAttribute("msg", "Error Occured while Recovering Category");
 		}
 		request.getRequestDispatcher("CategoryDisplay.jsp").forward(request, response);;
 		

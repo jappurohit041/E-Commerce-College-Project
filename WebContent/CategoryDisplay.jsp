@@ -105,7 +105,7 @@
 					Category List</a>
 				<hr style="border-color: black; border-width: 5px;">
 				<br>
-				${msg }
+				<p style="display: none" id='con'>${msg}</p>	
 				<%ArrayList<CategoryDetailBean> list=(ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory();%>
 				<div class="table-responsive">
 					<table border="1">
@@ -139,6 +139,10 @@
 				</div>
 			</div>
 		</div>
+		<script>
+        var s = document.getElementById('con').innerHTML;	
+        window.alert(s)
+		</script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

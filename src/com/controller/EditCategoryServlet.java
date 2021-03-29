@@ -86,10 +86,13 @@ public class EditCategoryServlet extends HttpServlet{
 						//Update
 						status = CategoryDao.updateRecord(category);
 						if(status==0) {
-						request.setAttribute("msg", "Updated Category Succefull");
-						request.getRequestDispatcher("CategoryDisplay.jsp").forward(request, response);
+						request.setAttribute("msg", "Updated Category Successfully");
+						}
+						else {
+							request.setAttribute("msg", "Some Error occured in Category Update");
+						}
+						request.getRequestDispatcher("CategoryDisplay.jsp").forward(request, response);	
 						
-					}
 				}
 			}
 			catch(Exception e) {
