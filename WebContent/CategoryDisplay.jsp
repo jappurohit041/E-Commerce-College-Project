@@ -141,8 +141,10 @@
 		</div>
 		<script>
         var s = document.getElementById('con').innerHTML;	
-        window.alert(s)
-		</script>
+        if(s!=''){
+        	window.alert(s)	
+        }
+        </script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
