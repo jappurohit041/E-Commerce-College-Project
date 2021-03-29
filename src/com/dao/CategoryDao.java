@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.bean.CategoryDetailBean;
@@ -28,6 +29,22 @@ public class CategoryDao {
 			System.out.println("In all get All Category");
 			e.printStackTrace();
 		}
+		return list;
+	}
+	public static HashMap<Integer, String> getCategoryName(){
+		HashMap<Integer, String> list = new HashMap<Integer, String>();
+			try(Connection con = JDBCConnectionOrcale.connectionMethod();
+					PreparedStatement psmt = con.prepareStatement("select categoryName, categoryID from categoryDetails");
+					ResultSet set = psmt.executeQuery();
+					){
+				while(set.next()) {
+					list.put(set.getInt("categoryID"), set.getString("categoryName"));
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("In get Category Name");
+			}
 		return list;
 	}
 	public static int getCurrentValue() {

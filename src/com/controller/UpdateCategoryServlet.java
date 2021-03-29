@@ -13,6 +13,8 @@ import com.dao.CategoryDao;
 
 @WebServlet("/UpdateCategoryServlet")
 public class UpdateCategoryServlet extends HttpServlet{
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int categoryID = Integer.parseInt(request.getParameter("categoryID"));

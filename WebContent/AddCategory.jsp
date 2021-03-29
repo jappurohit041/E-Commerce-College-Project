@@ -16,7 +16,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="script.js"></script>
-<title>Add | Edit Category</title>
+<title>Add Category</title>
 </head>
 <body>
 	<form id="msform" action="AddCategoryServlet" method="post"

@@ -2,7 +2,15 @@ package com.bean;
 
 public class SubCategoryDetailBean {
 	private int isActive, subCategoryID, categoryID;
-	private String subCategoryName;
+	private String subCategoryName,categoryName;
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
 	public int getIsActive() {
 		return isActive;

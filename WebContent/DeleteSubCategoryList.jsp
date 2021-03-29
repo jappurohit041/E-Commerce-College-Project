@@ -1,5 +1,7 @@
 <%@page import="com.dao.SubCategoryDao"%>
 <%@page import="com.bean.SubCategoryDetailBean"%>
+<%@page import="com.dao.CategoryDao"%>
+<%@page import="com.bean.CategoryDetailBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -11,7 +13,7 @@
 	href="../assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>User Display Panel</title>
+<title>Deleted Sub-Category Display</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -27,6 +29,11 @@
 	rel="stylesheet" />
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="assets/css/demo.css" rel="stylesheet" />
+<style>
+.navbar {
+	
+}
+</style>
 </head>
 
 <body>
@@ -60,14 +67,16 @@
 							<p>List of Orders</p>
 					</a>
 					</li>
-					<li><a class="nav-link" href="CategoryDisplay.jsp"> <i
-							class="nc-icon nc-layers-3"></i>
+					<li class="nav-item active"><a class="nav-link"
+						href="CategoryDisplay.jsp"> <i class="nc-icon nc-layers-3"></i>
 							<p>Manage Category</p>
 					</a></li>
-					<li class="nav-item active"><a class="nav-link"
+					<li>
+						<!-- href = "OrdersDisplayServlet"--> <a class="nav-link"
 						href="SubCategoryDisplay.jsp"> <i class="nc-icon nc-notes"></i>
 							<p>Manage Sub-Category</p>
-					</a></li>
+					</a>
+					</li>
 
 				</ul>
 			</div>
@@ -76,7 +85,7 @@
 			<!-- Navbar -->
 			<nav class="navbar navbar-expand-lg " color-on-scroll="500">
 				<div class="container-fluid">
-					<p class="navbar-brand">Manage Sub-Category</p>
+					<p class="navbar-brand">Manage Category</p>
 					<div class="collapse navbar-collapse justify-content-end"
 						id="navigation">
 						<ul class="navbar-nav ml-auto">
@@ -92,14 +101,12 @@
 			</nav>
 			<!-- End Navbar -->
 			<div class="content">
-			<p style="display: none" id='con'>${msg}</p>	
-			<hr style="border-color: black; border-width: 5px;">
+				<hr style="border-color: black; border-width: 5px;">
 				<a class="btn btn-primary" href="AddSubCategory.jsp">Add Sub-Category</a> <a
-					class="btn btn-danger" href="DeleteSubCategoryList.jsp" style="float: right">Deleted
+					class="btn btn-danger" href="CategoryDisplay.jsp" style="float: right">Active
 					Sub-Category List</a>
 				<hr style="border-color: black; border-width: 5px;">
 				<br>
-				<p style="display: none" id='con'>${msg}</p>	
 				<%ArrayList<SubCategoryDetailBean> list=(ArrayList<SubCategoryDetailBean>)SubCategoryDao.getAllSubCategoryDetail();%>
 				<div class="table-responsive">
 					<table border="1">
@@ -114,7 +121,7 @@
 						</thead>
 						<tbody>
 							<%for(SubCategoryDetailBean subCategory: list ){ 
-                			if(subCategory.getIsActive()==1){
+                			if(subCategory.getIsActive()==0){
                 		%>
 							<tr>
 								<td><%=subCategory.getSubCategoryID() %></td>
@@ -124,8 +131,8 @@
 								<td><a
 									href="UpdateSubCategoryServlet?subCategoryID=<%=subCategory.getSubCategoryID()%>"><button
 											type="button" class="btn btn-primary">Update</button></a> <a
-									href="DeleteSubCategoryServlet?subCategoryID=<%=subCategory.getSubCategoryID()%>"><button
-											type="button" class="btn btn-danger">Delete</button></a></td>
+									href="RecoverSubCategoryServlet?subCategoryID=<%=subCategory.getSubCategoryID()%>"><button
+											type="button" class="btn btn-danger">Recover</button></a></td>
 							</tr>
 							<%}} %>
 						</tbody>
@@ -133,12 +140,6 @@
 				</div>
 			</div>
 		</div>
-		<script>
-        var s = document.getElementById('con').innerHTML;	
-        if(s!=''){
-        	window.alert(s)	
-        }
-        </script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
