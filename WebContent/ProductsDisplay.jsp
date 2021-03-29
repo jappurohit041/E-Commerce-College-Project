@@ -19,34 +19,34 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
 <!-- CSS Files -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-<link href="assets/css/light-bootstrap-dashboard.css?v=2.0.0 "
-	rel="stylesheet" />
-<!-- CSS Just for demo purpose, don't include it in your project -->
-<link href="assets/css/demo.css" rel="stylesheet" />
-</head>
-
-<body>
-	<div class="wrapper">
-		<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
-			data-color="blue">
-			<div class="sidebar-wrapper">
-				<div class="logo" style="margin-left: 15px">
-					<img src="assets/img/logo.jpg" />
-				</div>
-				<ul class="nav">
-					<li><a class="nav-link" href="AdminDashboard.jsp"> <i
-							class="nc-icon nc-grid-45"></i>
-							<p>Dashboard</p>
-					</a></li>
-					<li>
-						<!--href = "UsersDisplayServlet"--> <a class="nav-link"
-						href="UsersDisplay.jsp"> <i class="nc-icon nc-single-02"></i>
-							<p>Manage Users</p>
-					</a>
-					</li>
-					<li class="nav-item active">
-						<!--href = "ProductsDisplayServlet"--> <a class="nav-link"
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="assets/css/light-bootstrap-dashboard.css?v=2.0.0 "
+		rel="stylesheet" />
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link href="assets/css/demo.css" rel="stylesheet" />
+	</head>
+	
+	<body>
+		<div class="wrapper">
+			<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
+				data-color="blue">
+				<div class="sidebar-wrapper">
+					<div class="logo" style="margin-left: 15px">
+						<img src="assets/img/logo.jpg" />
+					</div>
+					<ul class="nav">
+						<li><a class="nav-link" href="AdminDashboard.jsp"> <i
+								class="nc-icon nc-grid-45"></i>
+								<p>Dashboard</p>
+						</a></li>
+						<li>
+							<!--href = "UsersDisplayServlet"--> <a class="nav-link"
+							href="UsersDisplay.jsp"> <i class="nc-icon nc-single-02"></i>
+								<p>Manage Users</p>
+						</a>
+						</li>
+						<li class="nav-item active">
+							<!--href = "ProductsDisplayServlet"--> <a class="nav-link"
 						href="ProductsDisplay.jsp"> <i class="nc-icon nc-cart-simple"></i>
 							<p>Manage Products</p>
 					</a>
@@ -92,7 +92,11 @@
 				</div>
 			</nav>
 			<!-- End Navbar -->
-			<div class="content"></div>
+			<div class="content">
+			</div>
+			
+			
+			</div>
 		</div>
 </body>
 <!--   Core JS Files   -->
