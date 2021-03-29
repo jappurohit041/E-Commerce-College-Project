@@ -77,10 +77,13 @@ public class AddCategoryServlet extends HttpServlet{
 						//Update
 						status = CategoryDao.insertRecord(category);
 						if(status==0) {
-						request.setAttribute("msg", "Add Category Succefull");
+						request.setAttribute("msg", "Added Category Successfully");
+						}
+						else {
+							request.setAttribute("msg", "Some Error occured in Category Addition");	
+						}
 						request.getRequestDispatcher("CategoryDisplay.jsp").forward(request, response);
 						
-					}
 				}
 			}
 			catch(Exception e) {

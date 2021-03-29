@@ -11,7 +11,7 @@
 	href="../assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>User Display Panel</title>
+<title>Deleted Category Display</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -101,11 +101,10 @@
 			<div class="content">
 				<hr style="border-color: black; border-width: 5px;">
 				<a class="btn btn-primary" href="AddCategory.jsp">Add Category</a> <a
-					class="btn btn-danger" href="DeleteCategoryList.jsp" style="float: right">Deleted
+					class="btn btn-danger" href="CategoryDisplay.jsp" style="float: right">Active
 					Category List</a>
 				<hr style="border-color: black; border-width: 5px;">
 				<br>
-				<p style="display: none" id='con'>${msg}</p>	
 				<%ArrayList<CategoryDetailBean> list=(ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory();%>
 				<div class="table-responsive">
 					<table border="1">
@@ -120,7 +119,7 @@
 						</thead>
 						<tbody>
 							<%for(CategoryDetailBean category: list ){ 
-                			if(category.getIsActive()==1){
+                			if(category.getIsActive()==0){
                 		%>
 							<tr>
 								<td><%=category.getCategoryID() %></td>
@@ -130,8 +129,8 @@
 								<td><a
 									href="UpdateCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
 											type="button" class="btn btn-primary">Update</button></a> <a
-									href="DeleteCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
-											type="button" class="btn btn-danger">Delete</button></a></td>
+									href="RecoverCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
+											type="button" class="btn btn-danger">Recover</button></a></td>
 							</tr>
 							<%}} %>
 						</tbody>
@@ -139,12 +138,6 @@
 				</div>
 			</div>
 		</div>
-		<script>
-        var s = document.getElementById('con').innerHTML;	
-        if(s!=''){
-        	window.alert(s)	
-        }
-        </script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

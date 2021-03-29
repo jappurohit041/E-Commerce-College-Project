@@ -13,7 +13,7 @@ public class CategoryDao {
 	public static List<CategoryDetailBean> getAllCategory() {
 		List<CategoryDetailBean> list= new ArrayList<CategoryDetailBean>();
 		try (Connection con = JDBCConnectionOrcale.connectionMethod();
-				PreparedStatement psmt=con.prepareStatement("select * from categoryDetails");
+				PreparedStatement psmt=con.prepareStatement("select * from categoryDetails order by categoryID");
 				ResultSet set = psmt.executeQuery();){
 			while(set.next()) {
 				CategoryDetailBean category= new CategoryDetailBean();
@@ -97,5 +97,43 @@ public class CategoryDao {
 			e.printStackTrace();
 		}
 		return category;
+	}
+	public static boolean makeCategoryDeActive(int categoryID) {
+		boolean flag = false;
+		
+		try(
+				Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt= con.prepareStatement("update categoryDetails set isActive = 0 where categoryID = ?")
+				){
+			psmt.setInt(1, categoryID);
+			int num = psmt.executeUpdate();
+			if(num==1) {
+				flag = true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Make Category De-Active");
+		}
+	return flag;
+	}
+	public static boolean makeCategoryActive(int categoryID) {
+boolean flag = false;
+		
+		try(
+				Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt= con.prepareStatement("update categoryDetails set isActive = 1 where categoryID = ?")
+				){
+			psmt.setInt(1, categoryID);
+			int num = psmt.executeUpdate();
+			if(num==1) {
+				flag = true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Make Category Active");
+		}
+	return flag;
 	}
 }
