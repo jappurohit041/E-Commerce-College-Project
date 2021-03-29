@@ -1,3 +1,6 @@
+<%@page import="com.dao.CategoryDao"%>
+<%@page import="com.bean.CategoryDetailBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -88,7 +91,45 @@
 				</div>
 			</nav>
 			<!-- End Navbar -->
-			<div class="content"></div>
+			<div class="content">
+				<hr style="border-color: black; border-width: 5px;">
+				<a class="btn btn-primary" href="AddCategory.jsp">Add SubCategory</a> <a
+					class="btn btn-danger" href="#" style="float: right">Deleted
+					SubCategory List</a>
+				<hr style="border-color: black; border-width: 5px;">
+				<br>
+				<%ArrayList<CategoryDetailBean> list=(ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory();%>
+				<div class="table-responsive">
+					<table border="1">
+						<thead>
+							<tr>
+								<th>Sub-Category ID</th>
+								<th>Sub-Category Name</th>
+								<th>IsActive</th>
+								<th>Sub-Category Display Image</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%for(CategoryDetailBean category: list ){ 
+                			if(category.getIsActive()==1){
+                		%>
+							<tr>
+								<td><%=category.getCategoryID() %></td>
+								<td><%=category.getCategoryName() %></td>
+								<td><%=category.getIsActive() %></td>
+								<td><img src="<%=category.getImagePath() %>"></td>
+								<td><a
+									href="UpdateCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
+											type="button" class="btn btn-primary">Update</button></a> <a
+									href="DeleteCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
+											type="button" class="btn btn-danger">Delete</button></a></td>
+							</tr>
+							<%}} %>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 </body>
 <!--   Core JS Files   -->
