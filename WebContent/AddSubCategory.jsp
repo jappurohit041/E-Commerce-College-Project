@@ -31,12 +31,12 @@
 						id="inputFirstName" name="categoryName"> <label
 						class="error">${productNameError}</label>
 				</div>
-				<div class="col-6">
-					<div class="col">
-						<label for="inputImage">Image Path</label> <input type="file"
-							class="form-control" placeholder="Input" id="inputImage"
-							name="inputImage" style="padding: 3.5px 3px;" /> <label
-							class="error">${imageError}</label>
+					<div class="col-6">
+						<div class="col">
+							<label for="inputImage">Image Path</label> <input type="file"
+								class="form-control" placeholder="Input" id="inputImage"
+								name="inputImage" style="padding: 3.5px 3px;" /> <label
+								class="error">${imageError}</label>
 					</div>
 				</div>
 			</div>
