@@ -165,7 +165,9 @@ create table orderDetails(
 	constraint order_id_pk primary key (orderId),
 	constraint order_id_fk foreign key(userID) references userDetails(userID)
 );
-
+\\payment type : 0--COD
+				1--Net Banking
+				2--Debit/Credit Card
 CREATE SEQUENCE order_seq START WITH 1;
 
 CREATE OR REPLACE TRIGGER order_id_inc

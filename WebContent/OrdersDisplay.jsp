@@ -1,3 +1,6 @@
+<%@page import="com.bean.OrderDetailBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,7 +11,7 @@
 	href="../assets/img/apple-icon.png">
 <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>User Display Panel</title>
+<title>Order Display Panel</title>
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 	name='viewport' />
@@ -92,7 +95,48 @@
 				</div>
 			</nav>
 			<!-- End Navbar -->
-			<div class="content"></div>
+			<div class="content">
+				<%ArrayList<OrderDetailBean> listOfOrders = OrderDao.getAllOrders(); %>
+				<div class="table-responsive">
+					<table border="1">
+						<thead>
+							<tr>
+								<th>Order ID</th>
+								<th>User ID</th>
+								<th>Address</th>
+								<th>Payment Type</th>
+								<th>Final Amount</th>
+								<th>Total Amount</th>
+								<th>Discount Amount</th>
+								<th>Quantity</th>
+								<th>Order Date</th>
+								<th>Delivery Date</th>
+								<th>Delivery Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%for(OrderDetailBean order: listOfOrders ){ %>
+                			<tr>
+								<td><%=order.getOrderID() %></td>
+								<td><%=order.getUserID() %></td>
+								<td><%=order.getAddress() %></td>
+								<%String answer = (order.getPaymentType()== 0) ? "COD" : order.getPaymentType()==1? "Net-Banking":"Credit-Card"; %>
+								<td><%=answer %></td>
+								<td><%=order.getFinalAmount() %></td>
+								<td><%=order.getTotalAmount() %></td>
+								<td><%=order.getDiscountAmount() %></td>
+								<td><%=order.getQuantity() %></td>
+								<td><%=order.getOrderDate() %></td>
+								<td><%=order.getDeliveryDate() %></td>
+								<%answer =  order.getDeliveryStatus()==0? "Delievered" : "Not-Delievered";%>
+								<td><%=answer %></td>
+							</tr>
+							<%}%>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
 		</div>
 </body>
 <!--   Core JS Files   -->

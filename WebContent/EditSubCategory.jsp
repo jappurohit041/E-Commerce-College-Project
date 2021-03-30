@@ -18,7 +18,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="script.js"></script>
-<title>Add Sub-Category</title>
+<title>Edit Sub-Category</title>
 </head>
 <body>
 	<% HashMap<Integer, String> list = CategoryDao.getCategoryName();%>
