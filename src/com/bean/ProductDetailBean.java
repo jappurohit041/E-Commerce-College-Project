@@ -3,7 +3,23 @@ package com.bean;
 public class ProductDetailBean {
 	private int productId, categoryId, subCategoryId, quantity, isActive;
 	private float originalPrice, offerPrice;
-	private String productName, companyName, offerTill, imagePath, productDescription;
+	private String productName, companyName, offerTill, imagePath, productDescription,categoryName,subCategoryName;
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getSubCategoryName() {
+		return subCategoryName;
+	}
+
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
+	}
 
 	public int getProductId() {
 		return productId;

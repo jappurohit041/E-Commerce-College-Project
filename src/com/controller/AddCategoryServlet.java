@@ -74,7 +74,6 @@ public class AddCategoryServlet extends HttpServlet{
 				}
 				else {
 					int status = -1;
-						//Update
 						status = CategoryDao.insertRecord(category);
 						if(status==0) {
 						request.setAttribute("msg", "Added Category Successfully");

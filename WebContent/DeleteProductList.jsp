@@ -98,11 +98,9 @@
 			<div class="content">
 				<hr style="border-color: black; border-width: 5px;">
 				<a class="btn btn-primary" href="AddProduct.jsp">Add Product</a> <a
-					class="btn btn-danger" href="DeleteProductList.jsp" style="float: right">Deleted
-					Product List</a>
+					class="btn btn-danger" href="ProductsDisplay.jsp" style="float: right">Product List</a>
 				<hr style="border-color: black; border-width: 5px;">
 				<br>
-				<p style="display: none" id='con'>${msg}</p>
 				<%ArrayList<ProductDetailBean> list=(ArrayList<ProductDetailBean>)ProductDao.getAllProduct();%>
 				<div class="table-responsive">
 					<table border="1">
@@ -125,7 +123,7 @@
 						</thead>
 						<tbody>
 							<%for(ProductDetailBean p: list ){ 
-                			if(p.getIsActive()==1){
+                			if(p.getIsActive()==0){
                 		%>
 							<tr>
 								<td><%=p.getProductId()%></td>
@@ -145,8 +143,8 @@
 								<a
 									href="UpdateProductServlet?productID=<%=p.getProductId()%>"><button
 											type="button" class="btn btn-primary">Update</button></a> <a
-									href="DeleteProductServlet?productID=<%=p.getProductId()%>"><button
-											type="button" class="btn btn-danger">Delete</button></a>
+									href="RecoverProductServlet?productID=<%=p.getProductId()%>"><button
+											type="button" class="btn btn-danger">Recover</button></a>
 								
 								</td>
 							</tr>
@@ -155,15 +153,8 @@
 					</table>
 				</div>
 			</div>
-				
 			</div>
 		</div>
-		<script>
-        var s = document.getElementById('con').innerHTML;	
-        if(s!=''){
-        	window.alert(s)	
-        }
-        </script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

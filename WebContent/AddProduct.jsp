@@ -17,28 +17,33 @@
 <script src="script.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<title>Add or Edit Product</title>
+<title>Add Product</title>
 <style>
 body {
 	background-repeat: no-repeat;
+}
+.error{
+	color: red;
 }
 </style>
 </head>
 
 <body>
-	<form id="msform" action="Home.jsp" method="post">
+	<form id="msform" action="AddProductServlet" method="post" enctype = "multipart/form-data">
 		<fieldset>
 			<h2 class="fs-title">Product Details</h2>
 			<div class="row">
 				<div class="col-6">
 					<label for="inputProductName">Product Name</label> <input
 						type="text" class="form-control" placeholder="Product Name"
-						id="inputProductName" name="productName">
+						id="inputProductName" name="productName" value="${product.getProductName()}">
+						<label class="error">${productNameError}</label>
 				</div>
 				<div class="col-6">
 					<label for="inputCompanyName">Company Name</label> <input
 						type="text" class="form-control" placeholder="Company Name"
-						id="inputCompanyName" name="companyName" />
+						id="inputCompanyName" name="companyName" value="${product.getCompanyName()}"/>
+						<label class="error">${productCompanyNameError}</label>			
 				</div>
 			</div>
 			<div class="row">
@@ -46,28 +51,29 @@ body {
 				<div class="col-6">
 					<label for="inputDescription">Description</label> <input
 						type="text" class="form-control" placeholder="Description"
-						id="inputDescription" name="description">
+						id="inputDescription" name="description" value="${product.getProductDescription() }">
+						<label class="error">${productDescriptionError}</label>
 				</div>
 				<div class="col-6">
 					<label for="inputQuantity">Quantity</label> <input type="number"
 						class="form-control" placeholder="Quantity" id="inputQuantity"
-						name="quantity" />
-
+						name="quantity" value="${product.getQuantity() }" />
+						<label class="error">${productQuantityPriceError}</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-6">
 					<label for="inputOriginalPrice">Original Price</label> <input
 						type="number" class="form-control" placeholder="Original Price"
-						id="inputOriginalPrice" name="originalPrice" />
-
+						id="inputOriginalPrice" name="originalPrice" value="${product.getOriginalPrice() }"/>
+						<label class="error">${productOriginalPriceError}</label>
 				</div>
 
 				<div class="col-6">
 					<label for="inputOfferPrice">Offer Price</label> <input
 						type="number" class="form-control" placeholder="Offer Price"
-						id="inputOfferPrice" name="offerPrice" />
-
+						id="inputOfferPrice" name="offerPrice" value="${product.getOfferPrice() }" />
+						<label class="error">${productOfferPriceError}</label>
 				</div>
 			</div>
 			<div class="row">
@@ -75,28 +81,40 @@ body {
 					<label for="inputOfferTillDate">Offer Till Date</label> <input
 						type="date" class="form-control" placeholder="Offer-Date"
 						id="inputOfferTillDate" name="inputOfferTillDate" />
+						<label class="error">${productOfferTillError}</label>
 				</div>
 				<div class="col-6">
-					<label for="inputProductStatus">Product Active</label> <select
+					<label for="inputProductStatus">Product Active</label> 
+					<select
 						class="input-field" id="activeSession" name="inputProductStatus">
 						<option value="-1">Please select product active status</option>
 						<option value="0">No</option>
 						<option value="1">Yes</option>
 					</select>
+					<div class="row">
+						<label class="error">${productStatusError}</label>
+					</div>
 				</div>
+								
 			</div>
 			<div class="row">
 				<div class="col-6">
 					<label for="inputCategory">Category</label> <select
 						class="input-field" id="category" name="category">
-						<option>Please select category ?</option>
+						<option value="-1">Please select category ?</option>
 					</select>
+					<div class="row">
+					<label class="error">${productCategoryError}</label>
+					</div>
 				</div>
 				<div class="col-6">
 					<label for="inputsubCategory">Sub-Category</label> <select
 						class="input-field" id="subCategory" name="subCategory">
-						<option>Please select sub category?</option>
+						<option value="-1">Please select sub category?</option>
 					</select>
+					<div class="row">
+					<label class="error">${productSubCategoryError}</label>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -104,6 +122,9 @@ body {
 					<label for="inputImage">Image Path</label> <input type="file"
 						class="form-control" placeholder="Input" id="inputImage"
 						name="input" style="padding: 3.5px 3px;" />
+				</div>
+				<div class="row">
+				<label class="error">${productImagePathError}</label>
 				</div>
 			</div>
 			<input type="submit" name="submit"
@@ -123,8 +144,9 @@ body {
             data: {operation: 'category'},
             success: function (data, textStatus, jqXHR) {
                 let obj = $.parseJSON(data);
+                console.log(obj)
                 $.each(obj, function (key, value) {
-                    $('#category').append('<option value="' + value.id + '">' + value.categoryName + '</option>')
+                    $('#category').append('<option value="' + value.categoryID + '">' + value.categoryName + '</option>')
                 });
                 $('select').formSelect();
             },
@@ -136,7 +158,7 @@ body {
 	});
     $('#category').change(function () {
         $('#subCategory').find('option').remove();
-        $('#subCategory').append('<option>Select Sub Category</option>'); 
+        $('#subCategory').append('<option value="-1">Select Sub Category</option>'); 
 
         let cid = $('#category').val();
         let data = {
@@ -150,8 +172,9 @@ body {
             data: data,
             success: function (data, textStatus, jqXHR) {
                 let obj = $.parseJSON(data);
+                console.log(obj)
                 $.each(obj, function (key, value) {
-                    $('#subCategory').append('<option value="' + value.id + '">' + value.subCategoryName + '</option>')
+                    $('#subCategory').append('<option value="' + value.subCategoryID + '">' + value.subCategoryName + '</option>')
                 });
                 $('select').formSelect();
             },
