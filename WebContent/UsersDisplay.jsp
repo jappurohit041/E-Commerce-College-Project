@@ -33,14 +33,14 @@
 </style>
 <body>
 	<%	
-UserDetailBean user=null;
+UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
 	}
 else{
-	user =(UserDetailBean) session.getAttribute("user");
-	if(user.getRoleID()!=1){
+	mainUser =(UserDetailBean) session.getAttribute("mainUser");
+	if(mainUser.getRoleID()!=1){
 		request.setAttribute("msg","Your don't have access to this");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
 	}
@@ -53,7 +53,7 @@ else{
 			data-color="blue">
 			<div class="sidebar-wrapper">
 				<div class="logo" style="margin-left: 15px">
-					<img src="assets/img/logo.jpg" />
+					<img src="images/BigDealWhiteLogo.png" />
 				</div>
 				<ul class="nav">
 					<li><a class="nav-link" href="AdminDashboard.jsp"> <i
@@ -144,6 +144,9 @@ else{
 						</thead>
 						<tbody>
 							<%for(UserDetailBean u : list){
+								if(u.getUserID()==mainUser.getUserID()){
+									continue;
+								}else{
 							%>
 								<tr>
 									<td style="word-wrap: break-word"><%=u.getUserID() %></td>
@@ -167,7 +170,7 @@ else{
 <td><a href="UpdateUserServlet?userID=<%=u.getUserID()%>" 
 class="btn btn-primary btn-sm">Update</a></td>
 								</tr>
-							<% }%>
+							<% }}%>
 						</tbody>
 					</table>
 				</div>

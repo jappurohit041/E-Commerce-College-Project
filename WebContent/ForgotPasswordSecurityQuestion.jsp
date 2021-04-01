@@ -21,7 +21,7 @@
 
 <body>
 	<!-- multistep form -->
-	<form id="msform" action="#" method="post">
+	<form id="msform" action="ForgotPasswordLoginServlet" method="post">
 		<!-- progressbar -->
 		<ul id="progressbar" style="text-align: center; margin-left: 450px">
 			<li>Enter Email</li>
@@ -31,15 +31,11 @@
 			<h2 class="fs-title">Security Questions</h2>
 			<div class="row">
 				<div class="col">
+				<input type="hidden" value="${dummyUser.getUserID()}" name="userID">
 					<label for="inputSecurityQuestion">Please Select Your
 						Security Question</label> <select class="form-control" id="questions"
-						name="inputSecurityQuestion" onchange="getdata()">
-						<option value="-1">Please select security questions ?</option>
-						<option value="1">What is your favourite food dish ?</option>
-						<option value="2">Who is your favourite player ?</option>
-						<option value="3">What is name of your pet ?</option>
-						<option value="4">What is name of your childhood friend ?</option>
-						<option value="5">What is your school name ?</option>
+						name="inputSecurityQuestion" onchange="getdata()" disabled>
+						<option value="-1">${dummyUser.getSecurityQuestion() }</option>
 					</select>
 				</div>
 			</div>
@@ -50,10 +46,12 @@
 						Security Question</label> <input type="text" class="form-control"
 						placeholder="Security Answer" id="inputSecurityAnswer"
 						name="securityAnswer" />
+						<label class="error">${answerError}</label>
 				</div>
 			</div>
-			<input type="submit" name="submit" class="submit action-button"
-				value="Submit" />
+			<a href="LoginForm.jsp" style="float: left">Login&nbsp;</a><br>
+				<input type="submit" name="next"
+				class="action-button" value="Submit" />
 		</fieldset>
 	</form>
 </body>

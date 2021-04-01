@@ -20,7 +20,7 @@
 
 <body>
 	<!-- multistep form -->
-	<form id="msform" action="ForgotPasswordSecurityQuestion.jsp"
+	<form id="msform" action="ForgotPasswordServlet"
 		method="post">
 		<!-- progressbar -->
 		<ul id="progressbar" style="text-align: center; margin-left: 450px">
@@ -29,12 +29,17 @@
 		</ul>
 		<!-- fieldsets -->
 		<fieldset>
-			<h2 class="fs-title">Basic Details</h2>
+			<h2 class="fs-title">Forgot Password</h2>
 			<label for="inputEmailAddress" style="flex: content;">Email
-				Address</label> <input type="text" class="form-control"
+				Address</label> 
+				<input type="text" class="form-control"
 				placeholder="Email Address" id="inputEmailAddress"
-				name="emailAddress" /> <input type="submit" name="next"
+				name="emailAddress" />
+				<label class="error">${msg}</label>
+				<a href="LoginForm.jsp" style="float: left">Login&nbsp;</a><br>
+				<input type="submit" name="next"
 				class="action-button" value="Next" />
+				
 		</fieldset>
 	</form>
 </body>

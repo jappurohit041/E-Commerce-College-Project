@@ -80,7 +80,7 @@ body {
 			<div class="row">
 				<div class="col-6">
 					<label for="inputOfferTillDate">Offer Till Date</label> <input
-						type="date" class="form-control" placeholder="Offer-Date"
+						type="date" class="form-control" value="${product.getOfferTill() }"placeholder="Offer-Date"
 						id="inputOfferTillDate" name="inputOfferTillDate" />
 						<label class="error">${productOfferTillError}</label>
 				</div>

@@ -61,7 +61,7 @@ public class SignupValidationFilter implements Filter
 		System.out.println(user.getDateOfBirth());
 		user.setState(state);
 		request.setAttribute("landMark",landmark);
-		if(securityQuestion >= 1 && securityQuestion <= 5) {
+		if(securityQuestion >= 1 && securityQuestion <= 4) {
 			String questionOfUser = SecurityQuestion.questionSet().get(securityQuestion);	
 			user.setSecurityQuestion(questionOfUser);
 		}

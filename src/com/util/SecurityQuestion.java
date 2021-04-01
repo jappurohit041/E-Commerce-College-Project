@@ -9,7 +9,6 @@ public class SecurityQuestion {
 		questions.put(2, "Who is your favourite player");
 		questions.put(3,"What is name of your pet");
 		questions.put(4, "What is name of your childhood friend ");
-		questions.put(5, "Type your own question");
 		
 	}
 	public static HashMap<Integer, String> questionSet(){

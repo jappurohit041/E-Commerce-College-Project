@@ -25,7 +25,7 @@ public class LoginAuthenticationServlet extends HttpServlet{
 			if(user.getIsBlock()!=1) {
 				boolean isLogin = true;
 				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
+				session.setAttribute("mainUser", user);
 				session.setAttribute("isLogin", isLogin);
 				session.setMaxInactiveInterval(300);
 				response.sendRedirect("Home.jsp");

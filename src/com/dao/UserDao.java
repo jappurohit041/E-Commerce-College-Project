@@ -186,5 +186,88 @@ public class UserDao {
 		}
 		return flag;
 	}
+	public static boolean updateBasicDetail(UserDetailBean user) {
+		boolean flag= false;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("update userdetails set firstname= ?, lastname=?, emailid=?, dateofbirth=to_date(?,'yyyymmdd'), password=? where userid = ?");
+			){
+			psmt.setString(1, user.getFirstName());
+			psmt.setString(2, user.getLastName());
+			psmt.setString(3, user.getEmailID());
+			psmt.setString(4, user.getDateOfBirth());
+			psmt.setString(5, user.getPassWord());
+			psmt.setInt(6, user.getUserID());
+			int count = psmt.executeUpdate();
+			if(count==1) {
+				flag =true;
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In update basic detail");
+		}
+		return flag;
+	}
+	public static boolean updateAddressDetail(UserDetailBean user) {
+		boolean flag = false;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("update userdetails set address=?,city=?,state=?,pincode=?,country=?,contactnumber=? where userid=?");
+				){
+			psmt.setString(1, user.getAddress());
+			psmt.setString(2, user.getCity());
+			psmt.setString(3, user.getState());
+			psmt.setString(4, user.getPinCode());
+			psmt.setString(5, user.getCountry());
+			psmt.setLong(6, user.getPhoneNumber());
+			psmt.setInt(7, user.getUserID());
+			int count = psmt.executeUpdate();
+			if(count==1) {
+				flag = true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In Update Address Detail");
+		}
+		return flag;
+	}
+	public static boolean updateSecurityDetail(UserDetailBean user) {
+		boolean flag = false;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("update userdetails set securityAnswer=?,securityQuestion=? where userid=?");
+				){
+			psmt.setString(1, user.getSecurityAnswer());
+			psmt.setString(2, user.getSecurityQuestion());
+			psmt.setInt(3, user.getUserID());
+			int count = psmt.executeUpdate();
+			if(count==1) {
+				flag = true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In Update Security Detail");
+		}
+		return flag;
+	}
+	public static int recoverUser(String emailAddress) {
+		int flag = 0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("select userid from userdetails where emailid='"+emailAddress+"'");
+				ResultSet set = psmt.executeQuery();
+				){
+			System.out.println("Fetch size: "+set.getFetchSize());
+
+				while(set.next()) {	
+					flag = set.getInt("userid");
+				}	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Recover users");
+		}
+		return flag;
+	}
 	
 }

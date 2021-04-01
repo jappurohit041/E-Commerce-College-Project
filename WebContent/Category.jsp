@@ -1,3 +1,8 @@
+<%@page import="com.dao.SubCategoryDao"%>
+<%@page import="com.bean.SubCategoryDetailBean"%>
+<%@page import="com.bean.CategoryDetailBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dao.CategoryDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,9 +28,7 @@
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 <style>
-body {
-	background-color: black;
-}
+
 
 .categoryImg {
 	text-align: center;
@@ -39,151 +42,43 @@ body {
 </style>
 </head>
 <body>
-	<div class="container">
+	<%ArrayList<CategoryDetailBean> category = (ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory(); %>
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-2 categoryImg">
-				<img
-					src="https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100"
-					height="55px" width="55px">
-				<!-- <p>Grocery</p> -->
-				<!-- Example split danger button -->
-				<br>
-				<div class="btn-group">
+			<%for(CategoryDetailBean c: category){%>
+				<div class="col" align="center">
+					<img src="<%=c.getImagePath()%>" height="55px" width="55px"/>
+					<br>
+					<div class="btn-group">
+						
+					<% ArrayList<SubCategoryDetailBean> subCategory = (ArrayList<SubCategoryDetailBean>)SubCategoryDao.getSubCategoryByID(c.getCategoryID());%>
+					
+					<%if (subCategory.size()!=0){ %>
 					<button type="button"
-						class="btn btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<button type="button" class="btn btn-light text-dark">Grocery</button>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
+			class="btn btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft"
+			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-light text-dark"><%=c.getCategoryName() %></button>
+			<span class="sr-only">Toggle Dropdown</span>
+					</button>	
 					<div class="dropdown-menu">
-
-						<a class="dropdown-item" href="#">Staples</a> <a
-							class="dropdown-item" href="#">Snacks & Beverages</a> <a
-							class="dropdown-item" href="#">Packaged Food</a>
-						<!-- <div class="dropdown-divider"></div> -->
-						<a class="dropdown-item" href="#">Personal & Baby Care</a> <a
-							class="dropdown-item" href="#">Household Care</a> <a
-							class="dropdown-item" href="#">Daiery & Eggs</a>
+						
+					<%for(SubCategoryDetailBean sb: subCategory){ %>
+							<a class="dropdown-item" href="GetProductServlet?categoryID=<%=c.getCategoryID()%>&subCategoryID=<%=sb.getSubCategoryID()%>"><%=sb.getSubCategoryName() %></a><%}} %>
+					
+					<%if(subCategory.size()==0 || subCategory==null){ %>
+					<button type="button"
+			class="btn btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft disabled"
+			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-light text-dark"><%=c.getCategoryName() %></button>
+			<span class="sr-only">Toggle Dropdown</span>
+					</button><div class="dropdown-menu disabled"><%} %>
+					</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-2 categoryImg">
-
-				<img
-					src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100"
-					height="55px" width="55px">
-				<!-- <p>Electronics</p> -->
-				<br>
-				<div class="btn-group">
-					<button type="button"
-						class="btn dropdown-toggle dropdown-toggle-split btn-light DropdownRadiusLeft"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<button type="button" class="btn btn-light text-dark">Electronics</button>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a> <a
-							class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2 categoryImg">
-
-				<img
-					src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100 "
-					height="55px" width="55px">
-				<!-- <p>Fashion</p> -->
-				<br>
-				<div class="btn-group">
-					<button type="button"
-						class="btn dropdown-toggle dropdown-toggle-split btn-light DropdownRadiusLeft"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<button type="button" class="btn btn-light text-dark">Fashion</button>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Staples</a> <a
-							class="dropdown-item" href="#">Snacks & Beverages</a> <a
-							class="dropdown-item" href="#">Packaged Food</a>
-						<!-- <div class="dropdown-divider"></div> -->
-						<a class="dropdown-item" href="#">Personal & Baby Care</a> <a
-							class="dropdown-item" href="#">Household Care</a> <a
-							class="dropdown-item" href="#">Daiery & Eggs</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2 categoryImg">
-
-				<img
-					src="https://rukminim1.flixcart.com/flap/128/128/image/ee162bad964c46ae.png?q=100"
-					height="55px" width="55px">
-				<!-- <p>Home</p> -->
-				<br>
-				<div class="btn-group">
-					<button type="button"
-						class="btn btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<button type="button" class="btn btn-light text-dark">Home</button>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a> <a
-							class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2 categoryImg">
-
-				<img src="images	\beauty-removebg-preview.png"
-					style="margin-top: 4px;" height="50px" width="50px">
-				<!-- <p>Beauty</p> -->
-				<br>
-				<div class="btn-group">
-					<button type="button"
-						class="btn  btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<button type="button" class="btn btn-light text-dark ">Beauty</button>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a> <a
-							class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-2 categoryImg">
-
-				<img src="images\toycar-removebg-preview.png"
-					style="margin-top: 4px;" height="50px" width="50px">
-				<!-- <p>Toys</p> -->
-				<br>
-				<div class="btn-group">
-					<button type="button"
-						class="btn btn-light dropdown-toggle dropdown-toggle-split DropdownRadiusLeft"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<button type="button" class="btn btn-light text-dark ">Toys</button>
-						<span class="sr-only">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a> <a
-							class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>11
-					</div>
-				</div>
-			</div>
+				
+			<%}%>
 		</div>
 	</div>
-
+</div>
 </body>
 </html>

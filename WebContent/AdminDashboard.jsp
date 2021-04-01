@@ -30,13 +30,13 @@
 
 <body>
 <%	
-UserDetailBean user=null;
+UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
 	}
 else{
-	user =(UserDetailBean) session.getAttribute("user");	
+	mainUser =(UserDetailBean) session.getAttribute("mainUser");	
 }
 
 %>
@@ -45,7 +45,7 @@ else{
 			data-color="blue">
 			<div class="sidebar-wrapper">
 				<div class="logo" style="margin-left: 15px">
-					<img src="assets/img/logo.jpg" />
+					<img src="images/BigDealWhiteLogo.png" />
 				</div>
 				<ul class="nav">
 					<li class="nav-item active"><a class="nav-link"

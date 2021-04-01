@@ -57,8 +57,12 @@ public class EditCategoryServlet extends HttpServlet{
 					else {
 						File f=null;
 						f1=new File("C:\\Users\\Jap Purohit\\eclipse-workspace\\ECollegeProject\\WebContent\\images\\category");
-						System.out.println(item.getName());
-						if(item.getName().endsWith(".jpg") || 
+						System.out.println("Filename : "+item.getName());
+						System.out.println("Condition"+item.getName().equals(""));
+						if(item.getName().equals("")) {
+							category.setImagePath("images\\category\\"+category.getCategoryID()+".png");
+						}
+						else if(item.getName().endsWith(".jpg") || 
 								item.getName().endsWith(".jpeg")|| 
 									item.getName().endsWith(".png")) {
 						/*	if(flag) {

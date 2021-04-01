@@ -123,8 +123,11 @@ public class EditProductServlet extends HttpServlet{
 					else {
 						File f=null;
 						f1=new File("C:\\Users\\Jap Purohit\\eclipse-workspace\\ECollegeProject\\WebContent\\images\\product");
-						System.out.println(item.getName());
-						if((item.getName().endsWith(".jpg") || 
+						System.out.println("File name: "+item.getName());
+						if(item.getName().equals("")) {
+							product.setImagePath("images\\product\\"+product.getProductId()+".png");	
+						}
+						else if((item.getName().endsWith(".jpg") || 
 								item.getName().endsWith(".jpeg")|| 
 									item.getName().endsWith(".png"))&& isError==false) {
 								//New Category
