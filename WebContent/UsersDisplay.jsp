@@ -1,3 +1,6 @@
+<%@page import="com.dao.UserDao"%>
+<%@page import="com.bean.UserDetailBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,7 +28,9 @@
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="assets/css/demo.css" rel="stylesheet" />
 </head>
-
+<style>
+.btn{white-space:normal;}
+</style>
 <body>
 	<div class="wrapper">
 		<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
@@ -92,8 +97,72 @@
 				</div>
 			</nav>
 			<!-- End Navbar -->
-			<div class="content"></div>
+			<div class="content">
+				<hr style="border-color: black; border-width: 5px;">
+				<a class="btn btn-primary" href="AdminAddUser.jsp">Add User</a>
+				<hr style="border-color: black; border-width: 5px;">
+				<p style="display: none" id='con'>${msg}</p>
+				<%ArrayList<UserDetailBean> list=(ArrayList<UserDetailBean>)UserDao.getAllUser();%>
+				<div class="table-responsive">
+					<table border="1" style="table-layout: fixed; width: 100%">
+						<thead>
+							<tr>
+								<th style="word-wrap: break-word">User ID</th>
+								<th style="word-wrap: break-word">First Name</th>
+								<th style="word-wrap: break-word">Last Name</th>
+								<th style="word-wrap: break-word">Email ID</th>
+								<th style="word-wrap: break-word">Password</th>
+								<th style="word-wrap: break-word">Address</th>
+								<th style="word-wrap: break-word">Date of Birth</th>
+								<th style="word-wrap: break-word">City</th>
+								<th style="word-wrap: break-word">State</th>
+								<th style="word-wrap: break-word">Country</th>
+								<th style="word-wrap: break-word">Pincode</th>
+								<th style="word-wrap: break-word">Contact Number</th>
+								<th style="word-wrap: break-word">Role ID</th>
+								<th style="word-wrap: break-word">Is Block</th>
+								<th style="word-wrap: break-word">Security Question</th>
+								<th style="word-wrap: break-word">Security Answer</th>
+								<th style="word-wrap: break-word">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%for(UserDetailBean u : list){
+							%>
+								<tr>
+									<td style="word-wrap: break-word"><%=u.getUserID() %></td>
+									<td style="word-wrap: break-word"><%=u.getFirstName() %></td>
+									<td style="word-wrap: break-word"><%=u.getLastName() %></td>
+									<td style="word-wrap: break-word"><%=u.getEmailID() %></td>
+									<td style="word-wrap: break-word"><%=u.getPassWord() %></td>
+									<td style="word-wrap: break-word"><%=u.getAddress() %></td>
+									<td style="word-wrap: break-word"><%=u.getDateOfBirth() %></td>
+									<td style="word-wrap: break-word"><%=u.getCity()%></td>
+									<td style="word-wrap: break-word"><%=u.getState()%></td>
+									<td style="word-wrap: break-word"><%=u.getCountry() %></td>
+									<td style="word-wrap: break-word"><%=u.getPinCode() %></td>
+									<td style="word-wrap: break-word"><%=u.getPhoneNumber() %></td>
+									<%String answer = u.getRoleID()==1? "Admin":"User";%>
+									<td style="word-wrap: break-word"><%=answer %></td>
+									<%answer = u.getIsBlock()==1? "Yes":"No";%>
+									<td style="word-wrap: break-word"><%=answer %></td>
+									<td style="word-wrap: break-word"><%=u.getSecurityQuestion() %></td>
+									<td style="word-wrap: break-word"><%=u.getSecurityAnswer() %></td>
+<td><a href="UpdateUserServlet?userID=<%=u.getUserID()%>" 
+class="btn btn-primary btn-sm">Update</a></td>
+								</tr>
+							<% }%>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
+		<script>
+        var s = document.getElementById('con').innerHTML;	
+        if(s!=''){
+        	window.alert(s)	
+        }
+        </script>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

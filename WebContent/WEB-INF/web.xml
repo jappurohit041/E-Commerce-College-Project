@@ -15,4 +15,22 @@
 		<filter-name>SignupValidationFilter</filter-name>
 		<url-pattern>/SignUpServlet</url-pattern>
 	</filter-mapping>
+	
+	<filter>
+		<filter-name>AddminAddUserValidationFilter</filter-name>
+		<filter-class>com.filter.AddminAddUserValidationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AddminAddUserValidationFilter</filter-name>
+		<url-pattern>/AdminAddUserServlet</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>AdminEditUserValidationFilter</filter-name>
+		<filter-class>com.filter.AdminEditUserValidationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AdminEditUserValidationFilter</filter-name>
+		<url-pattern>/AdminEditUserServlet</url-pattern>
+	</filter-mapping>
 </web-app>

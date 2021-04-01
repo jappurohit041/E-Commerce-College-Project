@@ -18,7 +18,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="script.js"></script>
-<title>Sign Up Form | Edit Form</title>
+<title>Admin Add User</title>
 <style>
 .error {
 	font-size: 20px;
@@ -29,7 +29,7 @@
 
 <body>
 	<!-- multistep form -->
-	<form id="msform" action="SignUpServlet" method="post">
+	<form id="msform" action="AdminAddUserServlet" method="post">
 		<!-- progressbar -->
 		<ul id="progressbar">
 			<li class="active">Basic Details</li>
@@ -80,12 +80,7 @@
 						name="cPassword"> <label class="error">${cPasswordError}</label>
 				</div>
 			</div>
-			<a href="LoginForm.jsp" style="float: left">Already Existing
-				User&nbsp;</a>
-			<div class="verticalLine"
-				style="border-right: solid #000000; float: left">&nbsp;&nbsp;</div>
-			<a style="float: left; text-decoration: none; cursor: default">&nbsp;&nbsp;&nbsp;</a>
-			<a href="Home.jsp" style="float: left">Home Page</a> <br> <input
+			<a href="AdminDashboard.jsp" style="float: left">Admin Dashboard</a> <br> <input
 				type="button" name="next" class="next action-button" value="Next" />
 		</fieldset>
 		<fieldset>
@@ -147,7 +142,7 @@
 		<fieldset>
 			<h2 class="fs-title">Security Questions</h2>
 			<div class="row">
-				<div class="col">
+				<div class="col-6">
 					<label for="inputSecurityQuestion">Please Select Your
 						Security Question</label> <select class="form-control" id="questions"
 						name="inputSecurityQuestion" onchange="getdata()">
@@ -158,10 +153,7 @@
 					<%} %>
 					</select> <label class="error">${securityQuestionError}</label>
 				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col">
+				<div class="col-6">
 					<label for="inputSecurityAnswer">Please Answer Your
 						Security Question</label> <input type="text"
 						value="${user.getSecurityAnswer()}" class="form-control"
@@ -169,6 +161,28 @@
 						name="securityAnswer" /> <label class="error">${securityAnswerError}</label>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-6">
+					<label for="roleID">Please select your Role ID</label>
+					<select class="form-control" name="roleID">
+						<option value="-1">Please select role-ID</option>
+						<option value="1">Admin</option>
+						<option value="2">User</option>
+					</select>
+					<label class="error">${roleIDError}</label>
+				</div>
+				<div class="col-6">
+					<label for="roleID">Please Block Status</label>
+					<select class="form-control" name="isBlock">
+						<option value="-1">Is User Block?</option>
+						<option value="1">Yes</option>
+						<option value="0">No</option>
+					</select>
+					<label class="error">${isBlockError}</label>
+				</div>
+			</div>
+			<br>
+		
 			<input type="button" name="previous" class="previous action-button"
 				value="Previous" /> <input type="submit" name="submit"
 				class="btn btn-success success action-button" value="Submit" />

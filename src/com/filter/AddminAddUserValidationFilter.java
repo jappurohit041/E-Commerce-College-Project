@@ -17,8 +17,8 @@ import com.util.UtilValidation;
 /**
  * Servlet Filter implementation class SignupValidationfilter
  */
-@WebFilter("/SignupValidationfilter")
-public class SignupValidationFilter implements Filter 
+@WebFilter("/AddminAddUserValidationFilter")
+public class AddminAddUserValidationFilter implements Filter 
 {
 	public void destroy() {
 		System.out.println("Filter destroyed");
@@ -47,8 +47,8 @@ public class SignupValidationFilter implements Filter
 		user.setCity(city);
 		user.setAddress(houseNumber.trim()+" "+landmark.trim()+" "+city.trim()+" "+state.trim()+" "+country.trim()+" Pincode:- "+pinCode);
 		user.setCountry(country);
-		user.setIsBlock(0);
-		user.setRoleID(1);
+		user.setIsBlock(Integer.parseInt(request.getParameter("isBlock")));
+		user.setRoleID(Integer.parseInt(request.getParameter("roleID")));
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setEmailID(email);
@@ -79,6 +79,14 @@ public class SignupValidationFilter implements Filter
 		if(UtilValidation.valueValidation(lastName)  || UtilValidation.nameValidation(lastName)) {
 			request.setAttribute("lastNameError", "Please enter valid name"); 
 			isError=true; 
+		}
+		if(request.getParameter("roleID").equals("-1")) {
+			isError=true;
+			request.setAttribute("roleIDError", "Please select role id");
+		}
+		if(request.getParameter("isBlock").equals("-1")) {
+			isError=true;
+			request.setAttribute("isBlockError", "Please select block status");
 		}
 		if(UtilValidation.valueValidation(email) || UtilValidation.emailValidation(email)) {
 			request.setAttribute("emailIDError", "Please enter valid email"); 
@@ -135,7 +143,7 @@ public class SignupValidationFilter implements Filter
 		request.setAttribute("user", user);
 		if(isError)
 		{
-			request.getRequestDispatcher("SignupForm.jsp").forward(request, response);
+			request.getRequestDispatcher("AdminAddUser.jsp").forward(request, response);
 		}	
 		else
 		{
@@ -143,6 +151,6 @@ public class SignupValidationFilter implements Filter
 		}
 	}
 	public void init(FilterConfig fConfig) throws ServletException {
-		System.out.println("Signup filter started");
+		System.out.println("Admin filter started");
 	}
 }

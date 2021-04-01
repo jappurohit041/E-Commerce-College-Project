@@ -20,7 +20,7 @@ public class ProductDao {
 					+ "productid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive \r\n"
 					+ "from productdetails \r\n"
 					+ "join categoryDetails on categorydetails.categoryid=productdetails.categoryid \r\n"
-					+ "join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid");
+					+ "join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid order by productid");
 			ResultSet set = psmt.executeQuery();)
 		{
 			while(set.next()) {

@@ -17,6 +17,7 @@
 <body>
 	<!-- multistep form -->
 	<form id="msform" action="#" method="post">
+	${msg }
 		<!-- fieldsets -->
 		<fieldset>
 			<h2 class="fs-title">Login Form</h2>

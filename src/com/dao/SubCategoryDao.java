@@ -78,7 +78,7 @@ public class SubCategoryDao {
 			PreparedStatement psmt = con.prepareStatement("select subcategoryID, subcategoryName, "
 					+ "categoryName, subcategoryDetails.isActive "
 					+ "from subCategoryDetails join categoryDetails "
-					+ "c on subcategoryDetails.categoryid=c.categoryid");
+					+ "c on subcategoryDetails.categoryid=c.categoryid order by subcategoryid");
 			ResultSet set = psmt.executeQuery();){
 			while(set.next()) {
 				SubCategoryDetailBean subCategory = new SubCategoryDetailBean();
