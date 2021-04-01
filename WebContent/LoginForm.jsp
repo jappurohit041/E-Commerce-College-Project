@@ -16,8 +16,8 @@
 
 <body>
 	<!-- multistep form -->
-	<form id="msform" action="#" method="post">
-	${msg }
+	<form id="msform" action="LoginAuthenticationServlet" method="post">
+	
 		<!-- fieldsets -->
 		<fieldset>
 			<h2 class="fs-title">Login Form</h2>
@@ -35,6 +35,7 @@
 						class="form-control" placeholder="Password" name="password">
 				</div>
 			</div>
+			<label class="error">${msg}</label>
 			<a href="ForgotPasswordEmail.jsp" style="float: left">Forget
 				Password&nbsp;</a>
 			<div class="verticalLine"

@@ -1,3 +1,4 @@
+<%@page import="com.bean.UserDetailBean"%>
 <%@page import="com.dao.SubCategoryDao"%>
 <%@page import="com.bean.SubCategoryDetailBean"%>
 <%@page import="com.dao.CategoryDao"%>
@@ -37,6 +38,21 @@
 </head>
 
 <body>
+	<%	
+UserDetailBean user=null;
+if(session == null || session.getAttribute("isLogin") == null){
+		request.setAttribute("msg","Your session expired or you are not logined");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+else{
+	user =(UserDetailBean) session.getAttribute("user");
+	if(user.getRoleID()!=1){
+		request.setAttribute("msg","Your don't have access to this");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+}
+
+%>
 	<div class="wrapper">
 		<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
 			data-color="blue">
@@ -67,11 +83,11 @@
 							<p>List of Orders</p>
 					</a>
 					</li>
-					<li class="nav-item active"><a class="nav-link"
+					<li ><a class="nav-link"
 						href="CategoryDisplay.jsp"> <i class="nc-icon nc-layers-3"></i>
 							<p>Manage Category</p>
 					</a></li>
-					<li>
+					<li class="nav-item active">
 						<!-- href = "OrdersDisplayServlet"--> <a class="nav-link"
 						href="SubCategoryDisplay.jsp"> <i class="nc-icon nc-notes"></i>
 							<p>Manage Sub-Category</p>
@@ -92,7 +108,7 @@
 							<li class="nav-item"><a class="nav-link" href="Home.jsp">
 									<span class="no-icon">Home Page</span>
 							</a></li>
-							<li class="nav-item"><a class="nav-link" href="#pablo">
+							<li class="nav-item"><a class="nav-link" href="LogoutServlet">
 									<span class="no-icon">Log out</span>
 							</a></li>
 						</ul>

@@ -1,3 +1,4 @@
+<%@page import="com.bean.UserDetailBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -28,6 +29,17 @@
 </head>
 
 <body>
+<%	
+UserDetailBean user=null;
+if(session == null || session.getAttribute("isLogin") == null){
+		request.setAttribute("msg","Your session expired or you are not logined");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+else{
+	user =(UserDetailBean) session.getAttribute("user");	
+}
+
+%>
 	<div class="wrapper">
 		<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
 			data-color="blue">
@@ -85,7 +97,7 @@
 							<li class="nav-item"><a class="nav-link" href="Home.jsp">
 									<span class="no-icon">Home Page</span>
 							</a></li>
-							<li class="nav-item"><a class="nav-link" href="#pablo">
+							<li class="nav-item"><a class="nav-link" href="LogoutServlet">
 									<span class="no-icon">Log out</span>
 							</a></li>
 						</ul>

@@ -20,7 +20,7 @@ public class SignUpServlet extends HttpServlet {
 		UserDetailBean user = (UserDetailBean)request.getAttribute("user");
 		int flag = UserDao.insertUser(user);
 		if(flag==1) {
-			request.setAttribute("msg", "Successfull Sign Up");
+			request.setAttribute("msg", "Successfull Sign Up. Please login to continue");
 			request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 
 		}
@@ -30,7 +30,7 @@ public class SignUpServlet extends HttpServlet {
 		}
 		else {
 			request.setAttribute("msg", "Error Occured Please try again");
-			request.getRequestDispatcher("Home.jsp").forward(request, response);
+			request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 		}
 	}
 }

@@ -159,7 +159,30 @@ public class UserDao {
 			
 		}
 		catch(Exception e) {
-			
+			e.printStackTrace();
+			System.out.println("In update user admin");
+		}
+		return flag;
+	}
+	public static int getUserIDByEmailAndPassword(String email, String password) {
+		int flag =-1;
+		UserDetailBean user = new UserDetailBean();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select userid,emailid,password from userdetails");	
+			ResultSet set = psmt.executeQuery()
+				){
+			while(set.next()) {
+				user.setEmailID(set.getString("emailid"));
+				user.setPassWord(set.getString("password"));
+				if(user.getEmailID().equals(email) && user.getPassWord().equals(password)) {
+					flag = set.getInt("userid");
+					break;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In getUserIDByEmailAndPassword");
 		}
 		return flag;
 	}

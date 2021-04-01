@@ -1,3 +1,4 @@
+<%@page import="com.bean.UserDetailBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -137,6 +138,18 @@
 </style>
 </head>
 <body>
+<%	
+UserDetailBean user=null;
+if(session == null || session.getAttribute("isLogin") == null){
+		request.setAttribute("msg","Your session expired or you are not logined");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+else{
+	user =(UserDetailBean) session.getAttribute("user");	
+}
+
+%>
+
 	<header class="container-fluid "
 		style="background: linear-gradient(#8aaed1, white);">
 		<div class="row">
@@ -160,12 +173,24 @@
 			<div class="col-2 ">
 				<div class="LoginButton">
 					<div class="dropdown">
-						<a href="LoginForm.jsp" class="dropbtn"
-							style="text-decoration: none;">Login</a>
+						
+						<a href="LogoutServlet" class="dropbtn"
+							style="text-decoration: none;">Logout</a>
 						<div class="dropdown-content">
-							<a href="SignupForm.jsp">Sign Up Form</a> <a>View Orders</a> <a>Edit
-								Profile</a>
+							<a href="ViewUserOrders.jsp">View Orders</a> 
+							<a href="EditBasicDetailProfile.jsp">Basic Profile Edit</a>
+							<a href="EditAddress.jsp">Address Edit</a>
+							<a href="SecurityEdit.jsp">Security Edit</a>
+							<%
+							try {
+							if(user.getRoleID()==1){out.print("<a href="+"AdminDashboard.jsp"+">Admin Dashboard</a>");}}
+							catch(Exception e) {
+									request.setAttribute("msg","Please Login !!");
+									request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
+								}
+							%>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -177,7 +202,9 @@
 	<br>
 	<br>
 	<br>
-
+	<div class="content">
+		Hello World!! ${user.getFirstName()}
+	</div>
 	<footer class="row "
 		style="background: linear-gradient(#8aaed1, white);">
 		<div class="col-6">
