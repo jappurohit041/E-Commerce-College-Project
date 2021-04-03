@@ -51,7 +51,7 @@ public class SignupValidationFilter implements Filter
 		user.setRoleID(1);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setEmailID(email);
+		user.setEmailID(email.trim());
 		user.setPassWord(confirmPassword);
 		request.setAttribute("password", password);
 		user.setPinCode(pinCode);

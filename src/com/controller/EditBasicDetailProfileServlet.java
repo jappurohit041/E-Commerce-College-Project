@@ -55,14 +55,19 @@ public class EditBasicDetailProfileServlet extends HttpServlet {
 			request.getRequestDispatcher("EditBasicDetailProfile.jsp").forward(request, response);
 		}
 		else {
-			boolean flag = UserDao.updateBasicDetail(user);
-			if(flag) {
+			int flag = UserDao.updateBasicDetail(user);
+			if(flag==1) {
 				user = UserDao.getUserByID(user.getUserID());
 				boolean isLogin = true;
 				HttpSession session = request.getSession();
 				session.setAttribute("mainUser", user);
 				session.setAttribute("isLogin", isLogin);
 				request.setAttribute("msg", "Updated Succesfully");
+			}
+			else if(flag==-1){
+				request.setAttribute("passwordError", "Same as old password please change the password");
+				request.getRequestDispatcher("EditBasicDetailProfile.jsp").forward(request, response);
+				
 			}
 			else {
 				request.setAttribute("msg", "Error Occured");

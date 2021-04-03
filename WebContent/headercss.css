@@ -1,0 +1,138 @@
+@charset "ISO-8859-1";
+.LoginButton {
+	border: solid 1px White;
+	background-color: WHITE;
+	text-transform: uppercase;
+	text-decoration: none;
+	text-align: center;
+	padding-top: 3PX;
+	padding-bottom: 3PX;
+	margin-top: 10px;
+	color: black;
+}
+dropdown-content a{
+text-decoration: none;
+	
+}
+body{
+	overflow-x: hidden; 
+}
+.HeaderIcons {
+	margin-top: 10px;
+	margin-left: 8px;
+	text-align: right;
+	color: white;
+	font-size: 25px;
+}
+
+.HeaderIconsLabel {
+	color: white;
+	text-transform: uppercase;
+	margin-right: 10px;
+}
+
+.HeaderIconsLabel:hover, .HeaderIcons:hover {
+	color: rgb(212, 212, 253);
+}
+
+.searchForm {
+	margin-top: 10px;
+	text-align: right;
+}
+
+.searchHover {
+	color: blue;
+	background-color: white;
+	font-weight: bold;
+	margin-left: -6px;
+	padding-top: 3px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+}
+
+.searchHover:hover {
+	border: snow solid 0.5px;
+	padding: 5px;
+	color: white;
+}
+/* Dropdown Button */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	position: absolute;
+	display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	top: 25PX;
+	background-color: #f1f1f1;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+}
+
+/* .btn, .btn-secondary {
+	background-color: transparent;
+	color: white;
+	border: transparent;
+}
+
+.btn:hover, .btn-secondary:hover {
+	background-color: transparent;
+	border: transparent;
+	color: white;
+} */
+/* Links inside the dropdown */
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+	background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+footer{
+	background: #212121;
+	color: white;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+header{
+	position: sticky;
+	z-index: +2;
+	top: 0;
+	background: #2874f0;
+}
+
+.footerHeader {
+	font-size: medium;
+	text-transform: uppercase;
+	color: grey;
+	margin-bottom: 5px;
+}
+
+.footerBackground {
+	font-size: small;
+	padding: 20px;
+	text-align: center;	
+	color: cornsilk;
+}
+
+.vlLeft {
+	border-left: 1px solid white;
+	height: fit-content;
+}

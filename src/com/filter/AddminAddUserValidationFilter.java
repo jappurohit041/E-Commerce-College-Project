@@ -51,7 +51,7 @@ public class AddminAddUserValidationFilter implements Filter
 		user.setRoleID(Integer.parseInt(request.getParameter("roleID")));
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setEmailID(email);
+		user.setEmailID(email.trim());
 		user.setPassWord(confirmPassword);
 		request.setAttribute("password", password);
 		user.setPinCode(pinCode);

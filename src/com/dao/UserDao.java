@@ -38,6 +38,7 @@ public class UserDao {
 			}
 		}
 		catch(SQLException e) {
+			System.out.println(e.getErrorCode());
 			if(e.getErrorCode() == 20000) {
 				flag = -1;
 			}
@@ -186,8 +187,8 @@ public class UserDao {
 		}
 		return flag;
 	}
-	public static boolean updateBasicDetail(UserDetailBean user) {
-		boolean flag= false;
+	public static int updateBasicDetail(UserDetailBean user) {
+		int flag= 0;
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
 				PreparedStatement psmt = con.prepareStatement("update userdetails set firstname= ?, lastname=?, emailid=?, dateofbirth=to_date(?,'yyyymmdd'), password=? where userid = ?");
 			){
@@ -199,11 +200,14 @@ public class UserDao {
 			psmt.setInt(6, user.getUserID());
 			int count = psmt.executeUpdate();
 			if(count==1) {
-				flag =true;
+				flag =1;
 			}
 			
 		}
-		catch(Exception e) {
+		catch(SQLException e) {
+			if(e.getErrorCode()==20100) {
+				flag=-1;
+			}
 			e.printStackTrace();
 			System.out.println("In update basic detail");
 		}

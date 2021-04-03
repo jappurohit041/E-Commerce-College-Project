@@ -141,7 +141,7 @@ public class ProductDao {
 	public static ProductDetailBean getProductByID(int productID) {
 		ProductDetailBean product = new ProductDetailBean();
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
-				PreparedStatement psmt = con.prepareStatement("select * from productDetails where productId= ?");
+				PreparedStatement psmt = con.prepareStatement("select productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive from productdetails join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where productdetails.productid = ?");
 				){
 			psmt.setInt(1, productID);
 			ResultSet set = psmt.executeQuery();
@@ -157,6 +157,8 @@ public class ProductDao {
 				product.setOfferTill(set.getString("offertill").substring(0,10));
 				product.setImagePath(set.getString("imagepath"));
 				product.setProductDescription(set.getString("productDescription"));
+				product.setCategoryName(set.getString("CATEGORYNAME"));
+				product.setSubCategoryName(set.getString("SUBCATEGORYNAME"));
 			}
 		}
 		catch(Exception e) {
@@ -165,11 +167,79 @@ public class ProductDao {
 		}
 		return product;
 	}
+
+	public static ArrayList<ProductDetailBean> getProductByCategory(int categoryID) {
+		ArrayList<ProductDetailBean> list = new ArrayList<ProductDetailBean>();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive from productdetails join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where productdetails.categoryid = ? and productdetails.isactive = 1 and productdetails.quantity > 0 order by productid");
+			)
+		{
+			psmt.setInt(1, categoryID);
+			ResultSet set = psmt.executeQuery();
+			while(set.next()) {
+				ProductDetailBean prd = new ProductDetailBean();
+				prd.setProductId(set.getInt("productid"));
+				prd.setCategoryId(set.getInt("categoryid"));
+				prd.setSubCategoryId(set.getInt("subcategoryid"));
+				prd.setProductName(set.getString("PRODUCTNAME"));
+				prd.setCategoryName(set.getString("CATEGORYNAME"));
+				prd.setSubCategoryName(set.getString("SUBCATEGORYNAME"));
+				prd.setOriginalPrice(set.getFloat("ORIGINALPRICE"));
+				prd.setOfferPrice(set.getFloat("OFFERPRICE"));
+				prd.setCompanyName(set.getString("companyname"));
+				prd.setQuantity(set.getInt("quantity"));
+				prd.setOfferTill(set.getString("offertill").substring(0,10));
+				prd.setImagePath(set.getString("imagepath"));
+				prd.setProductDescription(set.getString("PRODUCTDESCRIPTION"));
+				prd.setIsActive(set.getInt("isactive"));
+				list.add(prd);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Get product by category id product dao");
+		}
+		return list;
+	}
+	
+	public static ArrayList<ProductDetailBean> getProductByCategoryAndSubCategory(int categoryID, int subcategoryID) {
+		ArrayList<ProductDetailBean> list = new ArrayList<ProductDetailBean>();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive from productdetails join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where productdetails.categoryid = ? and productdetails.quantity > 0 and productdetails.isactive = 1 and productdetails.subcategoryid = ? order by productid");
+			)
+		{
+			psmt.setInt(1, categoryID);
+			psmt.setInt(2, subcategoryID);
+			ResultSet set = psmt.executeQuery();
+			while(set.next()) {
+				ProductDetailBean prd = new ProductDetailBean();
+				prd.setProductId(set.getInt("productid"));
+				prd.setCategoryId(set.getInt("categoryid"));
+				prd.setSubCategoryId(set.getInt("subcategoryid"));
+				prd.setProductName(set.getString("PRODUCTNAME"));
+				prd.setCategoryName(set.getString("CATEGORYNAME"));
+				prd.setSubCategoryName(set.getString("SUBCATEGORYNAME"));
+				prd.setOriginalPrice(set.getFloat("ORIGINALPRICE"));
+				prd.setOfferPrice(set.getFloat("OFFERPRICE"));
+				prd.setCompanyName(set.getString("companyname"));
+				prd.setQuantity(set.getInt("quantity"));
+				prd.setOfferTill(set.getString("offertill").substring(0,10));
+				prd.setImagePath(set.getString("imagepath"));
+				prd.setProductDescription(set.getString("PRODUCTDESCRIPTION"));
+				prd.setIsActive(set.getInt("isactive"));
+				list.add(prd);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Get product by category id  and subcategory id dao");
+		}
+		return list;
+	}
 	public static void main(String[] args) {
-		ProductDetailBean p = getProductByID(1);
-		System.out.println(p.getProductName());
-		System.out.println(p.getOfferTill());
-		System.out.println(p.getQuantity());
-		System.out.println(p.getOfferPrice());
+		ArrayList<ProductDetailBean> list = getProductByCategoryAndSubCategory(4,2);
+		for(ProductDetailBean p : list) {
+			System.out.println(p.getProductName()+"    "+p.getCategoryId());
+		}
 	}
 }

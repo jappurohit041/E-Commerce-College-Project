@@ -175,4 +175,9 @@ boolean flag = false;
 		}
 		return subCategory;
 	}
+	public static void main(String[] args) {
+		List<SubCategoryDetailBean> list =  SubCategoryDao.getSubCategoryByID(1); 
+		System.out.println(list.size());
+		System.out.println(list==null);
+	}
 }
