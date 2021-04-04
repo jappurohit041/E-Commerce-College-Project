@@ -269,6 +269,34 @@ public class ProductDao {
 		}
 		return list;
 	}
+	public static int updateProductByID(ProductDetailBean product) {
+		int flag = 0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("update productDetails set categoryid= ?,subcategoryid = ?,originalprice = ?,offerprice = ?,productname = ?,companyname = ?,quantity = ?,offertill = to_date(?,'yyyymmdd'),imagepath = ?,productdescription = ?,isactive = ? where productid= ?");){
+			psmt.setInt(1, product.getCategoryId());
+			psmt.setInt(2, product.getSubCategoryId());
+			psmt.setFloat(3, product.getOriginalPrice());
+			psmt.setFloat(4, product.getOfferPrice());
+			psmt.setString(5, product.getProductName());
+			psmt.setString(6, product.getCompanyName());
+			psmt.setInt(7, product.getQuantity());
+			psmt.setString(8, product.getOfferTill());
+			psmt.setString(9, product.getImagePath());
+			psmt.setString(10, product.getProductDescription());
+			psmt.setInt(11, product.getIsActive());
+			psmt.setInt(12, product.getProductId());
+			int count = psmt.executeUpdate();
+			if(count==1) {
+				flag =1;
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In update Product By ID");
+		}
+		return flag;
+	}
 	public static void main(String[] args) {
 		ArrayList<ProductDetailBean> list = getProductByName("i");
 		for(ProductDetailBean p : list) {

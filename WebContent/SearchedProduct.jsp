@@ -70,7 +70,7 @@
 						</div>
 						
 						<div class="card-bottom">
-								<a href="AddToCartServlet?productID=<%=p.getProductId()%>userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="AddToCartServlet?productID=<%=p.getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
 								<a href="DetailProductServlet?productID=<%=p.getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
 						</div>
 					</div>
@@ -95,7 +95,7 @@
 						</div>
 						
 						<div class="card-bottom">
-								<a href="AddToCartServlet?productID=<%=p.getProductId()%>userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="AddToCartServlet?productID=<%=p.getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
 								<a href="DetailProductServlet?productID=<%=p.getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
 						</div>
 					</div>
@@ -120,7 +120,7 @@
 						</div>
 						
 						<div class="card-bottom">
-								<a href="AddToCartServlet?productID=<%=p.getProductId()%>userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="AddToCartServlet?productID=<%=p.getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
 								<a href="DetailProductServlet?productID=<%=p.getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
 						</div>
 					</div>
@@ -145,7 +145,7 @@
 						</div>
 						
 						<div class="card-bottom">
-								<a href="AddToCartServlet?productID=<%=p.getProductId()%>userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="AddToCartServlet?productID=<%=p.getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
 								<a href="DetailProductServlet?productID=<%=p.getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
 						</div>
 					</div>

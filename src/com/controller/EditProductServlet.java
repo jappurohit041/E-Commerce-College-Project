@@ -149,14 +149,8 @@ public class EditProductServlet extends HttpServlet{
 				}
 				else {
 					int status = -1;
-					boolean flag = ProductDao.deleteProductByID(product.getProductId());
-					if(flag) {
-						System.out.println("Inside flag");
-						System.out.println(product.getProductId());
-						status = ProductDao.insertRecord(product);		
-					}
-					
-					if(status==0) {
+					status = ProductDao.updateProductByID(product);
+					if(status==1) {
 					request.setAttribute("msg", "Edited Product Successfully");
 					}
 					else {

@@ -40,7 +40,7 @@
 	                    <div class="card-body" style="border-bottom: 2px solid black;border-top: 2px solid black; margin-left: 20px; margin-right: 10px;">
 	                        <div class="row justify-content-center align-items-center">
 	                            <div class="col-6 text-center">
-	                                <a href="AddToCartServlet?productID=<%=p.getProductId()%>userID=<%=mainUser.getUserID()%>" class="btn btn-outline-primary btn-group-lg"><h4>Add to cart</h4></a>        
+	                                <a href="AddToCartServlet?productID=<%=p.getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-outline-primary btn-group-lg"><h4>Add to cart</h4></a>        
 	                            </div>
 	                            <div class="col-6 text-center">
 	                                <a href="#" class="btn btn-outline-primary btn-group-lg"><h4>BUY NOW</h4></a>        
@@ -49,6 +49,7 @@
 	                    </div>
 	                </div>
 	            </div>
+
 	            <div class="col-7 text-center">
 	                <div style="margin-top: 30px;">
 	                    <hr>
