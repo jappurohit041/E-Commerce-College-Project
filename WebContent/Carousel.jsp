@@ -53,7 +53,7 @@
 <section>
 
   <!--Carousel Wrapper-->
-  <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel" style="margin-bottom: 50px; margin-top: 50px; z-index: 1;">
+  <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel" style="margin-bottom: 50px; margin-top: 50px; z-index: +1;">
     <!--Indicators-->
     <ol class="carousel-indicators">
       <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>

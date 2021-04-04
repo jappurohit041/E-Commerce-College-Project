@@ -33,10 +33,12 @@ else{
 			</div>
 			<div class="col-2"></div>
 			<div class="col-4">
+					<form action = "SearchProductByName">
 					<div class="input-group">
- 				 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-  <button type="button" class="btn btn-outline-light">search</button>
-</div>
+ 						<input type="search" name="productName" class="form-control rounded" placeholder="Search Product Name" aria-label="Search" aria-describedby="search-addon" />
+  						<button type="submit" class="btn btn-outline-light">search</button>
+					</div>
+					</form>
 			</div>
 			<div class="col-2"></div>
 			
@@ -64,8 +66,7 @@ else{
 				</div>
 			</div>
 			<div class="col-1">
-				<a href="#"><i data-toggle="tooltip" data-placement="bottom"
-					title="Cart"
+				<a href="CartDisplay.jsp"><i data-toggle="tooltip" data-placement="bottom" title="Cart"
 					class="btn btn-secondary HeaderIcons fa fa-shopping-cart"></i></a>
 			</div>
 		</div>

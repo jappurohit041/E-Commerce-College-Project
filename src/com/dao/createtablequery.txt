@@ -180,5 +180,16 @@ BEGIN
   FROM   dual;
 END;
 /
-
-
+---------------ORDER-DETAILS TABLE CREATION-------
+create table orderDetailed
+(
+	orderID number(10),
+	userID number(10),
+	productID number(10),
+	price number(10,2),
+	qty number(10,2),
+	amount number(10,2),
+	CONSTRAINT order_detail_id_fk1 foreign key(orderID) references orderdetails(orderid),
+	CONSTRAINT order_detail_user_fk foreign key(userID) references userDetails(userID),
+	CONSTRAINT order_detail_product_fk foreign key (productID) references productDetails(productid) 
+);

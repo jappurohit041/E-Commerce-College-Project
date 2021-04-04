@@ -80,28 +80,6 @@
 					else{break;}
 				%>
 				<%p = products.get(i);%>
-				<%-- <div class=" col-3">
-						<div class="card text-center"  style="border : 1px solid black; ">
-							<div class="card-header">
-							<img class="card-img-top" src="<%=p.getImagePath()%>">
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Product Name: <%=p.getProductName() %><br>
-							Product Description: <%=p.getProductDescription() %><br>
-							Offer Till:	<%=p.getOfferTill() %><br>
-							
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Base Price Rs. <%=p.getOriginalPrice() %><br>
-							Offer Price Rs.<%=p.getOfferPrice() %>	
-						</div>
-						
-						<div class="card-bottom">
-								<a href="AddToCartServlet?productID=<%=p.getProductId()%>userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
-								<a href="DetailProductServlet?productID=<%=p.getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
-						</div>
-					</div>
-				</div> --%>
 						<div class=" col-3">
 						<div class="card text-center"  style="border : 1px solid black; ">
 							<div class="card-header">
@@ -173,100 +151,6 @@
 					</div>
 				</div>
 			 </div>	 
-			 <%-- <%}%> --%>
-			 <%-- else{%>
-			  <div class="row">
-			 	<%	
-					if(i<products.size()-1){i++;}
-					else{break;}
-				%>
-				<%p = products.get(i);%>
-				<div class=" col-4">
-						<div class="card text-center"  style="border : 1px solid black; ">
-							<div class="card-header">
-							<img class="card-img-top" src="<%=p.getImagePath()%>">
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Product Name: <%=p.getProductName() %><br>
-							Product Description: <%=p.getProductDescription() %><br>
-							Offer Till:	<%=p.getOfferTill() %><br>
-							
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Base Price Rs. <%=p.getOriginalPrice() %><br>
-							Offer Price Rs.<%=p.getOfferPrice() %>	
-						</div>
-						
-						<div class="card-bottom">
-								<a href="#" class="btn btn-outline-primary" style="float: left;">Add To Cart</a>
-								<a href="#" class="btn btn-outline-warning" style="float: right;">View Details</a>
-						</div>
-					</div>
-				</div>
-				<%	
-					if(i<products.size()-1){i++;}
-					else{break;}
-				%>
-				<%p = products.get(i);%>
-				<div class=" col-4">
-						<div class="card text-center"  style="border : 1px solid black; ">
-							<div class="card-header">
-							<img class="card-img-top" src="<%=p.getImagePath()%>">
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Product Name: <%=p.getProductName() %><br>
-							Product Description: <%=p.getProductDescription() %><br>
-							Offer Till:	<%=p.getOfferTill() %><br>
-							
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Base Price Rs. <%=p.getOriginalPrice() %><br>
-							Offer Price Rs.<%=p.getOfferPrice() %>	
-						</div>
-						
-						<div class="card-bottom">
-								<a href="#" class="btn btn-outline-primary" style="float: left;">Add To Cart</a>
-								<a href="#" class="btn btn-outline-warning" style="float: right;">View Details</a>
-						</div>
-					</div>
-				</div>
-				<%	
-					if(i<products.size()-1){i++;}
-					else{break;}
-				%>
-				<%p = products.get(i);%>
-				<div class=" col-4">
-						<div class="card text-center"  style="border : 1px solid black; ">
-							<div class="card-header">
-							<img class="card-img-top" src="<%=p.getImagePath()%>">
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Product Name: <%=p.getProductName() %><br>
-							Product Description: <%=p.getProductDescription() %><br>
-							Offer Till:	<%=p.getOfferTill() %><br>
-							
-						</div>
-						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
-							Base Price Rs. <%=p.getOriginalPrice() %><br>
-							Offer Price Rs.<%=p.getOfferPrice() %>	
-						</div>
-						
-						<div class="card-bottom">
-								<a href="#" class="btn btn-outline-primary" style="float: left;">Add To Cart</a>
-								<a href="#" class="btn btn-outline-warning" style="float: right;">View Details</a>
-						</div>
-					</div>
-				</div>
-				<%	
-					if(i<products.size()-1){i++;}
-					else{break;}
-				%>
-			 </div>	 
-			 <%} %> --%>
-			 
-	
-			
-
 			<%} %>
 			<%if(products.size()==0){ %>
 				<img src="images\Product_Not_Found.png"   style="display: block; margin-left: auto; margin-right: auto; width: 50%;">

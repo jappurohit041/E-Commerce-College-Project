@@ -236,8 +236,41 @@ public class ProductDao {
 		}
 		return list;
 	}
+	public static ArrayList<ProductDetailBean> getProductByName(String name){
+		ArrayList<ProductDetailBean> list = new ArrayList<ProductDetailBean>();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive from productdetails join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where upper(productname) like '%'||upper('"+name +"')||'%' order by productid");
+					ResultSet set = psmt.executeQuery();
+				)
+		{
+
+			while(set.next()) {
+				ProductDetailBean prd = new ProductDetailBean();
+				prd.setProductId(set.getInt("productid"));
+				prd.setCategoryId(set.getInt("categoryid"));
+				prd.setSubCategoryId(set.getInt("subcategoryid"));
+				prd.setProductName(set.getString("PRODUCTNAME"));
+				prd.setCategoryName(set.getString("CATEGORYNAME"));
+				prd.setSubCategoryName(set.getString("SUBCATEGORYNAME"));
+				prd.setOriginalPrice(set.getFloat("ORIGINALPRICE"));
+				prd.setOfferPrice(set.getFloat("OFFERPRICE"));
+				prd.setCompanyName(set.getString("companyname"));
+				prd.setQuantity(set.getInt("quantity"));
+				prd.setOfferTill(set.getString("offertill").substring(0,10));
+				prd.setImagePath(set.getString("imagepath"));
+				prd.setProductDescription(set.getString("PRODUCTDESCRIPTION"));
+				prd.setIsActive(set.getInt("isactive"));
+				list.add(prd);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Get product by category id  and subcategory id dao");
+		}
+		return list;
+	}
 	public static void main(String[] args) {
-		ArrayList<ProductDetailBean> list = getProductByCategoryAndSubCategory(4,2);
+		ArrayList<ProductDetailBean> list = getProductByName("i");
 		for(ProductDetailBean p : list) {
 			System.out.println(p.getProductName()+"    "+p.getCategoryId());
 		}
