@@ -1,0 +1,94 @@
+
+create or replace trigger priceCannotBeNegative before update of offerprice,originalprice on productdetails for each row
+begin
+	if(:new.offerprice <0 or :new.originalprice<0) then
+		raise_application_error(-20200,'Price going negative');
+	end if;
+end;
+/
+
+create or replace trigger changePassword
+before update of password on userdetails for each row
+declare
+	 
+begin 
+	if(:new.password = :old.password) then
+		raise_application_error(-20100,'Password Matching');
+	end if;
+end;
+/
+
+create or replace trigger emailValidation 
+before insert on userdetails for each row
+declare
+	  vCount  NUMBER;
+begin 
+	select count(*) into vCount from userdetails where emailid like :new.emailid;
+	if(vCount > 0) then
+		raise_application_error(-20000,'Email ID Already Exist');
+	end if;
+end;
+/
+
+CREATE OR REPLACE TRIGGER orderDetail before
+    insert  on orderDetailed
+    FOR EACH ROW 
+DECLARE
+    v_product_id   productdetails.productid%TYPE;
+    v_product_qty  productdetails.quantity%TYPE;
+    new_qty orderDetailed.qty%type := :new.qty;
+    new_productid orderDetailed.qty%type := :new.productid;
+    new_orderid orderDetailed.orderid%type := :new.orderid;
+    new_userid orderDetailed.userid%type := :new.userid;
+BEGIN
+    SELECT
+        productid,
+        quantity
+    INTO
+        v_product_id,v_product_qty
+    FROM
+        productdetails
+    WHERE
+        productid = new_productid;
+
+	if(new_qty > v_product_qty) then 	
+		delete from orderDetails where orderid=new_orderid;
+		raise_application_error(-20001,'Quantity Excess');
+	
+	elsif(new_qty <= v_product_qty ) then
+		v_product_qty := v_product_qty - :new.qty ;
+		update productdetails set quantity = v_product_qty where productid = new_productid;
+		delete from cartdetails where userid= new_userid and productid=new_productid;
+	end if;
+
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER cartDetail before
+    insert  or update on cartdetails
+    FOR EACH ROW 
+DECLARE
+    v_product_id   productdetails.productid%TYPE;
+    v_product_qty  productdetails.quantity%TYPE;
+    new_qty cartDetails.qty%type := :new.qty;
+BEGIN
+    SELECT
+        productid,
+        quantity
+    INTO
+        v_product_id,v_product_qty
+    FROM
+        productdetails
+    WHERE
+        productid = :new.productid;
+
+    
+	if(new_qty > v_product_qty) then 	
+		raise_application_error(-20110,'Quantity Excess');
+	end if;
+
+END;
+/
+
+

@@ -28,20 +28,6 @@ create table userDetails(
 	constraint role_id_fk foreign key(roleID) references role(roleID)
 );
 
-CREATE SEQUENCE user_seq START WITH 1;
-
-CREATE OR REPLACE TRIGGER user_id_inc 
-BEFORE INSERT ON USERDETAILS
-FOR EACH ROW
-
-BEGIN
-  SELECT user_seq.NEXTVAL
-  INTO   :new.userID
-  FROM   dual;
-END;
-/
-
-
 REM --------Category Table Creation------------
 create table categoryDetails(
 	categoryID number(3),
@@ -50,22 +36,6 @@ create table categoryDetails(
 	isActive number(1) not null check (isActive in (0,1)),
 	constraint category_id_pk primary key(categoryID)
 );
-
-CREATE SEQUENCE cat_seq START WITH 1;
-
-
-CREATE OR REPLACE TRIGGER category_id_inc 
-BEFORE INSERT ON CATEGORYDETAILS
-FOR EACH ROW
-
-BEGIN
-  SELECT cat_seq.NEXTVAL
-  INTO   :new.categoryID
-  FROM   dual;
-END;
-/
-
-insert into categoryDetails(categoryName, isActive, imagePath) values('Grocery','1','images\\category\\1.png');
 
 REM --------Sub-Category Table Creation------------
 create table subCategoryDetails(
@@ -76,20 +46,6 @@ create table subCategoryDetails(
 	constraint sub_category_id_pk primary key(subCategoryID),
 	constraint sub_category_id_fk foreign key(categoryID) references categoryDetails(categoryID)
 );
-
-CREATE SEQUENCE sub_cat_seq START WITH 1;
-
-CREATE OR REPLACE TRIGGER sub_category_id_inc 
-BEFORE INSERT ON SUBCATEGORYDETAILS
-FOR EACH ROW
-
-BEGIN
-  SELECT sub_cat_seq.NEXTVAL
-  INTO   :new.subCategoryID
-  FROM   dual;
-END;
-/
-
 
 REM ----------PRODUCT TABLE CREATION-------------------
 create table productDetails(
@@ -110,20 +66,6 @@ create table productDetails(
 	constraint product_id_fk1 foreign key(subCategoryID) references subCategoryDetails(subCategoryID)
 );
 
-CREATE SEQUENCE product_seq START WITH 1;
-
-CREATE OR REPLACE TRIGGER product_id_inc
-BEFORE INSERT ON productDetails
-FOR EACH ROW
-
-BEGIN
-  SELECT product_seq.NEXTVAL
-  INTO   :new.productID 
-  FROM   dual;
-END;
-/
-
-
 REM ------------CART TABLE CREATION--------
 create table cartDetails(
 	cartID number(10),
@@ -135,19 +77,6 @@ create table cartDetails(
 	constraint cart_id_fk foreign key(userID) references userDetails(userID),
 	constraint cart_id_fk1 foreign key(productID) references productDetails(productID) 
 );
-
-CREATE SEQUENCE cart_seq START WITH 1;
-
-CREATE OR REPLACE TRIGGER cart_id_inc
-BEFORE INSERT ON cartDetails
-FOR EACH ROW
-
-BEGIN
-  SELECT cart_seq.NEXTVAL
-  INTO   :new.cartID 
-  FROM   dual;
-END;
-/
 
 REM ---------------ORDER TABLE CREATION-------
 create table orderDetails(
@@ -168,18 +97,7 @@ create table orderDetails(
 \\payment type : 0--COD
 				1--Net Banking
 				2--Debit/Credit Card
-CREATE SEQUENCE order_seq START WITH 1;
 
-CREATE OR REPLACE TRIGGER order_id_inc
-BEFORE INSERT ON orderDetails
-FOR EACH ROW
-
-BEGIN
-  SELECT order_seq.NEXTVAL
-  INTO   :new.orderId 
-  FROM   dual;
-END;
-/
 ---------------ORDER-DETAILS TABLE CREATION-------
 create table orderDetailed
 (
