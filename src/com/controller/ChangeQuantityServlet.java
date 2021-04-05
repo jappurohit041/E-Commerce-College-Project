@@ -34,7 +34,7 @@ public class ChangeQuantityServlet extends HttpServlet{
 			flag = CartDao.updateQuantity(productID,userID,product.getOfferPrice());
 		}
 		if(flag == -1) {
-			System.out.println("Trigger called");
+			request.setAttribute("msg", "We aren't available with that much amount of quantity.");
 		}
 		request.getRequestDispatcher("CartDisplay.jsp").forward(request, response);
 	}

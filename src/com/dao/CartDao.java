@@ -113,10 +113,12 @@ public class CartDao {
 			}
 		}
 		catch(SQLException e) {
+			if(e.getErrorCode()==20110) {
+				flag=-1;
+			}
 			e.printStackTrace();
 			System.out.println("In update insert Cart");
 		}
-		
 		return flag;
 	}
 	public static ArrayList<CartDetailBean> getListOfCart(int userID){
@@ -165,6 +167,7 @@ public class CartDao {
 				}
 		}
 		catch(Exception e) {
+			
 			e.printStackTrace();
 			System.out.println("In delete from cart");
 		}
@@ -187,10 +190,74 @@ public class CartDao {
 			}
 		}
 		catch(SQLException e) {
+			if(e.getErrorCode()==20110) {
+				flag=-1;
+			}
 			e.printStackTrace();
 			System.out.println("In update insert Cart");
 		}
 		
 		return flag;
+	}
+
+	public static ArrayList<CartDetailBean> getListOfCartByCartID(int cartID, int userID) {
+		ArrayList<CartDetailBean> list = new ArrayList<CartDetailBean>();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+	PreparedStatement psmt = con.prepareStatement("select cartid,price,productdetails.productid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,qty,offertill,productdetails.imagepath,productdescription from cartdetails join productdetails on  cartdetails.productid = productdetails.productid join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where userid=? and cartid = ?");){
+				psmt.setInt(1, userID);
+				psmt.setInt(2, cartID);
+		ResultSet set = psmt.executeQuery();
+		while(set.next()) {
+			CartDetailBean cart = new CartDetailBean();
+			cart.setCartID(set.getInt("cartid"));
+			cart.setPrice(set.getFloat("price"));
+			cart.setProductID(set.getInt("productid"));
+			cart.setCategoryName(set.getString("categoryName"));
+			cart.setSubCategryName(set.getString("subcategoryName"));
+			cart.setOrignalPrice(set.getFloat("originalprice"));
+			cart.setOfferPrice(set.getFloat("offerprice"));
+			cart.setProductName(set.getString("productname"));
+			cart.setCompanyName(set.getString("companyname"));
+			cart.setQuantity(set.getInt("qty"));
+			cart.setOfferTill(set.getString("offerTill"));
+			cart.setImgPath(set.getString("imagepath"));
+			cart.setProductDescription(set.getString("productdescription"));
+			list.add(cart);
+		}
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+		System.out.println("In get List of cart by cart id");
+	}
+		return list;
+	}
+	public static CartDetailBean getListOfCartByCartIDAndUserID(int cartID, int userID) {
+		CartDetailBean cart = new CartDetailBean();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+	PreparedStatement psmt = con.prepareStatement("select cartid,price,productdetails.productid,categorydetails.categoryname,subcategorydetails.subcategoryname,originalprice,offerprice,productname,companyname,qty,offertill,productdetails.imagepath,productdescription from cartdetails join productdetails on  cartdetails.productid = productdetails.productid join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where userid=? and cartid = ?");){
+				psmt.setInt(1, userID);
+				psmt.setInt(2, cartID);
+		ResultSet set = psmt.executeQuery();
+		while(set.next()) {
+			cart.setCartID(set.getInt("cartid"));
+			cart.setPrice(set.getFloat("price"));
+			cart.setProductID(set.getInt("productid"));
+			cart.setCategoryName(set.getString("categoryName"));
+			cart.setSubCategryName(set.getString("subcategoryName"));
+			cart.setOrignalPrice(set.getFloat("originalprice"));
+			cart.setOfferPrice(set.getFloat("offerprice"));
+			cart.setProductName(set.getString("productname"));
+			cart.setCompanyName(set.getString("companyname"));
+			cart.setQuantity(set.getInt("qty"));
+			cart.setOfferTill(set.getString("offerTill"));
+			cart.setImgPath(set.getString("imagepath"));
+			cart.setProductDescription(set.getString("productdescription"));
+		}
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+		System.out.println("In get List of cart by cart id");
+	}
+		return cart;
 	}
 }

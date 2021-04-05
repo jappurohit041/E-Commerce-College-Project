@@ -1,7 +1,7 @@
 package com.bean;
 
 public class OrderDetailBean {
-	private int orderID, userID, paymentType, quantity, deliveryStatus;
+	private int orderID, userID, paymentType, deliveryStatus;
 	private String address, orderDate, deliveryDate;
 	private float finalAmount, totalAmount, discountAmount;
 
@@ -27,14 +27,6 @@ public class OrderDetailBean {
 
 	public void setPaymentType(int paymentType) {
 		this.paymentType = paymentType;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public int getDeliveryStatus() {

@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <link href="headercss.css" rel="stylesheet"/>
-<title>Cart Display</title>
+<title>Confirm Order</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -150,6 +150,10 @@
             transform: translateZ(0);
             -webkit-mask-image: -webkit-radial-gradient(circle,#fff 100%,#000 100%)
         }
+        .error {
+	font-size: 20px;
+	color: red;
+}
 
             .waves-button, .waves-button-input, .waves-button:hover, .waves-button:visited {
                 z-index: 1;
@@ -239,15 +243,21 @@
 <body>
 	<div class="Header" style="z-index: +10">
 	<%@include file="Header.jsp"%>
- 	<%ArrayList<CartDetailBean> list = (ArrayList<CartDetailBean>) CartDao.getListOfCart(mainUser.getUserID()); %> 
+	<%;
+	int cartID=-1,fullCart=-1;%>
+ 	<%ArrayList<CartDetailBean> list = (ArrayList<CartDetailBean>) request.getAttribute("cartList"); 
+ 	
+ 	%> 
  	<%float totalPrice = 0; %>
 	</div>
 	<div class="container-fluid">
+	 
 		<div class="content" style="z-index: -1">
 				            				<p style="display: none" id='con'>${msg}</p>
 			<%if(list.size()!=0){ %>
 			 <div class="container">
       			<section class="mt-5 mb-4">
+      			<h2><strong>Confirm Order</strong></h2>
       			  <div class="row">
           			<div class="col-lg-8">
             			<div class="card wish-list mb-4">
@@ -274,31 +284,24 @@
                         </div>
                         <div>
                           <div class="def-number-input number-input safari_only mb-0 w-100">
-                            <a href="ChangeQuantityServlet?userID=<%=mainUser.getUserID()%>&productID=<%=c.getProductID()%>&operation=minus&quantity=<%=c.getQuantity()%>" class="btn btn-outline-danger" style="margin-right: 1px;">-</a>
-                            <input class="quantity" min="1" id = "quantity" name="quantity" value="<%=c.getQuantity()%>" type="number" disabled>
-                            <a href="ChangeQuantityServlet?userID=<%=mainUser.getUserID()%>&productID=<%=c.getProductID()%>&operation=plus&quantity=<%=c.getQuantity()%>" class="btn btn-outline-primary" style="margin-left: 1px;">+</a>
-                          </div>
-                          <small id="passwordHelpBlock" class="form-text text-muted text-center">
-                            (Note, 1 piece)
-                          </small>
+                            <p class="mb-3 text-muted text-uppercase small"><strong>Final Quantity: <%=c.getQuantity()%></strong></p>
+                         </div>
+                         
                         </div>
                       </div>
                       <div class="d-flex justify-content-between align-items-center">
                         <div>
-                          <a href="RemoveFromCartServlet?cartID=<%=c.getCartID()%>&userID=<%=mainUser.getUserID() %>" type="button" class="card-link-secondary small text-uppercase mr-3"><i
-                              class="fas fa-trash-alt mr-1"></i> Remove item </a>
-                          <a href="BuyNowCartServlet?cartID=<%=c.getCartID()%>&fullCart=false&userID=<%=mainUser.getUserID() %>" type="button" class="card-link-secondary small text-uppercase"><i
-                              class="fas fa-shopping-cart"></i>Order This Now </a>
+                          <a href="CartDisplay.jsp" type="button" class="card-link-secondary small text-uppercase"><i
+                              class="fas fa-shopping-cart"></i>View Cart</a>
                         </div>
                         <%totalPrice = totalPrice + c.getPrice(); %>
-                        <p class="mb-0"><span><strong>Total Price Rs. <%=c.getPrice()%></strong></span></p>
+                        <p class="mb-0"><span><strong>Sub-Total Price Rs. <%=c.getPrice()%></strong></span></p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <hr class="mb-4">
-                   <%} %>  
-               
+                   <%} %>       
                 <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay the purchase, adding
                   items to your cart does not mean booking them.</p>
                   <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Some Products might have been removed due to price change or offer end
@@ -333,7 +336,20 @@
                     <span><strong>Rs. <%=totalPrice %></strong></span>
                   </li>
                 </ul>
-                <a href="BuyNowCartServlet?cartID=&fullCart=true&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-block waves-effect waves-light">Go To Checkout </a>
+                <form action="PlaceOrderServlet">
+                <input type="hidden" value="<%=mainUser.getUserID()%>" name="userID">
+                <input type="hidden" value="${fullCart}" name="fullCart">
+                <input type="hidden" value="${cartID}" name="cartID">
+                <input type="hidden" value="<%=totalPrice%>" name="finalAmount">
+                <select name = "paymentMode" id="paymentMode" required>
+                	<option value="">Please select Payment Mode</option>
+                	<option value="0">Cash on Delivery</option>
+                	<option value="1">Net-Banking</option>
+                	<option value="2">Debit and Credit-Card</option>
+                </select>
+                 <label class="error">${payMentModeError}</label>
+                <input type="submit" name="submit" class="btn btn-primary btn-block waves-effect waves-light" value="Place Order" />
+                </form>
               </div>
             </div>
           </div>
@@ -344,16 +360,11 @@
 		</div>
 	</div>
 			 	<%if(list.size()==0){ %>
-                  <p class="text-primary mb-0" style="text-align: center; font-size: 20px;margin-top: 10px;"><i class="fas fa-info-circle mr-1"></i> Some Products might have been removed due to price change or offer end
+                  <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Some Products might have been removed due to price change or offer end
                   </p>
 				<img src="images\emptycart6.jpg" class="img-fluid" style="height: 650px;display: block; margin-left: auto; margin-right: auto; width: 100%;margin-bottom: 120px;margin-top: 120px;">
 			<% }%> 
 	<%@include file="Footer.jsp" %>
-		<script>
-        var s = document.getElementById('con').innerHTML;	
-        if(s!=''){
-        	window.alert(s)	
-        }
-        </script>
+
 </body>
 </html>

@@ -43,7 +43,7 @@
 	                                <a href="AddToCartServlet?productID=<%=p.getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-outline-primary btn-group-lg"><h4>Add to cart</h4></a>        
 	                            </div>
 	                            <div class="col-6 text-center">
-	                                <a href="#" class="btn btn-outline-primary btn-group-lg"><h4>BUY NOW</h4></a>        
+	                                <a href="Home.jsp" class="btn btn-outline-primary btn-group-lg"><h4>Explore Other Products</h4></a>        
 	                            </div>
 	                        </div>
 	                    </div>
