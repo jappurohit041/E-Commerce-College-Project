@@ -125,6 +125,14 @@
 					</div>
 				</div>
 </div>
+		<p style="display: none" id='con'>${msg}</p>
+	
+	<script>
+        var s = document.getElementById('con').innerHTML;	
+        if(s!=''){
+        	window.alert(s)	
+        }
+    </script>
 <hr>
 </div>
 </div>

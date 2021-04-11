@@ -141,6 +141,7 @@ public class PlaceOrderServlet extends HttpServlet{
 			request.getRequestDispatcher("CartDisplay.jsp").forward(request, response);	
 		}
 		else {
+			request.setAttribute("msg", "Order Placed Sucessfully. Thank you for shopping. Please do visit again. Hurray!!!");
 			request.getRequestDispatcher("Home.jsp").forward(request, response);
 		}
 		

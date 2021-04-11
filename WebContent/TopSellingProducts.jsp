@@ -120,44 +120,44 @@ else{
 					<div class="section">	
 					<%ArrayList<ProductDetailBean> list=(ArrayList<ProductDetailBean>)ProductDao.getTopSellingProducts();%>
 				<div class="table-responsive">
-					<table border="1">
-						<thead>
+					<table border="1" style="table-layout: fixed; width: 100%; text-align: center;" class="table-striped table-light ">
+						<thead style="text-align: center;">
 							<tr>
-								<th>Product ID</th>
-								<th>Product Name</th>
-								<th>Company Name</th>
-								<th>Category Name</th>
-								<th>SubCategory Name</th>
-								<th>Orignal Price</th>
-								<th>Offer Price</th>
-								<th>Offer Till</th>
-								<th>Quantity Left</th>
-								<th>Quantity Sold</th>
-								<th>Total Earning</th>
-								<th>Image</th>
-								<th>Product Description</th>
-								<th>Is Active</th>
+								<th  style="word-wrap: break-word; text-align: center;">Product ID</th>
+								<th  style="word-wrap: break-word; text-align: center;">Product Name</th>
+								<th  style="word-wrap: break-word; text-align: center;">Company Name</th>
+								<th  style="word-wrap: break-word; text-align: center;">Category Name</th>
+								<th  style="word-wrap: break-word; text-align: center;">SubCategory Name</th>
+								<th  style="word-wrap: break-word; text-align: center;">Orignal Price</th>
+								<th  style="word-wrap: break-word; text-align: center;">Offer Price</th>
+								<th  style="word-wrap: break-word; text-align: center;">Offer Till</th>
+								<th  style="word-wrap: break-word; text-align: center;">Quantity Left</th>
+								<th  style="word-wrap: break-word; text-align: center;">Quantity Sold</th>
+								<th  style="word-wrap: break-word; text-align: center;">Total Earning</th>
+								<th  style="word-wrap: break-word; text-align: center;">Image</th>
+								<th  style="word-wrap: break-word; text-align: center;">Product Description</th>
+								<th   style="word-wrap: break-word; text-align: center;">Is Active</th>
 							</tr>
 						</thead>
 						<tbody>
 							<%for(ProductDetailBean p: list ){ 
                 		%>
 							<tr>
-								<td><%=p.getProductId()%></td>
-								<td><%=p.getProductName()%></td>
-								<td><%=p.getCompanyName() %></td>
-								<td><%=p.getCategoryName() %></td>
-								<td><%=p.getSubCategoryName() %></td>
-								<td><%=p.getOriginalPrice() %></td>
-								<td><%=p.getOfferPrice() %></td>
-								<td><%=p.getOfferTill() %></td>
-								<td><%=p.getQuantity() %></td>
-								<td><%=p.getSoldQuantity() %></td>
-								<td><%=p.getTotalAmount() %></td>
-								<td><img src="<%=p.getImagePath() %>"></td>
-								<td><%=p.getProductDescription() %></td>
+								<td style="word-wrap: break-word"><%=p.getProductId()%></td>
+								<td style="word-wrap: break-word"><%=p.getProductName()%></td>
+								<td style="word-wrap: break-word"><%=p.getCompanyName() %></td>
+								<td style="word-wrap: break-word"><%=p.getCategoryName() %></td>
+								<td style="word-wrap: break-word"><%=p.getSubCategoryName() %></td>
+								<td style="word-wrap: break-word"><%=p.getOriginalPrice() %></td>
+								<td style="word-wrap: break-word"><%=p.getOfferPrice() %></td>
+								<td style="word-wrap: break-word"><%=p.getOfferTill() %></td>
+								<td style="word-wrap: break-word"><%=p.getQuantity() %></td>
+								<td style="word-wrap: break-word"><%=p.getSoldQuantity() %></td>
+								<td style="word-wrap: break-word"><%=p.getTotalAmount() %></td>
+								<td style="word-wrap: break-word"> <img src="<%=p.getImagePath() %>" class="img-fluid"></td>
+								<td style="word-wrap: break-word"><%=p.getProductDescription() %></td>
 								<%String answer = p.getIsActive()==1?"Yes":"No"; %>
-								<td><%=answer %></td>
+								<td style="word-wrap: break-word"><%=answer %></td>
 							</tr>
 							<%} %>
 						</tbody>
