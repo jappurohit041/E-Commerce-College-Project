@@ -32,7 +32,7 @@
 	
 	<body>
 		<%	
-UserDetailBean mainUser=null;
+try{UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
@@ -119,7 +119,7 @@ else{
 				<br>
 				<%ArrayList<ProductDetailBean> list=(ArrayList<ProductDetailBean>)ProductDao.getAllProduct();%>
 				<div class="table-responsive">
-					<table border="1">
+					<table border="1" style="table-layout: fixed; width: 100%; text-align: center; word-wrap: break-word; text-align: center;" class="table-striped table-light">
 						<thead>
 							<tr>
 								<th>Product ID</th>
@@ -151,16 +151,16 @@ else{
 								<td><%=p.getOfferPrice() %></td>
 								<td><%=p.getOfferTill() %></td>
 								<td><%=p.getQuantity() %></td>
-								<td><img src="<%=p.getImagePath() %>"></td>
+								<td><img src="<%=p.getImagePath() %>" class="img-fluid"></td>
 								<td><%=p.getProductDescription() %></td>
 								<%String answer = p.getIsActive()==1?"Yes":"No"; %>
 								<td><%=answer %></td>
 								<td>
 								<a
 									href="UpdateProductServlet?productID=<%=p.getProductId()%>"><button
-											type="button" class="btn btn-primary">Update</button></a> <a
+											type="button" class="btn btn-primary btn-block" style="white-space:normal;">Update</button></a> <a
 									href="RecoverProductServlet?productID=<%=p.getProductId()%>"><button
-											type="button" class="btn btn-danger">Recover</button></a>
+											type="button" class="btn btn-danger btn-block" style="white-space:normal;">Recover</button></a>
 								
 								</td>
 							</tr>
@@ -171,6 +171,11 @@ else{
 			</div>
 			</div>
 		</div>
+			<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

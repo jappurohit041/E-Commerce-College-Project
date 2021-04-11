@@ -5,6 +5,23 @@ public class UserDetailBean {
 	private String address, dateOfBirth, city, state, pinCode, country, securityQuestion, securityAnswer;
 	private long phoneNumber;
 	int userID, roleID, isBlock;
+	float totalDiscount,totalPurchase;
+	
+	public float getTotalDiscount() {
+		return totalDiscount;
+	}
+
+	public void setTotalDiscount(float totalDiscount) {
+		this.totalDiscount = totalDiscount;
+	}
+
+	public float getTotalPurchase() {
+		return totalPurchase;
+	}
+
+	public void setTotalPurchase(float totalPurchase) {
+		this.totalPurchase = totalPurchase;
+	}
 
 	public String getFirstName() {
 		return firstName;

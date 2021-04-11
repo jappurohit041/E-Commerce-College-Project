@@ -28,12 +28,16 @@
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="assets/css/demo.css" rel="stylesheet" />
 </head>
+
 <style>
+tr,th,tbody,thead{
+word-wrap: break-word
+}
 .btn{white-space:normal;}
 </style>
 <body>
 	<%	
-UserDetailBean mainUser=null;
+try{UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
@@ -120,33 +124,33 @@ else{
 				<p style="display: none" id='con'>${msg}</p>
 				<%ArrayList<UserDetailBean> list=(ArrayList<UserDetailBean>)UserDao.getAllUser();%>
 				<div class="table-responsive">
-					<table border="1" style="table-layout: fixed; width: 100%">
-						<thead>
+					<table border="1" style="table-layout: fixed; width: 100%; text-align: center;" class="table-striped table-light ">
+						<thead style="text-align: center;">
 							<tr>
-								<th style="word-wrap: break-word">User ID</th>
-								<th style="word-wrap: break-word">First Name</th>
-								<th style="word-wrap: break-word">Last Name</th>
-								<th style="word-wrap: break-word">Email ID</th>
-								<th style="word-wrap: break-word">Password</th>
-								<th style="word-wrap: break-word">Address</th>
-								<th style="word-wrap: break-word">Date of Birth</th>
-								<th style="word-wrap: break-word">City</th>
-								<th style="word-wrap: break-word">State</th>
-								<th style="word-wrap: break-word">Country</th>
-								<th style="word-wrap: break-word">Pincode</th>
-								<th style="word-wrap: break-word">Contact Number</th>
-								<th style="word-wrap: break-word">Role ID</th>
-								<th style="word-wrap: break-word">Is Block</th>
-								<th style="word-wrap: break-word">Security Question</th>
-								<th style="word-wrap: break-word">Security Answer</th>
-								<th style="word-wrap: break-word">Action</th>
+								<th style="word-wrap: break-word; text-align: center;">User ID</th>
+								<th style="word-wrap: break-word; text-align: center; ">First Name</th>
+								<th style="word-wrap: break-word; text-align: center;">Last Name</th>
+								<th style="word-wrap: break-word; text-align: center;">Email ID</th>
+								<th style="word-wrap: break-word; text-align: center;">Password</th>
+								<th style="word-wrap: break-word; text-align: center;">Address</th>
+								<th style="word-wrap: break-word; text-align: center;">Date of Birth</th>
+								<th style="word-wrap: break-word; text-align: center;">City</th>
+								<th style="word-wrap: break-word; text-align: center;">State</th>
+								<th style="word-wrap: break-word; text-align: center;">Country</th>
+								<th style="word-wrap: break-word; text-align: center;">Pincode</th>
+								<th style="word-wrap: break-word; text-align: center;">Total Purchase Done</th>
+								<th style="word-wrap: break-word; text-align: center;">Total Discount Done</th>
+								<th style="word-wrap: break-word; text-align: center;">Contact Number</th>
+								<th style="word-wrap: break-word; text-align: center;">Role ID</th>
+								<th style="word-wrap: break-word; text-align: center;">Is Block</th>
+								<th style="word-wrap: break-word; text-align: center;">Security Question</th>
+								<th style="word-wrap: break-word; text-align: center;">Security Answer</th>
+								<th style="word-wrap: break-word; text-align: center;">Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							<%for(UserDetailBean u : list){
-								if(u.getUserID()==mainUser.getUserID()){
-									continue;
-								}else{
+								
 							%>
 								<tr>
 									<td style="word-wrap: break-word"><%=u.getUserID() %></td>
@@ -160,6 +164,9 @@ else{
 									<td style="word-wrap: break-word"><%=u.getState()%></td>
 									<td style="word-wrap: break-word"><%=u.getCountry() %></td>
 									<td style="word-wrap: break-word"><%=u.getPinCode() %></td>
+									<td style="word-wrap: break-word"><%=u.getTotalPurchase() %></td>
+									<td style="word-wrap: break-word"><%=u.getTotalDiscount() %></td>
+									
 									<td style="word-wrap: break-word"><%=u.getPhoneNumber() %></td>
 									<%String answer = u.getRoleID()==1? "Admin":"User";%>
 									<td style="word-wrap: break-word"><%=answer %></td>
@@ -167,10 +174,14 @@ else{
 									<td style="word-wrap: break-word"><%=answer %></td>
 									<td style="word-wrap: break-word"><%=u.getSecurityQuestion() %></td>
 									<td style="word-wrap: break-word"><%=u.getSecurityAnswer() %></td>
+									<%if(mainUser.getUserID()==u.getUserID()){ %>
+<td><button class="btn btn-primary btn-block" style="white-space:normal;" disabled>Update</button></td>
+<%}else{ %>
+
 <td><a href="UpdateUserServlet?userID=<%=u.getUserID()%>" 
-class="btn btn-primary btn-sm">Update</a></td>
-								</tr>
-							<% }}%>
+class="btn btn-primary btn-block" style="white-space:normal;">Update</a></td>
+		<%} %>						</tr>
+							<% }%>
 						</tbody>
 					</table>
 				</div>
@@ -182,6 +193,11 @@ class="btn btn-primary btn-sm">Update</a></td>
         	window.alert(s)	
         }
         </script>
+        	<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

@@ -36,7 +36,8 @@
 </head>
 
 <body>
-	<%	
+<%	
+try{
 UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
@@ -45,11 +46,10 @@ if(session == null || session.getAttribute("isLogin") == null){
 else{
 	mainUser =(UserDetailBean) session.getAttribute("mainUser");
 	if(mainUser.getRoleID()!=1){
-		request.setAttribute("msg","Your don't have access to this");		
+		request.setAttribute("msg","You don't have access in this area");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
 	}
 }
-
 %>
 	<div class="wrapper">
 		<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
@@ -124,30 +124,30 @@ else{
 				<p style="display: none" id='con'>${msg}</p>	
 				<%ArrayList<CategoryDetailBean> list=(ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory();%>
 				<div class="table-responsive">
-					<table border="1">
-						<thead>
+					<table border="1" style="table-layout: fixed; width: 100%; text-align: center; word-wrap: break-word; text-align: center;" class="table-striped table-light">
+						<thead  style="text-align: center;">
 							<tr>
-								<th>Category ID</th>
-								<th>Category Name</th>
-								<th>IsActive</th>
-								<th>Category Display Image</th>
-								<th>Action</th>
+								<th style="word-wrap: break-word; text-align: center;">Category ID</th>
+								<th style="word-wrap: break-word; text-align: center;">Category Name</th>
+								<th style="word-wrap: break-word; text-align: center;">IsActive</th>
+								<th style="word-wrap: break-word; text-align: center;">Category Display Image</th>
+								<th style="word-wrap: break-word; text-align: center;">Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							<%for(CategoryDetailBean category: list ){ 
                 			if(category.getIsActive()==1){
                 		%>
-							<tr>
+							<tr style="font-size: x-large;">
 								<td><%=category.getCategoryID() %></td>
 								<td><%=category.getCategoryName() %></td>
-								<td><%=category.getIsActive() %></td>
-								<td><img src="<%=category.getImagePath() %>"></td>
+								<td><%=category.getIsActive()==0?"No":"Yes"%></td>
+								<td><img src="<%=category.getImagePath() %>" class="img-fluid"></td>
 								<td><a
 									href="UpdateCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
-											type="button" class="btn btn-primary">Update</button></a> <a
+											type="button" class="btn btn-primary btn-block" style="white-space:normal;">Update</button></a> <a
 									href="DeleteCategoryServlet?categoryID=<%=category.getCategoryID()%>"><button
-											type="button" class="btn btn-danger">Delete</button></a></td>
+											type="button" class="btn btn-danger btn-block" style="white-space:normal;">Delete</button></a></td>
 							</tr>
 							<%}} %>
 						</tbody>
@@ -161,6 +161,12 @@ else{
         	window.alert(s)	
         }
         </script>
+        	<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
+        
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

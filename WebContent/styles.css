@@ -10,7 +10,10 @@ html {
 	/*     background: linear-gradient(#8aaed1, white);
         */
 }
-
+.error{
+	color: red;
+	font-weight: bold;
+}
 body {
 	font-family: montserrat, arial, verdana;
 	background: linear-gradient(#8aaed1, white);

@@ -38,10 +38,7 @@
 			<label class="error">${msg}</label>
 			<a href="ForgotPasswordEmail.jsp" style="float: left">Forget
 				Password&nbsp;</a>
-			<div class="verticalLine"
-				style="border-right: solid #000000; float: left">&nbsp;&nbsp;</div>
-			<a style="float: left; text-decoration: none; cursor: default">&nbsp;&nbsp;&nbsp;</a>
-			<a href="Home.jsp" style="float: left">Home Page</a> <a
+			 <a
 				href="SignupForm.jsp" style="float: right">New User</a> <br /> <input
 				type="submit" name="next" class="next action-button" value="Submit" />
 

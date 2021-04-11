@@ -22,6 +22,110 @@
 <div class="content">
 <%@include file="Category.jsp" %>
 <%@include file="Carousel.jsp" %>
+<hr><p style="font-size: 25px;text-decoration: underline;"><strong>Top Selling Products</strong></p><hr>
+<div class="card-deck">
+				<div class="card">
+						<div class="card text-center"  style="border : 1px solid black; ">
+							<div class="card-header">
+							<img class="card-img-top" src="<%=p.get(0).getImagePath()%>">
+							</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5>Product Name: <%=p.get(0).getProductName() %></h5>
+							<h5>Product Description: <%=p.get(0).getProductDescription()%></h5>
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5 class="text-danger">Base Price Rs. <%=p.get(0).getOriginalPrice() %></h5>
+							<h5 class="text-primary">Offer Price Rs.<%=p.get(0).getOfferPrice() %></h5>	
+						</div>
+						
+						<div class="card-footer">
+								<a href="AddToCartServlet?productID=<%=p.get(0).getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="DetailProductServlet?productID=<%=p.get(0).getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+						<div class="card text-center"  style="border : 1px solid black; ">
+							<div class="card-header">
+							<img class="card-img-top" src="<%=p.get(1).getImagePath()%>">
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5>Product Name: <%=p.get(1).getProductName() %></h5>
+							<h5>Product Description: <%=p.get(1).getProductDescription()%></h5>
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5 class="text-danger">Base Price Rs. <%=p.get(1).getOriginalPrice() %></h5>
+							<h5 class="text-primary">Offer Price Rs.<%=p.get(1).getOfferPrice() %></h5>	
+						</div>
+						
+						<div class="card-footer">
+								<a href="AddToCartServlet?productID=<%=p.get(1).getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="DetailProductServlet?productID=<%=p.get(1).getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+						<div class="card text-center"  style="border : 1px solid black; ">
+							<div class="card-header">
+							<img class="card-img-top" src="<%=p.get(2).getImagePath()%>">
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5>Product Name: <%=p.get(2).getProductName() %></h5>
+							<h5>Product Description: <%=p.get(2).getProductDescription()%></h5>
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5 class="text-danger">Base Price Rs. <%=p.get(2).getOriginalPrice() %></h5>
+							<h5 class="text-primary">Offer Price Rs.<%=p.get(2).getOfferPrice() %></h5>	
+						</div>
+						
+						<div class="card-footer">
+								<a href="AddToCartServlet?productID=<%=p.get(2).getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="DetailProductServlet?productID=<%=p.get(2).getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+						<div class="card text-center"  style="border : 1px solid black; ">
+							<div class="card-header">
+							<img class="card-img-top" src="<%=p.get(3).getImagePath()%>">
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5>Product Name: <%=p.get(3).getProductName() %></h5>
+							<h5>Product Description: <%=p.get(3).getProductDescription()%></h5>
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5 class="text-danger">Base Price Rs. <%=p.get(3).getOriginalPrice() %></h5>
+							<h5 class="text-primary">Offer Price Rs.<%=p.get(3).getOfferPrice() %></h5>	
+						</div>
+						
+						<div class="card-footer">
+								<a href="AddToCartServlet?productID=<%=p.get(3).getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="DetailProductServlet?productID=<%=p.get(3).getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+						<div class="card text-center"  style="border : 1px solid black; ">
+							<div class="card-header">
+							<img class="card-img-top" src="<%=p.get(4).getImagePath()%>">
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5>Product Name: <%=p.get(4).getProductName() %></h5>
+							<h5>Product Description: <%=p.get(4).getProductDescription()%></h5>
+						</div>
+						<div class="card-body"  style="border-bottom : 1px solid black;border-top : 1px solid black;">
+							<h5 class="text-danger">Base Price Rs. <%=p.get(4).getOriginalPrice() %></h5>
+							<h5 class="text-primary">Offer Price Rs.<%=p.get(4).getOfferPrice() %></h5>	
+						</div>
+						
+						<div class="card-footer">
+								<a href="AddToCartServlet?productID=<%=p.get(4).getProductId()%>&userID=<%=mainUser.getUserID()%>" class="btn btn-primary btn-lg outline" >Add To Cart</a>
+								<a href="DetailProductServlet?productID=<%=p.get(4).getProductId()%>" class="btn btn-warning btn-lg outline" >View Details</a>
+						</div>
+					</div>
+				</div>
+</div>
+<hr>
 </div>
 </div>
 <%@include file="Footer.jsp" %>

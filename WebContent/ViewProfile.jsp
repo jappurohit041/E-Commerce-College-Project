@@ -30,7 +30,7 @@
 
 <body>
 	<%	
-UserDetailBean mainUser=null;
+try{UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
@@ -157,5 +157,10 @@ else{
 				value="Previous" />
 		</fieldset>
 	</form>
+		<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
 </body>
 </html>

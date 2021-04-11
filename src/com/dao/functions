@@ -1,0 +1,232 @@
+
+REM function 1
+create or replace function randomUser
+return number
+is 
+userid number;
+begin
+SELECT userid into userid FROM (SELECT distinct userid FROM userdetails ORDER BY DBMS_RANDOM.RANDOM) WHERE  rownum < 2;
+return userid;
+end;
+/
+
+
+REM function 2
+create or replace type topSellingCategoryArray is varray(2) of number;
+ /
+
+
+create or replace function topSellingCategory return topSellingCategoryArray as	
+cursor c_top is select categorydetails.categoryid from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid group by categorydetails.categoryname,categorydetails.categoryid,to_char(sysdate,'Month') order by sum(qty) desc fetch first 1 row only;
+cursor c_least is select categorydetails.categoryid from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid group by categorydetails.categoryname,categorydetails.categoryid,to_char(sysdate,'Month') order by sum(qty) fetch first 1 row only;
+tcid topSellingCategoryArray;
+r_top c_top%rowtype;
+r_least c_least%rowtype;
+begin
+	tcid :=topSellingCategoryArray(-1,-1);
+	for r_top in c_top loop
+		tcid(1) := r_top.categoryid;
+	end loop;
+	for r_least in c_least loop
+		tcid(2) := r_least.categoryid;
+	end loop;
+	return tcid;
+end;
+/
+
+declare 
+	tcid topSellingCategoryArray;
+
+begin	
+	tcid := topSellingCategory();
+	dbms_output.put_line(tcid(1)||' '||tcid(2));
+end;
+/
+
+
+REM function 3
+create or replace type productReport is varray(4) of number;
+/
+
+
+create or replace function productReportFunction return productReport as
+
+cursor c_top is select productdetails.categoryid,categoryname,orderdetailed.productid,sum(qty) from  orderdetailed join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid group by orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) desc fetch first 1 row only;
+
+cursor c_least is select productdetails.categoryid,orderdetailed.productid,sum(qty) from orderdetailed join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid group by categorydetails.categoryid,orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) fetch first 1 row only;
+
+cursor c_topm is select to_char(sysdate,'Month'),productdetails.categoryid,orderdetailed.productid,sum(qty) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid group by categorydetails.categoryid,to_char(sysdate,'Month'),orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) desc fetch first 1 row only;
+
+cursor c_leastm is select to_char(sysdate,'Month'),productdetails.categoryid,orderdetailed.productid,sum(qty) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid group by categorydetails.categoryid,to_char(sysdate,'Month'),orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) fetch first 1 row only;
+
+tcid productReport;
+r_top c_top%rowtype;
+r_least c_least%rowtype;
+r_topm c_topm%rowtype;
+r_leastm c_leastm%rowtype;
+
+begin 
+	tcid := productReport(-1,-1,-1,-1);
+	for r_top in c_top loop
+		tcid(1) := r_top.productid;
+	end loop;
+
+	for r_least in c_least loop
+		tcid(2) := r_least.productid;
+	end loop;
+
+	for r_topm in c_topm loop
+		tcid(3) := r_topm.productid;
+	end loop;
+
+	for r_leastm in c_leastm loop
+		tcid(4) := r_leastm.productid;
+	end loop;
+	dbms_output.put_line(tcid(1)||'   '||tcid(2)||'   '||tcid(3)||'   '||tcid(4));
+	return tcid;
+end;
+/
+
+
+declare 
+	tcid productReport;
+
+begin	
+	tcid := productReportFunction();
+	dbms_output.put_line(tcid(1)||' '||tcid(2));
+end;
+/
+
+
+REM function 4
+create or replace type orderReport is varray(8) of number;
+/
+
+create or replace function orderReportFunction return orderReport as
+tcid orderReport;
+begin 
+	tcid := orderReport (-1,-1,-1,-1,-1,-1,-1,-1);
+	select sum(amount) into tcid(1) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid group by to_char(sysdate,'Month');
+	select sum((originalprice-price)*qty) into tcid(2) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid group by to_char(sysdate,'Month');
+	select sum(amount) into tcid(3) from orderdetailed;
+	select sum((originalprice-price)*qty) into tcid(4) from orderdetailed;
+	select userid into tcid(5) from orderdetails group by userid order by count(*) desc fetch first 1 row only;
+	select userid into tcid(6) from orderdetails group by userid order by count(*) fetch first 1 row only;
+	select userid into tcid(7) from orderdetails group by userid,to_char(sysdate,'Month') order by count(*) desc fetch first 1 row only;
+	select userid into tcid(8) from orderdetails group by userid,to_char(sysdate,'Month') order by count(*) fetch first 1 row only;
+	dbms_output.put_line(tcid(1)||'  '||tcid(2)||' ' ||tcid(3)||' '||tcid(4)||' '||tcid(5)||' '||tcid(6)||' '||tcid(7)||' '||tcid(8));
+	return tcid;
+end;
+/
+
+
+declare 
+	tcid orderReport; 
+
+begin	
+	tcid := orderReportFunction ();
+	dbms_output.put_line(tcid(1)||' '||tcid(2));
+end;
+/
+
+
+
+REM function 5
+create or replace type categoryReport is varray(8) of number;
+/
+
+
+create or replace function categoryReportFunction(id  in number) return categoryReport as 
+tcid categoryReport;
+begin
+	tcid := categoryReport(-1,-1,-1,-1,-1,-1,-1,-1);
+	select sum(amount) into tcid(1) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where categorydetails.categoryid=id group by categorydetails.categoryid,to_char(sysdate,'Month');
+
+	select sum((orderdetailed.originalprice-orderdetailed.price)*orderdetailed.qty) into tcid(2) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where categorydetails.categoryid=id group by categorydetails.categoryid,to_char(sysdate,'Month');
+	
+select sum(amount) into tcid(3) from orderdetailed  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where categorydetails.categoryid=id group by categorydetails.categoryid;
+	select sum((orderdetailed.originalprice-orderdetailed.price)*orderdetailed.qty) into tcid(4) from orderdetailed join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where categorydetails.categoryid=id group by categorydetails.categoryid;
+	select orderdetailed.productid into tcid(5) from  orderdetailed join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where productdetails.categoryid = id group by orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) desc fetch first 1 row only;
+	select orderdetailed.productid into tcid(6) from  orderdetailed join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where productdetails.categoryid =id group by orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) fetch first 1 row only;
+	select orderdetailed.productid into tcid(7) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid  join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where categorydetails.categoryid=id group by categorydetails.categoryid,to_char(sysdate,'Month'),orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) desc fetch first 1 row only;
+	select orderdetailed.productid into tcid(8) from orderdetails join orderdetailed on orderdetailed.orderid=orderdetails.orderid join productdetails on productdetails.productid= orderdetailed.productid join categorydetails on categorydetails.categoryid = productdetails.categoryid where categorydetails.categoryid=id group by categorydetails.categoryid,to_char(sysdate,'Month'),orderdetailed.productid,productdetails.categoryid,categoryname order by sum(qty) fetch first 1 row only;
+	dbms_output.put_line(tcid(1)||'  '||tcid(2)||' ' ||tcid(3)||' '||tcid(4)||' '||tcid(5)||' '||tcid(6)||' '||tcid(7)||' '||tcid(8));
+	return tcid;
+end;
+/
+
+declare 
+	tcid categoryReport;
+
+begin	
+	tcid := categoryReportFunction (4);
+	dbms_output.put_line(tcid(1)||' '||tcid(2));
+end;
+/
+
+REM function 6
+create or replace procedure offerByPrice(product_id productDetails.productid%type, price number)as
+begin
+		update productDetails set offerprice = originalprice - price where productid= product_id;
+end;
+
+REM function 7
+create or replace procedure offerByPercentage(product_id productDetails.productid%type, percent number)as
+begin	
+		update productDetails set offerprice = originalprice*(1-(percent/100)) where productid= product_id;	
+end;
+
+REM function 8
+create or replace procedure offerByCategoryID(category_id categoryDetails.categoryid%type, percent number)as
+begin
+	update productDetails set offerprice = originalprice*(1-(percent/100)) where categoryid = category_id;	
+end;
+/
+
+REM function 9
+create  or replace type returningid is varray(5) of int;
+ /
+create or replace function topSellingProduct return returningid as 
+cursor c_main is select orderdetailed.productid,sum(qty) sum_qty from orderdetailed group by orderdetailed.productid order by sum_qty desc fetch next 5 rows only;
+rid returningid;
+r_main c_main%rowtype;
+begin
+	rid := returningid(-1,-1,-1,-1,-1);
+	for r_main in c_main loop
+			rid(c_main%ROWCOUNT):=r_main.productid;	
+	end loop;
+	return rid;
+end;
+/
+
+declare 
+	rid returningid;  
+begin	
+	rid:=topSellingProduct();
+	dbms_output.put_line(rid(1)||' '||rid(2)||' '||rid(3)||' '||rid(4)||' '||rid(5));
+end;
+/
+
+REM function 10
+create or replace function totalSavingDoneByWebSite return number as
+saved number;
+begin	
+	select sum((originalprice-price)*qty) into saved from orderdetailed;
+	return saved;
+end;
+/
+
+REM function 11
+create or replace function totalSavingDoneByUser(userNum in number) return number is
+saved number;
+begin
+select sum((originalprice-price)*qty) into saved from orderdetailed where userid = userNum group by  userid;
+return saved;
+end;
+/
+
+
+
+
+
+

@@ -2,7 +2,23 @@ package com.bean;
 
 public class CategoryDetailBean {
 	private int isActive, categoryID;
-	private String categoryName, imagePath;
+	private String categoryName, imagePath,productNames,subCategoryNames;
+
+	public String getProductNames() {
+		return productNames;
+	}
+
+	public void setProductNames(String productNames) {
+		this.productNames = productNames;
+	}
+
+	public String getSubCategoryNames() {
+		return subCategoryNames;
+	}
+
+	public void setSubCategoryNames(String subCategoryNames) {
+		this.subCategoryNames = subCategoryNames;
+	}
 
 	public int getIsActive() {
 		return isActive;

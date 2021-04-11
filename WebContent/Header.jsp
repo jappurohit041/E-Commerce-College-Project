@@ -26,7 +26,7 @@ else{
 
 %>
 
-	<header class="container-fluid header">
+	<header class="container-fluid header" style="z-index: +100;">
 		<div class="row align-items-center">
 			<div class="col-1">
 				<a href="Home.jsp"><img src="images/BigDealWhiteLogo.png" width="250px"></a>

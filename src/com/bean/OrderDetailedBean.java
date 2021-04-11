@@ -2,7 +2,13 @@ package com.bean;
 
 public class OrderDetailedBean {
 	private int orderID,userID,productID,quntity;
-	private float price,totalAmount;
+	private float price,totalAmount,orignalPrice;
+	public float getOrignalPrice() {
+		return orignalPrice;
+	}
+	public void setOrignalPrice(float orignalPrice) {
+		this.orignalPrice = orignalPrice;
+	}
 	public int getOrderID() {
 		return orderID;
 	}

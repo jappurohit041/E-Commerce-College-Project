@@ -1,3 +1,4 @@
+<%@page import="com.bean.UserDetailBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -19,6 +20,21 @@
 <title>Edit Category</title>
 </head>
 <body>
+<%	
+try{
+UserDetailBean mainUser=null;
+if(session == null || session.getAttribute("isLogin") == null){
+		request.setAttribute("msg","Your session expired or you are not logined");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+else{
+	mainUser =(UserDetailBean) session.getAttribute("mainUser");
+	if(mainUser.getRoleID()!=1){
+		request.setAttribute("msg","You don't have access in this area");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+}
+%>
 	<form id="msform" action="EditCategoryServlet" method="post"
 		enctype="multipart/form-data">
 		<fieldset>
@@ -58,5 +74,10 @@
 
 		</fieldset>
 	</form>
+		<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
 </body>
 </html>

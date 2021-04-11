@@ -26,19 +26,26 @@
 	rel="stylesheet" />
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="assets/css/demo.css" rel="stylesheet" />
+<style>
+.img-fluid{ max-width: 128px;max-height: 128px;}
+</style>
 </head>
 
 <body>
 <%	
+try{
 UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
 	}
 else{
-	mainUser =(UserDetailBean) session.getAttribute("mainUser");	
+	mainUser =(UserDetailBean) session.getAttribute("mainUser");
+	if(mainUser.getRoleID()!=1){
+		request.setAttribute("msg","You don't have access in this area");		
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
 }
-
 %>
 	<div class="wrapper">
 		<div class="sidebar" data-image="assets/img/sidebar-4.jpg"
@@ -108,66 +115,185 @@ else{
 			<div class="content">
 				<div class="container-fluid content-row" style="float: left">
 					<div class="section">
-						<div class="row">
-							<div class="col-4 d-flex align-items-stretch">
+						<div class="card-deck">
 								<div class="card text-center">
+									<div class="card-header">
 									<img class="card-img-top rounded mx-auto d-block"
-										src="assets/img/discount.png"
-										style="width: 128px; height: 128px;">
-									<div class="card-body d-flex flex-column">
-										<h5 class="card-title">Apply Discount on Product</h5>
-										<p class="card-text">This will apply discount on
-											particular product by price/percentage</p>
+										src="assets/img/discount.png" class="img-fluid" style="max-width: 128px; max-height: 128px;">
+										</div>
+									<div class="card-body" >
+										<h5 class="card-title" style="font-weight: bold;">Apply Discount on Product</h5>
+										<p class="card-text">This will apply discount on particular product by price/percentage</p>
 									</div>
-									<div class="card-body d-flex flex-column">
-										<button type="button"
-											class="align-self-end btn btn-lg btn-block btn-primary"
-											style="margin-top: auto;">Apply Discount by Price</button>
-										<br />
-										<button type="button"
-											class="align-self-end btn btn-lg btn-block btn-primary"
-											style="margin-top: auto;">Apply Discount by
-											Percentage</button>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+										<a href="ApplyDiscountByProduct.jsp" class="btn btn-primary btn-block" style="white-space:normal;">Apply Discount On Product</a>
 									</div>
 								</div>
-							</div>
-							<div class="col-4 d-flex align-items-stretch">
 								<div class="card text-center">
-									<img class="card-img-top rounded mx-auto d-block"
-										src="assets/img/discount.png"
-										style="width: 128px; height: 128px;">
-									<div class="card-body d-flex flex-column">
-										<h5 class="card-title">Apply Discount on Category</h5>
-										<p class="card-text">This will apply discount on
-											particular category by percentage</p>
-										<button type="button"
-											class="align-self-end btn btn-lg btn-block btn-primary"
-											style="margin-top: auto;">Select Category</button>
-
+									<div class="card-header">
+										<img class="card-img-top rounded mx-auto d-block"
+											src="assets/img/discount.png"
+											class="img-fluid" style="max-width: 128px; max-height: 128px;">
+									</div>
+									<div class="card-body" >
+											<h5 class="card-title" style="font-weight: bold;">Apply Discount on Category</h5>
+											<p class="card-text">This will apply discount on particular category by percentage</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100" >
+											<a href="CategoryDiscount.jsp" class="btn btn-primary btn-block" style="white-space:normal;">Select Category</a>
 									</div>
 								</div>
-							</div>
-							<div class="col-4 d-flex align-items-stretch">
-								<div class="card text-center">
-									<img class="card-img-top rounded mx-auto d-block"
-										src="assets/img/rising_graph.png"
-										style="width: 128px; height: 128px;">
-									<div class="card-body d-flex flex-column">
-										<h5 class="card-title">Top Selling Products</h5>
-										<p class="card-text">This will display top selling
-											products on the ecommerce website</p>
-										<button type="button"
-											class="align-self-end btn btn-lg btn-block btn-primary"
-											style="margin-top: auto;">Top Selling Product</button>
+								<div class="card text-center" >
+									<div class="card-header">
+										<img class="card-img-top rounded mx-auto d-block"
+											src="assets/img/rising_graph.png"
+											class="img-fluid" style="max-width: 128px; max-height: 128px;">
 									</div>
+									<div class="card-body">
+											<h5 class="card-title" style="font-weight: bold;">Top Selling Products</h5>
+											<p class="card-text">This will display top selling products on the ecommerce website</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+												<a href="TopSellingProducts.jsp" class="btn btn-primary btn-block" style="white-space:normal;">Top Selling Product</a>
+									</div>		
 								</div>
+								
+						</div>
+						
+						<div class="card-deck">
+							<div class="card text-center">
+									<div class="card-header">
+									<img class="card-img-top rounded mx-auto d-block"
+										src="images/reset.png" class="img-fluid" style="max-width: 128px; max-height: 128px;">
+										</div>
+									<div class="card-body" >
+										<h5 class="card-title" style="font-weight: bold;">Reset Price</h5>
+										<p class="card-text">This will reset the price of products whose offer is over</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+										<a href="ResetPriceServlet" class="btn btn-primary btn-block" style="white-space:normal;">Reset Offer Price</a>
+									</div>
 							</div>
+							<div class="card text-center">
+									<div class="card-header">
+									<img class="card-img-top rounded mx-auto d-block"
+										src="images/product.png" class="img-fluid" style="max-width: 128px; max-height: 128px;">
+										</div>
+									<div class="card-body" >
+										<h5 class="card-title" style="font-weight: bold;">Product Report</h5>
+										<p class="card-text">This will give you report of all the products</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+										<a href="ProductReport.jsp" class="btn btn-primary btn-block" style="white-space:normal;">Product Reports</a>
+									</div>
+							</div>
+							<div class="card text-center" >
+									<div class="card-header">
+										<img class="card-img-top rounded mx-auto d-block"
+											src="images/category.png"
+											class="img-fluid" style="max-width: 128px; max-height: 128px;">
+									</div>
+									<div class="card-body">
+										<h5 class="card-title" style="font-weight: bold;">Category Report</h5>
+										<p class="card-text">This will give the category wise report.</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+											<a href="CategoryReportSelection.jsp"	class="btn btn-primary btn-block" style="white-space:normal;">Category Wise Report</a>
+									</div>
+							</div>
+						
+						</div>
+						<div class="card-deck">
+							<div class="card text-center" >
+									<div class="card-header">
+										<img class="card-img-top rounded mx-auto d-block"
+											src="images/report.png"
+											class="img-fluid" style="max-width: 128px; max-height: 128px;">
+									</div>
+									<div class="card-body">
+										<h5 class="card-title" style="font-weight: bold;">Order Report</h5>
+										<p class="card-text">This will give you the order report of overall website</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+											<a href="OrderReportServlet"	class="btn btn-primary btn-block" style="white-space:normal;">Order Report</a>
+									</div>
+							</div>
+							<div class="card text-center">
+									<div class="card-header">
+									<img class="card-img-top rounded mx-auto d-block"
+										src="images/Trend.png" class="img-fluid" style="max-width: 128px; max-height: 128px;">
+										</div>
+									<div class="card-body" >
+										<h5 class="card-title" style="font-weight: bold;">Category Trend</h5>
+										<p class="card-text">User Trend Category Wise for this Current Month</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+										<a href="CategoryWiseTrend.jsp" class="btn btn-primary btn-block" style="white-space:normal;">See Trend Category Wise</a>
+									</div>
+							</div>
+							
+							<div class="card text-center" >
+									<div class="card-header">
+										<img class="card-img-top rounded mx-auto d-block"
+											src="images/random.png"
+											class="img-fluid" style="max-width: 128px; max-height: 128px;">
+									</div>
+									<div class="card-body">
+										<h5 class="card-title" style="font-weight: bold;">Pick Random Active Customer</h5>
+										<p class="card-text">This will pick random random customer and mail that person on the given Mail-ID for availing special discount</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+											<a href="PickRandomServlet"	class="btn btn-primary btn-block" style="white-space:normal;">Find Random Customer</a>
+									</div>
+							</div>
+						
+						</div>
+						<div class="card-deck">
+							<div class="card text-center">
+									<div class="card-header">
+									<img class="card-img-top rounded mx-auto d-block"
+										src="images/user.png" class="img-fluid" style="max-width: 128px; max-height: 128px;">
+										</div>
+									<div class="card-body" >
+										<h5 class="card-title" style="font-weight: bold;">User Report</h5>
+										<p class="card-text">This will give report of particular user</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+										<a href="UserReportSelect.jsp" class="btn btn-primary btn-block" style="white-space:normal;">User Report</a>
+									</div>
+							</div>
+							<div class="card text-center">
+									<div class="card-header">
+									<img class="card-img-top rounded mx-auto d-block"
+										src="images/product.png" class="img-fluid" style="max-width: 128px; max-height: 128px;">
+										</div>
+									<div class="card-body" >
+										<h5 class="card-title" style="font-weight: bold;">Product Report</h5>
+										<p class="card-text">This will give you report of the particular product</p>
+									</div>
+									<div class="card-footer d-flex align-items-center justify-content-center h-100">
+										<a href="ProductReportSelect.jsp" class="btn btn-primary btn-block" style="white-space:normal;">Product Report</a>
+									</div>
+							</div>
+						
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<p style="display: none" id='con'>${msg}</p>
+	<script>
+        var s = document.getElementById('con').innerHTML;	
+        if(s!=''){
+        	window.alert(s)	
+        }
+    </script>
+	<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

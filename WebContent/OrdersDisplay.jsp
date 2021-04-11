@@ -1,3 +1,5 @@
+<%@page import="com.bean.OrderShowCaseBean"%>
+<%@page import="com.dao.OrderShowCaseDao"%>
 <%@page import="com.bean.UserDetailBean"%>
 <%@page import="com.bean.OrderDetailBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -32,7 +34,7 @@
 
 <body>
 	<%	
-UserDetailBean mainUser=null;
+try{UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
@@ -112,40 +114,44 @@ else{
 			</nav>
 			<!-- End Navbar -->
 			<div class="content">
-				<%ArrayList<OrderDetailBean> listOfOrders = OrderDao.getAllOrders(); %>
+				<p class="mb-3  text-uppercase large"><h3><strong>Order Detail</strong></h3></p>
+				<hr>
+				<%ArrayList<OrderShowCaseBean> list = OrderShowCaseDao.getAllOrderDetail();%>
 				<div class="table-responsive">
-					<table border="1">
+					<table border="1" style="table-layout: fixed; width: 100%; text-align: center;" class="table-striped table-light ">
 						<thead>
 							<tr>
-								<th>Order ID</th>
-								<th>User ID</th>
-								<th>Address</th>
-								<th>Payment Type</th>
-								<th>Final Amount</th>
-								<th>Total Amount</th>
-								<th>Discount Amount</th>
-								<th>Quantity</th>
-								<th>Order Date</th>
-								<th>Delivery Date</th>
-								<th>Delivery Status</th>
+								<th style="word-wrap: break-word; text-align: center;">Order ID</th>
+								<th style="word-wrap: break-word; text-align: center;">User ID</th>
+								<th style="word-wrap: break-word; text-align: center;">Address</th>
+								<th style="word-wrap: break-word; text-align: center;">Payment Type</th>
+								<th style="word-wrap: break-word; text-align: center;">ProductID</th>
+								<th style="word-wrap: break-word; text-align: center;">Product Name</th>
+								<th style="word-wrap: break-word; text-align: center;">Quantity</th>
+								<th style="word-wrap: break-word; text-align: center;">Offer Price</th>
+								<th style="word-wrap: break-word; text-align: center;">Total Amount</th>
+								<th style="word-wrap: break-word; text-align: center;">Discount Amount</th>
+								<th style="word-wrap: break-word; text-align: center;">Order Date</th>
+								<th style="word-wrap: break-word; text-align: center;">Delivery Date</th>
+								<th style="word-wrap: break-word; text-align: center;">Delivery Status</th>
 							</tr>
 						</thead>
 						<tbody>
-							<%for(OrderDetailBean order: listOfOrders ){ %>
+							<%for(OrderShowCaseBean o: list ){ %>
                 			<tr>
-								<td><%=order.getOrderID() %></td>
-								<td><%=order.getUserID() %></td>
-								<td><%=order.getAddress() %></td>
-								<%String answer = (order.getPaymentType()== 0) ? "COD" : order.getPaymentType()==1? "Net-Banking":"Credit-Card"; %>
-								<td><%=answer %></td>
-								<td><%=order.getFinalAmount() %></td>
-								<td><%=order.getTotalAmount() %></td>
-								<td><%=order.getDiscountAmount() %></td>
-								<td><%=order.getQuantity() %></td>
-								<td><%=order.getOrderDate() %></td>
-								<td><%=order.getDeliveryDate() %></td>
-								<%answer =  order.getDeliveryStatus()==0? "Delievered" : "Not-Delievered";%>
-								<td><%=answer %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getOrderID() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getUserID() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getAddress() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=(o.getPaymentType()== 0) ? "COD" : o.getPaymentType()==1? "Net-Banking":"Credit-Card" %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getProductID() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getProductName() %></td>	
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getQuantity() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getPrice() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getAmount() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=(o.getQuantity()*o.getOrignalPrice())-o.getAmount() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getOrderDate() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getDeliveryDate() %></td>
+								<td style="word-wrap: break-word; text-align: center;"><%=o.getDeliveryStatus()==0? "Not-Delievered" : "Delievered" %></td>
 							</tr>
 							<%}%>
 						</tbody>
@@ -154,6 +160,11 @@ else{
 				
 			</div>
 		</div>
+			<%}catch(Exception e){
+		request.setAttribute("msg","You are not logined Please login");
+		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+	}
+%>
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

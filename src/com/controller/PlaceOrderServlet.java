@@ -71,6 +71,7 @@ public class PlaceOrderServlet extends HttpServlet{
 				order.setProductID(c.getProductID());
 				order.setPrice(c.getOfferPrice());
 				order.setQuntity(c.getQuantity());
+				order.setOrignalPrice(c.getOrignalPrice());
 				order.setTotalAmount(c.getOfferPrice()*c.getQuantity());
 				flag1 = OrderDetailedDao.insertRecord(order);
 				if(flag1==-1) {
@@ -123,6 +124,7 @@ public class PlaceOrderServlet extends HttpServlet{
 			order.setProductID(cart.getProductID());
 			order.setPrice(cart.getOfferPrice());
 			order.setQuntity(cart.getQuantity());
+			order.setOrignalPrice(cart.getOrignalPrice());
 			order.setTotalAmount(cart.getOfferPrice()*cart.getQuantity());
 			int flag1 = OrderDetailedDao.insertRecord(order);
 			if(flag1==-1) {

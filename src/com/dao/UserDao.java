@@ -1,10 +1,13 @@
 package com.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.bean.UserDetailBean;
 import com.util.JDBCConnectionOrcale;
@@ -61,6 +64,74 @@ public class UserDao {
 		return currentValue;
 	}
 	
+	public static float getDiscountByUser(int userID) {
+		float discountAmount=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select sum(discountamount) from userdetails join orderdetails on orderdetails.userid=userdetails.userid where userdetails.userid = ?");
+			){
+			psmt.setInt(1,userID);
+			ResultSet set = psmt.executeQuery();
+			
+			while(set.next()) {
+				discountAmount = set.getFloat("sum(discountamount)");			
+			}
+		}catch(Exception e) {
+			System.out.println("In get discount value of user Detail");
+			e.printStackTrace();
+		}
+		return discountAmount;
+	}
+	public static float getTotalPurchaseOfUser(int userID) {
+		float totalPurchase=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select sum(finalamount) from userdetails join orderdetails on orderdetails.userid=userdetails.userid where userdetails.userid = ?");
+			){
+			psmt.setInt(1,userID);
+			ResultSet set = psmt.executeQuery();
+			
+			while(set.next()) {
+				totalPurchase = set.getFloat("sum(finalamount)");			
+			}
+		}catch(Exception e) {
+			System.out.println("In get discount value of user Detail");
+			e.printStackTrace();
+		}
+		return totalPurchase;
+	}
+	public static float getDiscountByUserForCurrentMonth(int userID) {
+		float discountAmount=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select sum(discountamount) from userdetails join orderdetails on orderdetails.userid=userdetails.userid where userdetails.userid = ? group by to_char(sysdate,'Month')");
+			){
+			psmt.setInt(1,userID);
+			ResultSet set = psmt.executeQuery();
+			
+			while(set.next()) {
+				discountAmount = set.getFloat("sum(discountamount)");			
+			}
+		}catch(Exception e) {
+			System.out.println("In get discount value of user Detail");
+			e.printStackTrace();
+		}
+		return discountAmount;
+	}
+	public static float getTotalPurchaseOfUserForCurrentMonth(int userID) {
+		float totalPurchase=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select sum(finalamount) from userdetails join orderdetails on orderdetails.userid=userdetails.userid where userdetails.userid = ? group by to_char(sysdate,'Month')");
+			){
+			psmt.setInt(1,userID);
+			ResultSet set = psmt.executeQuery();
+			
+			while(set.next()) {
+				totalPurchase = set.getFloat("sum(finalamount)");			
+			}
+		}catch(Exception e) {
+			System.out.println("In get discount value of user Detail");
+			e.printStackTrace();
+		}
+		return totalPurchase;
+	}
 	public static ArrayList<UserDetailBean> getAllUser() {
 		ArrayList<UserDetailBean> list = new ArrayList<UserDetailBean>();
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
@@ -85,6 +156,9 @@ public class UserDao {
 				user.setIsBlock(set.getInt("isblock"));
 				user.setSecurityQuestion(set.getString("securityquestion"));
 				user.setSecurityAnswer(set.getString("securityanswer"));
+				user.setTotalDiscount(getDiscountByUser(user.getUserID()));
+				user.setTotalPurchase(getTotalPurchaseOfUser(user.getUserID()));
+				
 				list.add(user);
 			}
 			
@@ -120,6 +194,62 @@ public class UserDao {
 				user.setIsBlock(set.getInt("isblock"));
 				user.setSecurityQuestion(set.getString("securityquestion"));
 				user.setSecurityAnswer(set.getString("securityanswer"));
+				user.setTotalDiscount(getDiscountByUser(user.getUserID()));
+				user.setTotalPurchase(getTotalPurchaseOfUser(user.getUserID()));
+				
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In get User By ID");
+		}
+		return user;
+	}
+	public static HashMap<Integer, String> getUserName(){
+		HashMap<Integer, String> list = new HashMap<Integer, String>();
+			try(Connection con = JDBCConnectionOrcale.connectionMethod();
+					PreparedStatement psmt = con.prepareStatement("select concat(firstname,concat(' ',lastname)) name,userid from userdetails");
+					ResultSet set = psmt.executeQuery();
+					){
+				while(set.next()) {
+					list.put(set.getInt("userID"), set.getString("name"));
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("In get user Name");
+			}
+		return list;
+	}
+	
+	public static UserDetailBean getUserByIDForCurrentMonth(int userID) {
+		UserDetailBean user = new UserDetailBean();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("select * from userDetails where userid=? ");
+				)
+		{
+			psmt.setInt(1, userID);
+			ResultSet set = psmt.executeQuery();
+			while(set.next()) {
+				user.setFirstName(set.getString("firstname"));
+				user.setLastName(set.getString("lastname"));
+				user.setEmailID(set.getString("emailid"));
+				user.setPassWord(set.getString("password"));
+				user.setAddress(set.getString("address"));
+				user.setUserID(set.getInt("userid"));
+				user.setDateOfBirth(set.getString("dateofbirth").substring(0, 10));
+				user.setCity(set.getString("city"));
+				user.setState(set.getString("state"));
+				user.setPinCode(set.getString("pincode"));
+				user.setCountry(set.getString("country"));
+				user.setPhoneNumber(set.getLong("contactnumber"));
+				user.setRoleID(set.getInt("roleid"));
+				user.setIsBlock(set.getInt("isblock"));
+				user.setSecurityQuestion(set.getString("securityquestion"));
+				user.setSecurityAnswer(set.getString("securityanswer"));
+				user.setTotalDiscount(getDiscountByUserForCurrentMonth(user.getUserID()));
+				user.setTotalPurchase(getTotalPurchaseOfUserForCurrentMonth(user.getUserID()));
+				
 			}
 		}
 		catch(Exception e) {
@@ -273,5 +403,35 @@ public class UserDao {
 		}
 		return flag;
 	}
+	public static int randomUser() {
+		int userID=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				CallableStatement csmt = con.prepareCall("{? = call randomUser}");){
+			 csmt.registerOutParameter(1, Types.INTEGER);
+			csmt.execute();
+			userID = csmt.getInt(1);
+		}
+		catch(SQLException e) {
+			System.out.println("In generating random users");
+		}
+		return userID;
+	}
 	
+	public static float totalSavingDoneByUser(int userID) {
+		float saving=0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				CallableStatement csmt = con.prepareCall("{? = call totalSavingDoneByUser(?)}");){
+			 csmt.registerOutParameter(1, Types.FLOAT);
+			 csmt.setInt(2, userID);
+			csmt.execute();
+			saving = csmt.getFloat(1);
+		}
+		catch(SQLException e) {
+			System.out.println("In total Saving Done by User");
+		}
+		return saving;
+	}
+	public static void main(String[] args) {
+		System.out.println(totalSavingDoneByUser(1));
+	}
 }

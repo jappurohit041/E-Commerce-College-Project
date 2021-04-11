@@ -237,6 +237,7 @@
     </style>
 </head>
 <body>
+
 	<div class="Header" style="z-index: +10">
 	<%@include file="Header.jsp"%>
  	<%ArrayList<CartDetailBean> list = (ArrayList<CartDetailBean>) CartDao.getListOfCart(mainUser.getUserID()); %> 

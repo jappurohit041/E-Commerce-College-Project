@@ -1,10 +1,15 @@
 package com.dao;
 
+import java.math.BigDecimal;
+import java.sql.Array;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import com.bean.ProductDetailBean;
 import com.util.JDBCConnectionOrcale;
 
@@ -167,6 +172,88 @@ public class ProductDao {
 		}
 		return product;
 	}
+	public static ProductDetailBean getTopSellingProductByProductID(int productID) {
+		ProductDetailBean product = new ProductDetailBean();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("select sum(amount),productdetails.productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,productdetails.originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive,sum(qty) from orderdetailed join productdetails on productdetails.productid = orderdetailed.productid join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where productdetails.productid = ? group by orderdetailed.productid,productdetails.productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,productdetails.originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive");
+				){
+			psmt.setInt(1, productID);
+			ResultSet set = psmt.executeQuery();
+			while(set.next()) {
+				product.setProductId(set.getInt("productid"));
+				product.setCategoryId(set.getInt("categoryID"));
+				product.setSubCategoryId(set.getInt("subcategoryid"));
+				product.setOriginalPrice(set.getFloat("originalprice"));
+				product.setOfferPrice(set.getFloat("offerprice"));
+				product.setProductName(set.getString("productName"));
+				product.setCompanyName(set.getString("companyName"));
+				product.setQuantity(set.getInt("quantity"));
+				product.setTotalAmount(set.getFloat("SUM(AMOUNT)"));
+				product.setSoldQuantity(set.getInt("sum(qty)"));
+				product.setOfferTill(set.getString("offertill").substring(0,10));
+				product.setImagePath(set.getString("imagepath"));
+				product.setProductDescription(set.getString("productDescription"));
+				product.setCategoryName(set.getString("CATEGORYNAME"));
+				product.setSubCategoryName(set.getString("SUBCATEGORYNAME"));
+				product.setIsActive(set.getInt("isactive"));
+				
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Get product by id");
+		}
+		return product;
+	}
+	public static HashMap<Integer, String> getProductName(){
+		HashMap<Integer, String> list = new HashMap<Integer, String>();
+			try(Connection con = JDBCConnectionOrcale.connectionMethod();
+					PreparedStatement psmt = con.prepareStatement("select productname,productid from productdetails");
+					ResultSet set = psmt.executeQuery();
+					){
+				while(set.next()) {
+					list.put(set.getInt("productid"), set.getString("productname"));
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("In get product Name");
+			}
+		return list;
+	}
+	
+	public static ProductDetailBean getTopSellingProductByProductIDForMonth(int productID) {
+		ProductDetailBean product = new ProductDetailBean();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("select to_char(sysdate,'Month'),productdetails.productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,productdetails.originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive,sum(qty),sum(amount) from orderdetailed join productdetails on productdetails.productid = orderdetailed.productid join categoryDetails on categorydetails.categoryid=productdetails.categoryid join subcategorydetails on subcategorydetails.subcategoryid=productdetails.subcategoryid where orderdetailed.productid=? group by orderdetailed.productid,productdetails.productid,productdetails.categoryid,productdetails.subcategoryid,categorydetails.categoryname,subcategorydetails.subcategoryname,productdetails.originalprice,offerprice,productname,companyname,quantity,offertill,productdetails.imagepath,productdescription,productdetails.isactive,to_char(sysdate,'Month')");
+				){
+			psmt.setInt(1, productID);
+			ResultSet set = psmt.executeQuery();
+			while(set.next()) {
+				product.setProductId(set.getInt("productid"));
+				product.setCategoryId(set.getInt("categoryID"));
+				product.setSubCategoryId(set.getInt("subcategoryid"));
+				product.setOriginalPrice(set.getFloat("originalprice"));
+				product.setOfferPrice(set.getFloat("offerprice"));
+				product.setProductName(set.getString("productName"));
+				product.setCompanyName(set.getString("companyName"));
+				product.setQuantity(set.getInt("quantity"));
+				product.setTotalAmount(set.getFloat("SUM(AMOUNT)"));
+				product.setSoldQuantity(set.getInt("sum(qty)"));
+				product.setOfferTill(set.getString("offertill").substring(0,10));
+				product.setImagePath(set.getString("imagepath"));
+				product.setProductDescription(set.getString("productDescription"));
+				product.setCategoryName(set.getString("CATEGORYNAME"));
+				product.setSubCategoryName(set.getString("SUBCATEGORYNAME"));
+				product.setIsActive(set.getInt("isactive"));
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Get product by id");
+		}
+		return product;
+	}
 
 	public static ArrayList<ProductDetailBean> getProductByCategory(int categoryID) {
 		ArrayList<ProductDetailBean> list = new ArrayList<ProductDetailBean>();
@@ -297,10 +384,145 @@ public class ProductDao {
 		}
 		return flag;
 	}
-	public static void main(String[] args) {
-		ArrayList<ProductDetailBean> list = getProductByName("i");
-		for(ProductDetailBean p : list) {
-			System.out.println(p.getProductName()+"    "+p.getCategoryId());
+	public static HashMap<Integer,String> productIDAndQuestion(){
+		HashMap<Integer,String> map = new HashMap<Integer,String>();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				PreparedStatement psmt = con.prepareStatement("select productid, upper(productname) from productdetails where isactive=1");
+				ResultSet set = psmt.executeQuery();
+				){
+			while(set.next()) {
+				map.put(set.getInt("productid"), set.getString("upper(productname)"));
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In get productid and question");
+		}
+		return map;
+	}
+
+	public static int applyDiscountByPrice(int productID, float percent) {
+		int flag= 0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				CallableStatement csmt = con.prepareCall("call  offerByPrice(?,?)") 
+				){
+			csmt.setInt(1, productID);
+			csmt.setFloat(2, percent);
+			boolean flag1 = csmt.execute();
+			if(!flag1) {
+				flag=1;
+			}
+		}
+		catch(SQLException e) {
+			if(e.getErrorCode()==20200) {
+				flag=-1;
+			}
+			//e.printStackTrace();
+			System.out.println("In apply discount by price");
+		}
+		return flag;
+	}
+	public static int applyDiscountByPercent(int productID, float percent) {
+		int flag= 0;
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				CallableStatement csmt = con.prepareCall("call  offerByPercentage(?,?)");
+				){
+			csmt.setInt(1, productID);
+			csmt.setFloat(2, percent);
+			boolean flag1 = csmt.execute();
+			if(!flag1) {
+				flag=1;
+			}
+		}
+		catch(SQLException e) {
+			if(e.getErrorCode()==20200) {
+				flag=-1;
+			}
+			//e.printStackTrace();
+			System.out.println("In apply discount by percentage");
+		}
+		return flag;
+	}
+	public static int[] topSellingProduct() {
+		BigDecimal[] productID= new BigDecimal[5];
+		int[] product = new int[5];
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			){
+			CallableStatement csmt = con.prepareCall("begin ?:= topSellingProduct; end;");
+			csmt.registerOutParameter(1, Types.ARRAY,"RETURNINGID");
+			csmt.executeQuery();
+			
+			Array array = (Array) csmt.getArray(1);
+			productID = (BigDecimal[])array.getArray();
+			for(int i =0;i<productID.length;i++) {
+				product[i]=productID[i].intValue();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return product;
+	}
+	public static void resetPrice() {
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+				CallableStatement csmt = con.prepareCall("{call  resetPrice}");)
+		{
+			csmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
+	public static ArrayList<ProductDetailBean> getTopSellingProducts(){
+		ArrayList<ProductDetailBean> list = new ArrayList<ProductDetailBean>();
+		int[] productID = topSellingProduct();
+		for(int i =0 ; i<productID.length;i++) {
+			ProductDetailBean product = getTopSellingProductByProductID(productID[i]);
+			list.add(product);
+		}
+		return list;
+	}
+	public static int[] productReport() {
+		BigDecimal[] productID= new BigDecimal[4];
+		int[] product = new int[4];
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			){
+			CallableStatement csmt = con.prepareCall("begin ?:= productReportFunction; end;");
+			csmt.registerOutParameter(1, Types.ARRAY,"PRODUCTREPORT");
+			csmt.executeQuery();
+			
+			Array array = (Array) csmt.getArray(1);
+			productID = (BigDecimal[])array.getArray();
+
+			for(int i =0;i<productID.length;i++) {
+				product[i]=productID[i].intValue();
+			}
+			for(int i=0;i<product.length;i++) {
+				System.out.println("i : "+product[i]);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return product;
+	}
+	public static ArrayList<ProductDetailBean> productReportMethod(){
+		ArrayList<ProductDetailBean> list = new ArrayList<ProductDetailBean>();
+		int[] productID = productReport();
+		//System.out.println(productID.length);
+		for(int i=0;i<productID.length;i++) {
+			System.out.println("i : "+productID[i]);
+		}
+		for(int i =0 ; i<2;i++) {
+			ProductDetailBean product = getTopSellingProductByProductID(productID[i]);
+			list.add(product);
+		}
+		for(int i =2 ; i<productID.length;i++) {
+			ProductDetailBean product = getTopSellingProductByProductIDForMonth(productID[i]);
+			list.add(product);
+		}
+		return list;
+	}
+	public static void main(String[] args) {
+		productReport();
+	}
+	
 }

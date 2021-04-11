@@ -1,3 +1,6 @@
+<%@page import="com.bean.ProductDetailBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -16,40 +19,18 @@
   background: black;
   background-color: black;
 }
+.gif{
 
+}
 
+@KeyFrame gifInfinite {
+	0% {}
+	100% {}
+}
 </style>
+
 </head>
-<body>
-<!-- <div  id="page-hero" class="carousel slide" data-bs-ride="carousel" style="margin-bottom: 50px; margin-top: 50px;">
-    <ul class="carousel-indicators">
-        <li data-bs-target="#page-hero" data-bs-slide-to='0' class="active bg-dark" ></li>
-        <li data-bs-target="#page-hero" data-bs-slide-to='1' class="bg-dark"></li>
-        <li data-bs-target="#page-hero" data-bs-slide-to='2' class="bg-dark"></li>
-        <li data-bs-target="#page-hero" data-bs-slide-to='3' class="bg-dark"></li>
-    </ul>
-        <div class="carousel-inner">
-            <div class="carousel-item  active">
-                <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2021/4/1/e3db6c65-045e-4ab8-b0b6-cd847dfa03311617290551429-USPA_Kids_Desk_Banner.jpg" width="100%" height="400px">
-            </div>
-            <div class="carousel-item">
-                <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2021/4/1/1a5ab5a0-dea6-4c68-a80a-79ec0efdae451617290551412-Biba_Desk_Banner.jpg" width="100%" height="400px">
-            </div>
-            <div class="carousel-item">
-                <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2021/4/1/cecf7580-8d0b-4040-b9b6-1edec8f5dea01617290551366-Personal-Care_Desk.jpg" width="100%" height="400px">
-            </div>
-            <div class="carousel-item">
-                <img src="https://cms.bigbazaarstore.com/cms/model/HFD/EIe/Cun6/1Dailyfavourites.jpg" width="100%" height="400px">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#page-hero" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark text-dark"  style="padding: 30px; border-radius: 10px;"></span>
-        </a>
-        <a class="carousel-control-next" href="#page-hero" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark text-dark" style="padding: 30px; border-radius: 10px;"></span>
-        </a>
-    </div> -->
-    <!--Section: Block Content-->
+<body style="margin: 0px;">
 <section>
 
   <!--Carousel Wrapper-->
@@ -59,49 +40,80 @@
       <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
       <li data-target="#carousel-example-2" data-slide-to="1"></li>
       <li data-target="#carousel-example-2" data-slide-to="2"></li>
+      <li data-target="#carousel-example-2" data-slide-to="3"></li>
+      <li data-target="#carousel-example-2" data-slide-to="4"></li>
     </ol>
     <!--/Indicators-->
     <!--Slides-->
+    <%ArrayList<ProductDetailBean> p = ProductDao.getTopSellingProducts(); %>
     <div class="carousel-inner" role="listbox">
       <div class="carousel-item active">
         <div class="view">
-          <img class="d-block w-100" src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2021/4/1/e3db6c65-045e-4ab8-b0b6-cd847dfa03311617290551429-USPA_Kids_Desk_Banner.jpg"
-            alt="First slide" width="100%" height="500px">
+          <img class="d-block w-100" src="<%=p.get(0).getImagePath()%>"
+            alt="First slide" width="200%" height="500px">
           <a href="#!">
             <div class="mask rgba-black-light"></div>
           </a>
         </div>
         <div class="carousel-caption">
-          <h3 class="h3-responsive">First shop item</h3>
-          <p>First text</p>
+          <h3 class="h3-responsive" style="color: black;"><%=p.get(0).getProductName() %></h3>
+          <p style="color: black;"><%=p.get(0).getProductDescription() %></p>
         </div>
-      </div>
-      <div class="carousel-item">
+    </div>
+    <div class="carousel-item">
         <!--Mask color-->
         <div class="view">
-          <img class="d-block w-100" src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2021/4/1/1a5ab5a0-dea6-4c68-a80a-79ec0efdae451617290551412-Biba_Desk_Banner.jpg"
+          <img class="d-block w-100" src="<%=p.get(1).getImagePath() %>"
             alt="Second slide" width="100%" height="500px">
           <a href="#!">
             <div class="mask rgba-black-light"></div>
           </a>
         </div>
         <div class="carousel-caption">
-          <h3 class="h3-responsive">Second shop item</h3>
-          <p>Secondary text</p>
+          <h3 class="h3-responsive"  style="color: black;"><%=p.get(1).getProductName() %></h3>
+          <p  style="color: black;"><%=p.get(1).getProductDescription() %></p>
         </div>
-      </div>
-      <div class="carousel-item">
+    </div>
+    <div class="carousel-item">
         <!--Mask color-->
         <div class="view">
-          <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2021/4/1/cecf7580-8d0b-4040-b9b6-1edec8f5dea01617290551366-Personal-Care_Desk.jpg" 
+          <img src="<%=p.get(2).getImagePath() %>" 
           width="100%" height="500px">
                 <a href="#!">
             <div class="mask rgba-black-light"></div>
           </a>
         </div>
         <div class="carousel-caption">
-          <h3 class="h3-responsive">Third shop item</h3>
-          <p>Third text</p>
+          <h3 class="h3-responsive"  style="color: black;"><%=p.get(2).getProductName() %></h3>
+          <p  style="color: black;"><%=p.get(2).getProductDescription() %></p>
+        </div>
+    </div>
+    <div class="carousel-item">
+        <!--Mask color-->
+        <div class="view">
+          <img src="<%=p.get(3).getImagePath() %>" 
+          width="100%" height="500px" loop=infinte>
+                <a href="#!">
+            <div class="mask rgba-black-light"></div>
+          </a>
+        </div>
+        <div class="carousel-caption">
+          <h3 class="h3-responsive"  style="color: black;"><%=p.get(3).getProductName() %></h3>
+          <p  style="color: black;"><%=p.get(3).getProductDescription() %></p>
+        </div>
+    </div>
+ 	<div class="carousel-item">
+        <!--Mask color-->
+        <div class="view">
+          <img src="<%=p.get(4).getImagePath() %>" 
+          width="100%" height="500px" loop=infinte>
+                <a href="#!">
+            <div class="mask rgba-black-light"></div>
+          </a>
+        </div>
+        <div class="carousel-caption">
+          <h3 class="h3-responsive"  style="color: black;"><%=p.get(4).getProductName() %></h3>
+          <p  style="color: black;"><%=p.get(4).getProductDescription() %></p>
         </div>
       </div>
     </div>

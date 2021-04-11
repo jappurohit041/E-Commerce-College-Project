@@ -12,13 +12,14 @@ public class OrderDetailedDao {
 	public static int insertRecord(OrderDetailedBean order) {
 		int flag =0;
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
-				PreparedStatement psmt = con.prepareStatement("insert into orderdetailed (orderid,userid,productid,price,qty,amount) values(?,?,?,?,?,?)");){
+				PreparedStatement psmt = con.prepareStatement("insert into orderdetailed (orderid,userid,productid,price,qty,amount,originalPrice) values(?,?,?,?,?,?,?)");){
 			psmt.setInt(1, order.getOrderID());
 			psmt.setInt(2, order.getUserID());
 			psmt.setInt(3, order.getProductID());
 			psmt.setFloat(4, order.getPrice());
 			psmt.setInt(5, order.getQuntity());
 			psmt.setFloat(6, order.getTotalAmount());
+			psmt.setFloat(7, order.getOrignalPrice());
 			int count = psmt.executeUpdate();
 			if(count==1) {
 				flag=1;

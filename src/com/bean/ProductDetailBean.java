@@ -1,7 +1,24 @@
 package com.bean;
 
 public class ProductDetailBean {
-	private int productId, categoryId, subCategoryId, quantity, isActive;
+	private int productId, categoryId, subCategoryId, quantity, isActive,soldQuantity;
+	private float totalAmount;
+	public float getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(float totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public int getSoldQuantity() {
+		return soldQuantity;
+	}
+
+	public void setSoldQuantity(int soldQuantity) {
+		this.soldQuantity = soldQuantity;
+	}
+
 	private float originalPrice, offerPrice;
 	private String productName, companyName, offerTill, imagePath, productDescription,categoryName,subCategoryName;
 

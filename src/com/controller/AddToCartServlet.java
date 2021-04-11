@@ -41,7 +41,7 @@ public class AddToCartServlet extends HttpServlet{
 			request.setAttribute("msg", "Product Added in the Cart");
 		}
 		else {
-			request.setAttribute("msg", "Some Error Occured");
+			request.setAttribute("msg", "Sorry this product went out of stock");
 		}
 		request.getRequestDispatcher("CartDisplay.jsp").forward(request, response);
 	}

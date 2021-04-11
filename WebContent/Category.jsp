@@ -1,3 +1,4 @@
+<%@page import="com.bean.UserDetailBean"%>
 <%@page import="com.dao.SubCategoryDao"%>
 <%@page import="com.bean.SubCategoryDetailBean"%>
 <%@page import="com.bean.CategoryDetailBean"%>
@@ -42,6 +43,7 @@
 </style>
 </head>
 <body>
+
 	<%ArrayList<CategoryDetailBean> category = (ArrayList<CategoryDetailBean>)CategoryDao.getAllCategory(); %>
 	<div class="container-fluid">
 		<div class="row">
@@ -80,5 +82,6 @@
 		</div>
 	</div>
 </div>
+
 </body>
 </html>

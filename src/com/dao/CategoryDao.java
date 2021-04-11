@@ -1,8 +1,13 @@
 package com.dao;
 
+import java.math.BigDecimal;
+import java.sql.Array;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,4 +158,132 @@ boolean flag = false;
 		}
 	return flag;
 	}
+	public static int applyDiscountByCategoryID(int categoryID, float percent) {
+			int flag= 0;
+			try(Connection con = JDBCConnectionOrcale.connectionMethod();
+					CallableStatement csmt = con.prepareCall("call  offerByCategoryID(?,?)"); 
+					){
+				csmt.setInt(1, categoryID);
+				csmt.setFloat(2, percent);
+				boolean flag1 = csmt.execute();
+				if(!flag1) {
+					flag=1;
+				}
+			}
+			catch(SQLException e) {
+				if(e.getErrorCode()==20200) {
+					flag=-1;
+				}
+				//e.printStackTrace();
+				System.out.println("In apply discount by categoryID");
+			}
+			return flag;
+	}
+	public static int[] topSellingCategory() {
+		BigDecimal[] categoryID= new BigDecimal[2];
+		int[] category = new int[2];
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			){
+			CallableStatement csmt = con.prepareCall("begin ?:= topSellingCategory; end;");
+			csmt.registerOutParameter(1, Types.ARRAY,"TOPSELLINGCATEGORYARRAY");
+			csmt.executeQuery();
+			
+			Array array = (Array) csmt.getArray(1);
+			categoryID = (BigDecimal[])array.getArray();
+			for(int i =0;i<categoryID.length;i++) {
+				category[i]=categoryID[i].intValue();
+			}
+		}catch(Exception e) {
+
+			System.out.println("In top selling category");
+			e.printStackTrace();
+		}
+		return category;
+	}
+	public static ArrayList<CategoryDetailBean> topSellingCategoryDetails(){
+		ArrayList<CategoryDetailBean> list = new ArrayList<CategoryDetailBean>();
+		int[] category = topSellingCategory();
+		for(int i=0;i<category.length;i++) {
+			CategoryDetailBean c=getCategoryDetailed(category[i]);
+			list.add(c);
+		}
+		return list;
+	}
+	public static CategoryDetailBean getCategoryDetailed(int categoryID) {
+		CategoryDetailBean c = new CategoryDetailBean();
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			PreparedStatement psmt = con.prepareStatement("select subcategorydetails.categoryid,categoryName,categorydetails.imagePath,listagg(distinct subcategoryname, ',') within group (order by subcategoryname) as names,listagg(distinct productdetails.productname, ',') as productnames from subcategorydetails join productdetails on productdetails.categoryid=subcategorydetails.categoryid join categoryDetails on categoryDetails.categoryid=subcategorydetails.categoryid where subcategorydetails.categoryid=? group by subcategorydetails.categoryid,categoryName,categorydetails.imagePath");
+				){
+			psmt.setInt(1, categoryID);
+			ResultSet set= psmt.executeQuery();
+			while(set.next()) {
+				c.setCategoryID(set.getInt("categoryid"));
+				c.setCategoryName(set.getString("categoryname"));
+				c.setImagePath(set.getString("imagePath"));
+				c.setSubCategoryNames(set.getString("names"));
+				c.setProductNames(set.getString("productnames"));
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("In get  categoryDetail");
+		}
+		return c;
+	}
+	public static float[] categoryReport(int categoryID) {
+		BigDecimal[] category= new BigDecimal[8];
+		float[] categoryReport = new float[8];
+		try(Connection con = JDBCConnectionOrcale.connectionMethod();
+			){
+			CallableStatement csmt = con.prepareCall("begin ?:= categoryReportFunction(?); end;");
+			csmt.registerOutParameter(1, Types.ARRAY,"CATEGORYREPORT");
+			csmt.setInt(2, categoryID);
+			csmt.executeQuery();
+			
+			Array array = (Array) csmt.getArray(1);
+			category = (BigDecimal[])array.getArray();
+			for(int i =0;i<categoryReport.length;i++) {
+				categoryReport[i]=category[i].floatValue();
+			}
+		}catch(SQLException e) {
+			if(e.getErrorCode()==1403) {
+				categoryReport[7]=-2;
+			}
+
+		}
+		return categoryReport;
+	}
+	
+	public static HashMap<String,Object> getCategoryReport(int categoryID){
+		HashMap<String,Object> report = new HashMap<String,Object>();
+		float[] categoryReport = CategoryDao.categoryReport(categoryID);
+		if(categoryReport[7]!=-2) {
+			report.put("thisMonthSale",categoryReport[0]);
+			report.put("thisMonthDiscount", categoryReport[1]);
+			report.put("totalSale", categoryReport[2]);
+			report.put("totalDiscount", categoryReport[3]);
+			report.put("topSalingProduct", ProductDao.getTopSellingProductByProductID((int)categoryReport[4]));
+			report.put("leastSalingProduct", ProductDao.getTopSellingProductByProductID((int)categoryReport[5]));
+			report.put("topSalingProductMonth", ProductDao.getTopSellingProductByProductIDForMonth((int)categoryReport[6]));
+			report.put("leastSalingProductMonth", ProductDao.getTopSellingProductByProductIDForMonth((int)categoryReport[7]));
+		}
+		else {
+			report.put("Error", true);
+		}
+		return report;
+	}
+	public static void main(String[] args) {
+		float[] categoryReport = CategoryDao.categoryReport(5);
+		if(categoryReport[7]!=-2) {
+			for(int i=0;i<categoryReport.length;i++) {
+				System.out.println("categoryReport : "+categoryReport[i]);
+			}	
+		}
+		else {
+			System.out.println("In main function error");
+		}
+		
+	}
+	
 }

@@ -32,7 +32,7 @@
 	
 	<body>
 	<%	
-UserDetailBean mainUser=null;
+try{UserDetailBean mainUser=null;
 if(session == null || session.getAttribute("isLogin") == null){
 		request.setAttribute("msg","Your session expired or you are not logined");		
 		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
@@ -121,22 +121,22 @@ else{
 				<p style="display: none" id='con'>${msg}</p>
 				<%ArrayList<ProductDetailBean> list=(ArrayList<ProductDetailBean>)ProductDao.getAllProduct();%>
 				<div class="table-responsive">
-					<table border="1">
+					<table border="1" style="table-layout: fixed; width: 100%; text-align: center; word-wrap: break-word; text-align: center;" class="table-striped table-light" >
 						<thead>
 							<tr>
-								<th>Product ID</th>
-								<th>Product Name</th>
-								<th>Company Name</th>
-								<th>Category Name</th>
-								<th>SubCategory Name</th>
-								<th>Orignal Price</th>
-								<th>Offer Price</th>
-								<th>Offer Till</th>
-								<th>Quantity</th>
-								<th>Image</th>
-								<th>Product Description</th>
-								<th>Is Active</th>
-								<th>Action</th>
+								<th style="word-wrap: break-word; text-align: center;">Product ID</th>
+								<th style="word-wrap: break-word; text-align: center;">Product Name</th>
+								<th style="word-wrap: break-word; text-align: center;">Company Name</th>
+								<th style="word-wrap: break-word; text-align: center;">Category Name</th>
+								<th style="word-wrap: break-word; text-align: center;">SubCategory Name</th>
+								<th style="word-wrap: break-word; text-align: center;">Orignal Price</th>
+								<th style="word-wrap: break-word; text-align: center;">Offer Price</th>
+								<th style="word-wrap: break-word; text-align: center;">Offer Till</th>
+								<th style="word-wrap: break-word; text-align: center;">Quantity</th>
+								<th style="word-wrap: break-word; text-align: center;">Image</th>
+								<th style="word-wrap: break-word; text-align: center;">Product Description</th>
+								<th style="word-wrap: break-word; text-align: center;">Is Active</th>
+								<th style="word-wrap: break-word; text-align: center;">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -153,16 +153,17 @@ else{
 								<td><%=p.getOfferPrice() %></td>
 								<td><%=p.getOfferTill() %></td>
 								<td><%=p.getQuantity() %></td>
-								<td><img src="<%=p.getImagePath() %>"></td>
+								<td><img src="<%=p.getImagePath() %>" class="img-fluid" style="min-height: 120px; max-height: 240px;"></td>
 								<td><%=p.getProductDescription() %></td>
 								<%String answer = p.getIsActive()==1?"Yes":"No"; %>
 								<td><%=answer %></td>
 								<td>
 								<a
 									href="UpdateProductServlet?productID=<%=p.getProductId()%>"><button
-											type="button" class="btn btn-primary">Update</button></a> <a
-									href="DeleteProductServlet?productID=<%=p.getProductId()%>"><button
-											type="button" class="btn btn-danger">Delete</button></a>
+											type="button" class="btn btn-primary btn-block" style="white-space:normal;">Update</button></a> 
+											
+									<a href="DeleteProductServlet?productID=<%=p.getProductId()%>"><button
+											type="button" class="btn btn-danger btn-block" style="white-space:normal;">Delete</button></a>
 								
 								</td>
 							</tr>
@@ -180,6 +181,12 @@ else{
         	window.alert(s)	
         }
         </script>
+        <%}catch(Exception e){
+        	request.setAttribute("msg","You are not logined Please login");
+    		request.getRequestDispatcher("LoginForm.jsp").forward(request,response);
+        }
+        	%>
+        
 </body>
 <!--   Core JS Files   -->
 <script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
