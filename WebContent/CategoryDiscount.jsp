@@ -42,7 +42,7 @@
 			<%HashMap<Integer, String> map = CategoryDao.getCategoryName();  %>
 			<h2 class="fs-title">Category Details</h2>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12">
 					<label for="inputProductName">Category Name</label> <select id="discountType" 
 					class="form-control" name = "categoryID" style="padding: 8px 16px;" required>
 						<option value="">Please select option value</option>
@@ -51,11 +51,17 @@
 			 			<%} %>
 					</select>
 				</div>
+			</div>
+			<br>
+			<div class="row">
 				<div class="col-6">
-					<label for="inputPrice">Percentage Discount</label> 
+					<label for="inputPrice">Value of Discount Percentage</label> 
 					<input type="number" name="valueOfDiscount" required>
 					<label class="error" style="color: red; font-weight: bold;">${negativeType}</label>
-					
+				</div>
+				<div class="col-6">
+					<label for="inputPrice">Offer Till</label> 
+					<input type="date" name="offerTill" required>
 				</div>
 			</div>
 			<input type="submit" name="submit"

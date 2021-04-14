@@ -18,13 +18,15 @@ public class ApplyDiscountByCategory extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		float percent = Float.parseFloat(request.getParameter("valueOfDiscount"));
 		int categoryID= Integer.parseInt(request.getParameter("categoryID"));
+		String offerTill=request.getParameter("offerTill").replaceAll("-", "");
+		
 		int flag =0;
 		if(percent<0) {
 			request.setAttribute("negativeType", "Negative percentage or price to be applied");
 			request.getRequestDispatcher("ApplyDiscountByCategory.jsp").forward(request, response);
 		}
 		else {
-			flag = CategoryDao.applyDiscountByCategoryID(categoryID,percent);
+			flag = CategoryDao.applyDiscountByCategoryID(categoryID,percent,offerTill);
 		}
 		if(flag==-1) {
 			request.setAttribute("msg", "Price becoming negative");

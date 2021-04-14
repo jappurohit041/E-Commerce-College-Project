@@ -158,13 +158,14 @@ boolean flag = false;
 		}
 	return flag;
 	}
-	public static int applyDiscountByCategoryID(int categoryID, float percent) {
+	public static int applyDiscountByCategoryID(int categoryID, float percent,String offerTill) {
 			int flag= 0;
 			try(Connection con = JDBCConnectionOrcale.connectionMethod();
-					CallableStatement csmt = con.prepareCall("call  offerByCategoryID(?,?)"); 
+					CallableStatement csmt = con.prepareCall("call  offerByCategoryID(?,?,?)"); 
 					){
 				csmt.setInt(1, categoryID);
 				csmt.setFloat(2, percent);
+				csmt.setString(3, offerTill);
 				boolean flag1 = csmt.execute();
 				if(!flag1) {
 					flag=1;

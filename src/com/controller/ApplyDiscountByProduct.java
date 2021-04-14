@@ -20,6 +20,8 @@ public class ApplyDiscountByProduct extends HttpServlet{
 		float percent = Float.parseFloat(request.getParameter("valueOfDiscount"));
 		int discountType= Integer.parseInt(request.getParameter("discountType"));
 		int productID= Integer.parseInt(request.getParameter("productID"));
+		String offerTill=request.getParameter("offerTill").replaceAll("-", "");
+		System.out.println("offerTill : "+offerTill);
 		if(percent<0) {
 			request.setAttribute("negativeType", "Negative percentage or price to be applied");
 			request.getRequestDispatcher("ApplyDiscountByProduct.jsp").forward(request, response);
@@ -27,11 +29,11 @@ public class ApplyDiscountByProduct extends HttpServlet{
 		int flag=0;
 		if(discountType==1) {
 			//by price
-			flag = ProductDao.applyDiscountByPrice(productID,percent);
+			flag = ProductDao.applyDiscountByPrice(productID,percent,offerTill);
 		}
 		else {
 			//by percentage
-			flag = ProductDao.applyDiscountByPercent(productID,percent);
+			flag = ProductDao.applyDiscountByPercent(productID,percent,offerTill);
 		}
 		if(flag==-1) {
 			request.setAttribute("msg", "Price becoming negative");

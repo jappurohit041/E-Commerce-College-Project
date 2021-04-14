@@ -401,13 +401,14 @@ public class ProductDao {
 		return map;
 	}
 
-	public static int applyDiscountByPrice(int productID, float percent) {
+	public static int applyDiscountByPrice(int productID, float percent,String offerTill) {
 		int flag= 0;
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
-				CallableStatement csmt = con.prepareCall("call  offerByPrice(?,?)") 
+				CallableStatement csmt = con.prepareCall("call  offerByPrice(?,?,?)") 
 				){
 			csmt.setInt(1, productID);
 			csmt.setFloat(2, percent);
+			csmt.setString(3, offerTill);
 			boolean flag1 = csmt.execute();
 			if(!flag1) {
 				flag=1;
@@ -422,13 +423,14 @@ public class ProductDao {
 		}
 		return flag;
 	}
-	public static int applyDiscountByPercent(int productID, float percent) {
+	public static int applyDiscountByPercent(int productID, float percent,String offerTill) {
 		int flag= 0;
 		try(Connection con = JDBCConnectionOrcale.connectionMethod();
-				CallableStatement csmt = con.prepareCall("call  offerByPercentage(?,?)");
+				CallableStatement csmt = con.prepareCall("call  offerByPercentage(?,?,?)");
 				){
 			csmt.setInt(1, productID);
 			csmt.setFloat(2, percent);
+			csmt.setString(3, offerTill);
 			boolean flag1 = csmt.execute();
 			if(!flag1) {
 				flag=1;

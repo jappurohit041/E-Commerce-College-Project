@@ -165,21 +165,21 @@ end;
 /
 
 REM function 6
-create or replace procedure offerByPrice(product_id productDetails.productid%type, price number)as
+create or replace procedure offerByPrice(product_id productDetails.productid%type, price number,offertillInput varchar2)as
 begin
-		update productDetails set offerprice = originalprice - price where productid= product_id;
+		update productDetails set offerprice = originalprice - price,offertill = to_date(offertillInput,'yyyymmdd') where productid= product_id;
 end;
-
+/
 REM function 7
-create or replace procedure offerByPercentage(product_id productDetails.productid%type, percent number)as
+create or replace procedure offerByPercentage(product_id productDetails.productid%type, percent number,offertillInput varchar2)as
 begin	
-		update productDetails set offerprice = originalprice*(1-(percent/100)) where productid= product_id;	
+		update productDetails set offerprice = originalprice*(1-(percent/100)),offertill = to_date(offertillInput,'yyyymmdd') where productid= product_id;	
 end;
-
+/
 REM function 8
-create or replace procedure offerByCategoryID(category_id categoryDetails.categoryid%type, percent number)as
+create or replace procedure offerByCategoryID(category_id categoryDetails.categoryid%type, percent number,offertillInput varchar2)as
 begin
-	update productDetails set offerprice = originalprice*(1-(percent/100)) where categoryid = category_id;	
+	update productDetails set offerprice = originalprice*(1-(percent/100)),offertill = to_date(offertillInput,'yyyymmdd') where categoryid = category_id;	
 end;
 /
 

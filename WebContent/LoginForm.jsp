@@ -24,7 +24,7 @@
 			<div class="row">
 				<div class="col">
 					<label for="inputEmailID">Email ID</label> <input type="text"
-						class="form-control" placeholder="First Name" id="inputEmailID"
+						class="form-control" placeholder="Email ID" id="inputEmailID"
 						name="emailID">
 				</div>
 			</div>

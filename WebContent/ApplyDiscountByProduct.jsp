@@ -63,10 +63,14 @@
 			<br>	
 			
 			<div class="row">
-					<div class="col-12">
-					<label for="inputPrice">Value</label> 
+				<div class="col-6">
+					<label for="inputPrice">Value of Discount Percentage/Discount Amount</label> 
 					<input type="number" name="valueOfDiscount" required>
 					<label class="error" style="color: red; font-weight: bold;">${negativeType}</label>
+				</div>
+				<div class="col-6">
+					<label for="inputPrice">Offer Till</label> 
+					<input type="date" name="offerTill" required>
 				</div>
 			</div>
 			<input type="submit" name="submit"
