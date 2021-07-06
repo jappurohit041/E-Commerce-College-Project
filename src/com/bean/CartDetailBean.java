@@ -117,4 +117,6 @@ public class CartDetailBean {
 		this.price = price;
 	}
 
+	
+	
 }
