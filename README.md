@@ -1,2 +1,2 @@
-# ECollegeProject
-ECollegeProject
+# E Commerce College Project
+E Commerce College Project
